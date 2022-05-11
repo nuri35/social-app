@@ -1,0 +1,77 @@
+version: "3.9"
+
+services:
+
+  autoheal:
+    restart: on-failure
+    image: willfarrell/autoheal
+    environment:
+      - AUTOHEAL_CONTAINER_LABEL=all
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  mongo:
+
+    image: mongo
+    restart: on-failure
+    volumes:
+      - db-data:/var/lib/mongo/data
+    ports:
+      - 27017:27017
+
+    env_file: .env
+    networks:
+      - webapp
+  
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=/run/secrets/db_password
+    
+      
+  backend:
+    
+    build: .
+    depends_on:
+      - mongo
+    restart: on-failure
+    links:
+      - mongo
+    env_file: .env
+
+    volumes:
+      - /home/full/path:/tmp/cache
+
+    tty: true
+    environment:
+      - DB_HOST=mongo
+      - DB_USER=root
+      - DB_PASSWORD=/run/secrets/db_password
+      - DB_NAME=Blog
+      - DB_PORT=27017
+      - NODE_ENV=development
+     
+    ports:
+      - 6868:$PORT
+
+
+    networks:
+      - webapp
+
+    secrets:
+      - db_password
+
+
+
+
+
+networks:
+  webapp:
+    driver: bridge
+
+
+volumes:
+  db-data:
+
+secrets:
+  db_password:
+    file: db_password.txt
