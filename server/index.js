@@ -1,8 +1,8 @@
 const express = require("express")
 const app = express()
 require('dotenv').config();
+const database = require("./src/controller/database")
 const MongoStore = require('connect-mongo')
- const database = require("./src/controller/database")
 const bodyParser = require("body-parser")
 const cors = require("cors")
 const session = require("express-session")
@@ -12,6 +12,7 @@ const authrouter = require("./src/router/auth_router")
 const commentRouter = require("./src/router/commnet_router")
  const likeDislike = require("./src/router/action")
 const passport = require("passport");
+database.main()
 const {
     DB_HOST,
     DB_PORT,
@@ -24,12 +25,12 @@ const {
 
 app.use(session({
     secret:process.env.SESSION_SECRET,
-    resave:false,
+    resave:true,
     saveUninitialized:true,
     
     store:  MongoStore.create(process.env.NODE_ENV === "production" ? {mongoUrl: `mongodb://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?authSource=admin`} : process.env.NODE_ENV === "development" ? {
         mongoUrl: `mongodb://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?authSource=admin` } : {
-        mongoUrl: `mongodb://localhost:${process.env.MONGODB_LOCAL_PORT}/${process.env.MONGODB_DATABASE}` }) ,
+        mongoUrl: `mongodb://127.0.0.1:${process.env.DB_PORT}/${process.env.DB_NAME}` }) ,
     cookie:{
         secure: true,
         maxAge:1000 * 60 * 60 * 24 
@@ -44,7 +45,6 @@ app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
-database.main()
 
 
 //router

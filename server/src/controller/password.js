@@ -19,7 +19,7 @@ module.exports = function(passport){
         passport.use(new LocalStrategy(options, async (email,password,done)=>{
 
 
-     
+   
 
             try{
 
@@ -74,7 +74,7 @@ const {email,picture,email_verified} = profile._json;
 
 
   if (!req.user) { // req.user undefıned ıse  bura ıslıcek
-
+    
         const user = await   User.findOne({ 'google.idProf' : profile.id })
        
 
