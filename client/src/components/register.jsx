@@ -1,26 +1,18 @@
 
-
-
-
 import {React,useState,useEffect} from "react";
 import axios from "axios"
 import { Link, useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SimpleSnackbar from "./alert"
-// or
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-
-// @material-ui/icons
 import Email from "@material-ui/icons/Email";
 import People from "@material-ui/icons/People";
 import Lock from "@material-ui/icons/Lock";
-
 import Header from "./Header/Header.js";
 import HeaderLinks from "./Header/HeaderLinks.js";
 import Footer from "./Footer/Footer.js";
-
 import GridContainer from "./Grid/GridContainer.js";
 import GridItem from "./Grid/GridItem.js";
 import Button from "./CustomButtons/Button.js";
@@ -28,14 +20,11 @@ import Card from "./Card/Card.js";
 import CardBody from "./Card/CardBody.js";
 import CardHeader from "./Card/CardHeader.js";
 import CardFooter from "./Card/CardFooter.js";
-import CustomInput from "./CustomInput/CustomInput.js";
-import {useDispatch} from "react-redux"
 import styles from "./../assets/jss/material-kit-react/views/loginPage";
 import * as yup from "yup"
 import {yupResolver} from "@hookform/resolvers/yup"
 import {useForm} from "react-hook-form"
 import image from "./../assets/img/bg7.jpg";
-
 const useStyles = makeStyles(styles);
 
  
@@ -178,7 +167,7 @@ export default function RegisterPage(props) {
               
                   <TextField id="standard-basic" label="First Name"
                   
-                  id="first"
+                 
                       name="first"
                       {...register('first')}
                       error={errors.first}

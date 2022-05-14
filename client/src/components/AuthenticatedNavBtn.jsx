@@ -1,14 +1,9 @@
-import React,{useState,useEffect,useContext} from "react";
-// @material-ui/core components
+import React,{useState,useContext} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-
 import AddPostForm from "./AddPostForm"
-
-
 import Menu from '@mui/material/Menu';
-import { Link } from "react-router-dom";
 import Header from "./Header/Header.js";
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
@@ -18,9 +13,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import styles from "../assets/jss/material-kit-react/views/componentsSections/navbarsStyle";
-import { MailOutlined ,BellOutlined,LogoutOutlined} from '@ant-design/icons';
+import {BellOutlined,LogoutOutlined} from '@ant-design/icons';
 import Badge from '@mui/material/Badge';
-import axios from "axios"
 import { AuthContext } from "./Context";
 
 
@@ -28,21 +22,21 @@ const useStyles = makeStyles(styles);
 
 export default function SectionNavbars() {
 
-  const {user,ısAuthenticated,setUser,setIsAuthenticated} = useContext(AuthContext)
+  const {user} = useContext(AuthContext)
 
-const nameSlice = ()=>{
-  const sliceName =  user.name.charAt(0) + user.surname.charAt(0)   ;
-  return sliceName
-}
- 
+// const nameSlice = ()=>{
+//   const sliceName =  user.name.charAt(0) + user.surname.charAt(0)   ;
+//   return sliceName
+// }
+// anchorElNav
   const classes = useStyles();
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [ setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
  
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
+  // const handleOpenNavMenu = (event) => {
+  //   setAnchorElNav(event.currentTarget);
+  // };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };

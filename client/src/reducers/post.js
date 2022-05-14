@@ -9,6 +9,7 @@ const initialState = {
 
 
 const postReducer = (state = initialState,action)=>{
+   
     switch (action.type) {
        
 
@@ -17,22 +18,21 @@ const postReducer = (state = initialState,action)=>{
                     ...state,
                     currentPost:action.payload
                 }
-                break;
+                
     
             case types.CREATE_POST:
                 return {
                     ...state,
                     posts:[...state.posts,action.payload]
                 }
-                break;
+               
         
         default:
             return {
                 ...state
             }
-                
             
-            break;
+            
     }
 }
 

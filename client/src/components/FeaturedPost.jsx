@@ -1,4 +1,4 @@
-import React,{useContext} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
@@ -6,13 +6,11 @@ import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import { red } from '@mui/material/colors';
 import CardHeader from '@mui/material/CardHeader';
 import Divider from '@mui/material/Divider';
 import Avatar from '@mui/material/Avatar';
 import moment from "moment"
 import Chip from '@mui/material/Chip';
-import { myContext } from "./Context";
 
 function FeaturedPost(props) {
   const { post } = props;
@@ -60,9 +58,9 @@ function FeaturedPost(props) {
     title={
       post?.authorId?.google ?
 
-      post?.authorId?.google.name
+     `${post?.authorId?.google.name}`
       :
-      post?.authorId?.local.name + " " + " " + post?.authorId?.local.surname
+      `${post?.authorId?.local.name}  ${post?.authorId?.local.surname}` 
       
       }
      subheader={convertRelativeTime(post.time)}

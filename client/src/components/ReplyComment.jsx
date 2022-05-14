@@ -14,12 +14,13 @@ function ReplyComment(props){
     useEffect(() => {
 
         let commentNumber = 0;
-        props.CommentLists.map((comment) => {
+       
+        props.CommentLists.forEach((comment) => {
 
             if (comment.responseTo === props.parentCommentId) {
                 commentNumber++
             }
-        })
+        });
         setChildCommentNumber(commentNumber)
     }, [props.CommentLists, props.parentCommentId])
 

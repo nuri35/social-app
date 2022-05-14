@@ -1,12 +1,14 @@
 import React,{useState,useEffect} from "react";
+import {createPost} from "../actions/post"
 import SimpleSnackbar from "./alert"
+import EDITOR_JS_TOOLS from "../editor/editor.js"
+import EditorJs from '@natterstefan/react-editor-js'
+import  jsonToHtml from "./jsonToHtml"
 import MenuItem from '@mui/material/MenuItem';
 import {useForm,Controller} from "react-hook-form"
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import Select from '@mui/material/Select';
-
-import App from "../App"
 import { useDispatch,useSelector } from "react-redux";
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -15,19 +17,10 @@ import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import * as yup from "yup"
 import {yupResolver} from "@hookform/resolvers/yup"
-import TextField from '@mui/material/TextField';
 import CustomImageList from "./image"
 import { DialogActions } from "@mui/material";
 import { Input  } from "@mui/material";
 const tags = ["Sport","Programming","Health","Science","Culturel","Technology","Business","Politics","Foods","Other","Self-improvement"]
-import PositionedSnackbar from "./PositionedSnackbar"
-import {createPost} from "../actions/post"
-
-import EDITOR_JS_TOOLS from "../editor/editor.js"
-import EditorJs from '@natterstefan/react-editor-js'
-import Paragraph from "antd/lib/skeleton/Paragraph";
-import data from "@iconify/icons-eva/bell-fill";
-import jsonToHtml from "./jsonToHtml"
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -63,7 +56,7 @@ const AddPostForm =({open,handleClose})=>{
   
     let article = data()
 
-    objarticle.map(obj=>{
+    objarticle.forEach(obj=>{
 
       switch (obj.type) {
        
@@ -111,7 +104,7 @@ const AddPostForm =({open,handleClose})=>{
       
         default:
           return ""
-          break;
+          
       }
 
 

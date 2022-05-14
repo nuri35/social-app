@@ -1,4 +1,4 @@
-export default {
+  const jsonToHtml =  {
   
     makeParagraph(obj) {
     
@@ -81,3 +81,4 @@ export default {
     
 
 }
+export default jsonToHtml

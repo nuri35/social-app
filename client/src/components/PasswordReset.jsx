@@ -1,9 +1,6 @@
 
-
-
-import {React,useEffect,useState,useContext} from "react";
-
-import { Link, useParams } from "react-router-dom";
+import {React,useState} from "react";
+import { useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SimpleSnackbar from "./alert"
@@ -26,8 +23,6 @@ import CardBody from "./Card/CardBody.js";
 import CardHeader from "./Card/CardHeader.js";
 import CardFooter from "./Card/CardFooter.js";
 import styles from "./../assets/jss/material-kit-react/views/loginPage";
-
-
 import image from "./../assets/img/bg7.jpg";
 import axios from "axios";
 const useStyles = makeStyles(styles);
@@ -157,7 +152,7 @@ function PasswordReset(props){
       
                         <TextField id="standard-basic" label="Password"
                         
-                        id="password"
+                        // id="password"
                             name="password"
                             {...register('password')}
                             error={errors.password}
@@ -184,7 +179,7 @@ function PasswordReset(props){
 
                          <TextField id="standard-basic" label="Password again"
                         
-                        id="resetPassword"
+                        // id="resetPassword"
                             name="resetPassword"
                             {...register('resetPassword')}
                             error={errors.resetPassword}

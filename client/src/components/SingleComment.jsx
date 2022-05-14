@@ -1,14 +1,12 @@
-import React, { createElement, useState ,useContext} from 'react';
+import React, {useState ,useContext} from 'react';
 import Input from '@mui/material/Input';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
-import 'antd/dist/antd.css';
+import "antd/dist/antd.min.css"
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import { Comment } from 'antd';
 import moment from 'moment';
-import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
-import { blue } from '@mui/material/colors';
 import {notification } from 'antd';
 import { AuthContext } from "./Context";
 import axios from "axios"
@@ -22,12 +20,11 @@ import LikeDislike from "./LikeDislike"
 import Popover from '@mui/material/Popover';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
-import SimpleSnackbar from "./alert"
 
 const SingleComment = (props) => {
 
   
-  const {user,ısAuthenticated,setUser,setIsAuthenticated} = useContext(AuthContext)
+  const {user,ısAuthenticated} = useContext(AuthContext)
 
   const [popoverContent,setPopoverContent] = useState(false)
   const [anchorEl, setAnchorEl] = useState(null);
@@ -89,7 +86,7 @@ const [editInput,setEditInput] = useState(false)
         "Sign in to share your thoughts.And Touch people's lives by commenting on posts",
       btn,
       key,
-      onClose: close,
+     
     });
   
   };
@@ -102,7 +99,7 @@ const [editInput,setEditInput] = useState(false)
       description:
        `${message}`,
      
-      onClose: close,
+    
     });
   
   };
@@ -135,7 +132,7 @@ const [editInput,setEditInput] = useState(false)
 
     setIsVisible(!isVisible);
 
-    if( Number(e.currentTarget.value.length) == Number(props.comment.content.length) ) {
+    if( Number(e.currentTarget.value.length) === Number(props.comment.content.length) ) {
       setEditButton(false)
     }
   }
@@ -333,9 +330,9 @@ if(deleteResult.data.success){
 
          {  props.comment.writer.google ?
 
-props.comment.writer.google.name
+`${props.comment.writer.google.name}`
 :
-props.comment.writer.local.name + " " + " " +props.comment.writer.local.surname 
+`${props.comment.writer.local.name} ${props.comment.writer.local.surname}` 
 }
 
  </h3>}

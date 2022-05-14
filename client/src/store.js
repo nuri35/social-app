@@ -4,10 +4,6 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import rootReducer from "./reducers/rootReducer"
 
 
-
-
-
-
 const store = createStore(
     rootReducer,
     {},
@@ -15,3 +11,5 @@ const store = createStore(
     
     )
 export default store
+
+

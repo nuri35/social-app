@@ -1,25 +1,19 @@
 
 import { styled,alpha } from '@mui/material/styles';
 import Sidebar from './Sidebar';
-import React,{useState,useRef,useCallback,useContext,useEffect} from 'react'
+import React,{useState,useRef,useCallback,useContext} from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import FeaturedPost from './FeaturedPost';
 import NoRresult from "./NoRresult"
 import MuiGrid from '@mui/material/Grid';
-import SimpleSnackbar from "./alert"
-import { useParams } from "react-router-dom";
-import axios from "axios"
+import InputBase from '@mui/material/InputBase';
 import {
-  Typography,
-  Button,
+
   Toolbar,
-  IconButton,
-  Avatar,
-    Chip,
-    Badge,
+
 
 } from "@material-ui/core"
-import { searchPost } from '../actions/post';
+import { SearchPost } from '../actions/post';
 
 import { AuthContext } from "./Context";
 import Nav from "./Nav"
@@ -61,7 +55,7 @@ const sidebar = {
     },
   }));
   
-  import InputBase from '@mui/material/InputBase';
+
       
   const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
@@ -119,7 +113,7 @@ const PostsList =  ()=>{
 
   
   
-  const {blogs,hasMore,loading,error,userInfo} =  searchPost(query,pageNumber)
+  const {blogs,hasMore,loading} =  SearchPost(query,pageNumber)
 
 
 
@@ -154,7 +148,7 @@ if(node) observer.current.observe(node)
 
 
 
-  const {user,ısAuthenticated,setUser,setIsAuthenticated} = useContext(AuthContext)
+  const {ısAuthenticated} = useContext(AuthContext)
  
   return (
       
@@ -218,7 +212,7 @@ if(node) observer.current.observe(node)
         }
       
 
-      {blogs.length == 0 &&
+      {blogs.length === 0 &&
 
     <NoRresult />
               

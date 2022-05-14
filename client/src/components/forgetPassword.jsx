@@ -1,25 +1,16 @@
 
-import React,{useState,useEffect} from "react";
-import GitHub from '@mui/icons-material/GitHub';
-import Google from '@mui/icons-material/Google';
-import { Link } from "react-router-dom";
+import React,{useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import {
  
-  Typography,
  TextField,
 
-
 } from "@material-ui/core"
-// @material-ui/icons
 import Email from "@material-ui/icons/Email";
 import SimpleSnackbar from "./alert"
-
 import Header from "./Header/Header.js";
 import HeaderLinks from "./Header/HeaderLinks.js";
-import Footer from "./Footer/Footer.js";
-
 import GridContainer from "./Grid/GridContainer.js";
 import GridItem from "./Grid/GridItem.js";
 import Button from "./CustomButtons/Button.js";
@@ -27,7 +18,6 @@ import Card from "./Card/Card.js";
 import CardBody from "./Card/CardBody.js";
 import CardHeader from "./Card/CardHeader.js";
 import CardFooter from "./Card/CardFooter.js";
-import CustomInput from "./CustomInput/CustomInput.js";
 import * as yup from "yup"
 import {yupResolver} from "@hookform/resolvers/yup"
 import {useForm} from "react-hook-form"
@@ -132,7 +122,7 @@ console.log(err)
 
                   <TextField id="standard-basic" label="Email"
                   
-                  id="Email"
+                  // id="Email"
                       name="Email"
                       {...register('Email')}
                       error={errors.Email}

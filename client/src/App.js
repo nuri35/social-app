@@ -1,19 +1,10 @@
-import React,{useState,useEffect,useContext} from 'react'
-import { useDispatch } from 'react-redux';
-import {BrowserRouter as Router, Routes,Route,Navigate, BrowserRouter } from "react-router-dom"
+import React,{useContext} from 'react'
+import {BrowserRouter as Router, Routes,Route,Navigate } from "react-router-dom"
 import { makeStyles } from '@material-ui/core/styles'
 import {
     CssBaseline,
     Container,
     Grid,
-  
-    Toolbar,
-    Typography,
-    Button,
-    IconButton,
-    Avatar,
-    Chip,
-    Badge,
 
   
 } from "@material-ui/core"
@@ -26,7 +17,6 @@ import PageNotFound from "./components/PageNotFound"
 import Login from "./components/login"
 import Register from "./components/register"
 import ForgetPassword from "./components/forgetPassword"
-
 import { AuthContext } from "./components/Context";
 import PostBody from "./components/PostBody"
 import PasswordReset from "./components/PasswordReset"
@@ -54,7 +44,7 @@ import PasswordReset from "./components/PasswordReset"
 
 const App = () => {
 
-  const {user,ısAuthenticated,setUser,setIsAuthenticated} = useContext(AuthContext)
+  const {ısAuthenticated} = useContext(AuthContext)
 
 
   const classes = useStyle();

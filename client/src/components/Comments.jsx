@@ -1,16 +1,13 @@
 import React , {useState,useContext}from 'react'
-import Typography from '@mui/material/Typography';
 import axios from "axios"
 import Box from '@mui/material/Box';
 import Input from '@mui/material/Input';
-import Avatar from '@mui/material/Avatar';
 import FormControl from '@mui/material/FormControl';
 import Popover from '@mui/material/Popover';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import SortOutlined from '@mui/icons-material/SortOutlined';
-import SimpleSnackbar from './alert';
 import SingleComment from "./SingleComment"
 import ReplyComment from "./ReplyComment"
 import { Empty } from 'antd';
@@ -22,7 +19,7 @@ export default function Comments(props) {
  
   const [loading,setLoading] = useState(false)
   
-  const {user,ısAuthenticated,setUser,setIsAuthenticated} = useContext(AuthContext)
+  const {user,ısAuthenticated} = useContext(AuthContext)
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -51,7 +48,6 @@ export default function Comments(props) {
         "Sign in to share your thoughts.And Touch people's lives by commenting on posts",
       btn,
       key,
-      onClose: close,
     });
   
   };

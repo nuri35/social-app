@@ -1,18 +1,17 @@
 
 
-import {React,useEffect,useState,useContext} from "react";
+import {React,useState,useContext} from "react";
 
 import Google from '@mui/icons-material/Google';
 
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SimpleSnackbar from "./alert"
-import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 // @material-ui/icons
 import Email from "@material-ui/icons/Email";
-import People from "@material-ui/icons/People";
+
 import Lock from "@material-ui/icons/Lock";
 
 import Header from "./Header/Header.js";
@@ -28,10 +27,8 @@ import Card from "./Card/Card.js";
 import CardBody from "./Card/CardBody.js";
 import CardHeader from "./Card/CardHeader.js";
 import CardFooter from "./Card/CardFooter.js";
-import CustomInput from "./CustomInput/CustomInput.js";
 import { AuthContext } from "./Context";
 import styles from "./../assets/jss/material-kit-react/views/loginPage";
-
 import image from "./../assets/img/bg7.jpg";
 import axios from "axios";
 
@@ -89,7 +86,7 @@ const { register,trigger, handleSubmit, formState:{ errors }, resetField } = use
     })
 
 
-    if(login.status == 200 && login.data.isAuthenticated == true){
+    if(login.status === 200 && login.data.isAuthenticated === true){
       
       authContext.setUser(login.data.user)
       authContext.setIsAuthenticated(!authContext.ısAuthenticated)
@@ -114,6 +111,7 @@ const { register,trigger, handleSubmit, formState:{ errors }, resetField } = use
 
 
 const googleLogin = () => {
+ 
   window.open("http://localhost:5000/auth/google", "_self");
 };
 
@@ -169,7 +167,7 @@ const googleLogin = () => {
                  
                   <TextField id="standard-basic" label="Email"
                   
-                  id="Email"
+                 //burdakı idyi kullancan post işlemlerine bakcagın zaman
                       name="Email"
                       {...register('Email')}
                       error={errors.Email}
@@ -196,7 +194,7 @@ const googleLogin = () => {
 
   <TextField id="standard-basic" label="password"
                   
-                  id="password"
+                 
                       name="password"
                       {...register('password')}
                       error={errors.password}

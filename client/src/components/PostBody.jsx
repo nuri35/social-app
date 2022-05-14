@@ -1,24 +1,22 @@
 import React,{useEffect,useContext, useState} from "react"
-import Typography from '@mui/material/Typography';
 import {useParams} from "react-router-dom"
-import { useDispatch,useSelector } from "react-redux";
+import {useSelector } from "react-redux";
 import Nav from "./Nav"
-import {fetchSinglePost} from "../actions/post"
 import Comments from "./Comments"
 import LikeDislike from "./LikeDislike"
-import { Comment, Tooltip, Avatar } from 'antd';
+import {fetchSinglePost} from "../actions/post"
 import moment from "moment"
 import Chip from '@mui/material/Chip';
 import { AuthContext } from "./Context";
-import IconButton from '@mui/material/IconButton';
 import AuthenticatedNav from "./AuthenticatedNav"
 import axios from "axios";
 import { Empty } from 'antd';
+// import {useDispatch} from "react-redux"
 
 
-function PostBody({match,history,location}){
+function PostBody(){
 
-    const {user,ısAuthenticated,setUser,setIsAuthenticated} = useContext(AuthContext)
+    const {user,ısAuthenticated} = useContext(AuthContext)
    
 
     const imgSrc = `https://source.unsplash.com/random/800x500?`
@@ -26,14 +24,14 @@ function PostBody({match,history,location}){
     const params = useParams();
 
 
- const dispatch = useDispatch()
+// const dispatch = useDispatch()
 
  useEffect(() => {
    
-    dispatch(fetchSinglePost(params.id))
+    fetchSinglePost(params.id)
 
 
-}, [dispatch])
+}, [params.id])
 
 
 
@@ -56,12 +54,12 @@ const [CommentLists,setCommentLists] = useState([])
    let indexValue = null
 
 const newCommentArr = CommentLists.filter((comment,index)=>{
-    if( newComment._id == comment._id){
+    if( newComment._id === comment._id){
        
         indexValue = index
-     
+     return indexValue
     }else{
-        return newComment._id != comment._id
+        return newComment._id !== comment._id
     }
 
 })
@@ -82,7 +80,7 @@ const deleteComment = (newComment)=>{
 const deletedArr = CommentLists.filter((comment)=>{
    
     
-       return newComment != comment._id
+       return newComment !== comment._id
 
 
 })
@@ -95,6 +93,10 @@ setCommentLists(deletedArr)
 
 
 
+ 
+useEffect(() => {
+
+    
 const allComments = async ()=>{
     const postVariable = {
         postId : params.id
@@ -115,13 +117,9 @@ try{
 
 }
 
-
- 
-useEffect(() => {
-  
-    allComments()
+allComments()
     
-    }, [])
+    }, [params.id,CommentLists])
 
 
 
@@ -158,15 +156,16 @@ useEffect(() => {
     <span style={{padding:"6px",color:"#1A8917"}}>{
     
     currentPost?.authorId?.google ?
+    `${currentPost?.authorId?.google.name}`
     
-    currentPost?.authorId?.google.name
     :
-    currentPost?.authorId?.local.name + " " + " " + currentPost?.authorId?.local.surname
+    `${ currentPost?.authorId?.local.name} ${currentPost?.authorId?.local.surname}`
+   
     
     }</span>
     <span style={{padding:"6px",  color:"#757575"}} >{moment(currentPost?.time).fromNow()}</span>
     
-       <img src={imgSrc+currentPost?.tag} />
+       <img src={imgSrc+currentPost?.tag}  alt="about"/>
     
      <div dangerouslySetInnerHTML={{__html:currentPost?.content}} />
      

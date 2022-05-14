@@ -3,13 +3,10 @@ import React from "react"
 import "./index.css"
 import "./App.scss"
 import App from "./App.js"
-
 import AuthProvider from './components/Context';
-
-
-
 import {Provider} from "react-redux"
 import store from "./store"
+
 
 ReactDOM.render(
 
@@ -21,8 +18,6 @@ ReactDOM.render(
 
   </Provider>
  ,
-
-  
     document.getElementById("root")
 );
 

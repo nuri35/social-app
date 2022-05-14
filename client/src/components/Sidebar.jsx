@@ -1,22 +1,17 @@
-import React,{useState,useRef,useCallback,useContext,useEffect} from 'react'
-import PropTypes from 'prop-types';
-import { Link, useParams } from "react-router-dom";
-
+import React from 'react'
+// import PropTypes from 'prop-types';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-// import Link from '@mui/material/Link';
-import Chip from '@mui/material/Chip';
-import { Tag } from 'antd';
 import Button from "./CustomButtons/Button.js";
 import GitHub from '@mui/icons-material/GitHub';
 import Instagram from '@mui/icons-material/Instagram';
 import Facebook from '@mui/icons-material/Facebook';
 import LinkedIn from '@mui/icons-material/LinkedIn';
-import axios from "axios"
+
 
 function Sidebar(props) {
-  const { CheckableTag } = Tag;
-  const { tags,description,title } = props;
+
+  const { description,title } = props;
  
     
 
@@ -44,7 +39,7 @@ function Sidebar(props) {
   <Button
                       startIcon={<GitHub />}
                         justIcon
-                        href="#pablo"
+                       
                         target="_blank"
                         color="transparent"
                         href="https://github.com/nuri35"
@@ -55,7 +50,7 @@ function Sidebar(props) {
                  <Button
                       startIcon={<Facebook />}
                         justIcon
-                        href="#pablo"
+                       
                         target="_blank"
                         color="transparent"
                         href="https://Facebook.com/"
@@ -66,9 +61,10 @@ function Sidebar(props) {
                  <Button
                       startIcon={<LinkedIn />}
                         justIcon
-                        href="#pablo"
+                       
                         target="_blank"
                         color="transparent"
+                       
                         href="https://www.linkedin.com/in/nurettin-sen/"
                       >
                      
@@ -77,7 +73,6 @@ function Sidebar(props) {
                  <Button
                       startIcon={<Instagram />}
                         justIcon
-                        href="#pablo"
                         target="_blank"
                         color="transparent"
                         href="https://www.linkedin.com/in/nurettin-sen/"
@@ -90,21 +85,21 @@ function Sidebar(props) {
   );
 }
 
-Sidebar.propTypes = {
-  archives: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
-  description: PropTypes.string.isRequired,
-  social: PropTypes.arrayOf(
-    PropTypes.shape({
-      icon: PropTypes.elementType.isRequired,
-      name: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
-  title: PropTypes.string.isRequired,
-};
+// Sidebar.propTypes = {
+//   archives: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       title: PropTypes.string.isRequired,
+//       url: PropTypes.string.isRequired,
+//     }),
+//   ).isRequired,
+//   description: PropTypes.string.isRequired,
+//   social: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       icon: PropTypes.elementType.isRequired,
+//       name: PropTypes.string.isRequired,
+//     }),
+//   ).isRequired,
+//   title: PropTypes.string.isRequired,
+// };
 
 export default Sidebar;

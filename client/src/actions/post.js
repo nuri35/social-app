@@ -1,7 +1,7 @@
 import * as types from "./types"
 import * as api from "../api/index"
 import axios from "axios"
-import React,{useState,useEffect} from 'react'
+import {useState,useEffect}from 'react'
 
 
 
@@ -44,7 +44,7 @@ export const fetchSinglePost = (id) => async(dispatch)=>{
 
 
 
-export  const searchPost =  (query,pageNumber) =>{
+export  const SearchPost =  (query,pageNumber) =>{
 
 
     const [loading,setLoading] = useState(true)
@@ -57,7 +57,7 @@ export  const searchPost =  (query,pageNumber) =>{
         setBlogs([])
     },[query])
 
-  useEffect(()=>{
+    useEffect(()=>{
     setLoading(true)
     setError(false)
     let cancel 

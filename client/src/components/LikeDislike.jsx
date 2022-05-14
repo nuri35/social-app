@@ -1,16 +1,13 @@
-import React , {useState,useEffect,useContext}from 'react'
-
+import React , {useState,useEffect,useMemo}from 'react'
+// import { useDispatch } from "react-redux";
 import Tooltip from '@mui/material/Tooltip';
-import IconButton from '@mui/material/IconButton';
 import { LikeOutlined,DislikeOutlined,LikeFilled,DislikeFilled } from '@ant-design/icons';
-import { AuthContext } from "./Context";
 import axios from "axios"
 
 
 
 export default function LikeDislike(props) {
 
-    const {user,ısAuthenticated,setUser,setIsAuthenticated} = useContext(AuthContext)
 
     const [likes, setLikes] = useState(0);
     const [likeAction, setLikeAction] = useState(null);
@@ -18,7 +15,15 @@ export default function LikeDislike(props) {
     const [dislikes, setDislikes] = useState(0);
     const [dislikeAction, setDislikeAction] = useState(null);
 
-    let variable = {}
+   
+    
+    let variable = useMemo(() => {
+        return {};
+      
+      
+  },[]);
+
+    // let variable = {}
 
     if(props.post){
 
@@ -39,66 +44,60 @@ export default function LikeDislike(props) {
     }
 
     useEffect(() => {
+        
+const getAction = async()=>{
+
+    try{
       
    
-        getAction()
-  
-  
-
-}, [])
+    
+  const result =   await axios.post("http://localhost:5000/action/getLikes",variable)
 
 
-const getAction = async()=>{
-  
+              if(result.data.success){
+                  setLikes(result.data.likes.length)
+                 
 
-  
-      try{
+                  result.data.likes.forEach(like =>{
+
+                      if(like.userId === props.userId){
+                          setLikeAction("liked")
+                      }
+
+                  })
+
+
+              }
+
+
+              const resultDis =   await axios.post("http://localhost:5000/action/getDislikes",variable)
+
         
-     
-      
-    const result =   await axios.post("http://localhost:5000/action/getLikes",variable)
- 
- 
-                if(result.data.success){
-                    setLikes(result.data.likes.length)
-                   
+              if(resultDis.data.success){
+                  setDislikes(resultDis.data.dislikes.length)
+                 
 
-                    result.data.likes.map(like =>{
+                  resultDis.data.dislikes.forEach(dislike =>{
 
-                        if(like.userId === props.userId){
-                            setLikeAction("liked")
-                        }
+                      if(dislike.userId === props.userId){
+                          setDislikeAction("disliked")
+                      }
 
-                    })
+                  })
 
 
-                }
+              }
 
 
-                const resultDis =   await axios.post("http://localhost:5000/action/getDislikes",variable)
- 
-          
-                if(resultDis.data.success){
-                    setDislikes(resultDis.data.dislikes.length)
-                   
 
-                    resultDis.data.dislikes.map(dislike =>{
-
-                        if(dislike.userId === props.userId){
-                            setDislikeAction("disliked")
-                        }
-
-                    })
-
-
-                }
-
-
-  
-        }catch(err){
-          console.log(err)
-        }
+      }catch(err){
+        console.log(err)
+      }
 }
+        getAction()
+}, [props.userId,variable])
+
+
 
 
 
