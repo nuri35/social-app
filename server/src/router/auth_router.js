@@ -32,22 +32,12 @@ router.post("/verify",authcontoller.verifymail)
 
 
 
-// router.post("/register",authMiddleweare.isnothavesession,validatormıddleweare.validatenewuser(),authcontoller.register)
 
 router.post("/register",authcontoller.register)
 
 router.post("/forgetPass",authcontoller.forgetPass)
 
 router.post("/resetPassword",authcontoller.resetPassword)
-
-// router.get("/forgetpass",authMiddleweare.isnothavesession,authcontoller.showforgetpass)//sıfremı unuttum kısmı gorunecek 
-
-// router.post("/forgetpass",authMiddleweare.isnothavesession,validatormıddleweare.validateemail(),authcontoller.forgetpass)
-
-// router.get("/resetpassword/:id/:token",authMiddleweare.isnothavesession,authcontoller.resetpass)
-// router.get("/resetpassword",authMiddleweare.isnothavesession,authcontoller.resetpass)
-
-// router.post("/resetpassword",authMiddleweare.isnothavesession,validatormıddleweare.validatpass(),authcontoller.resetpassok)
 
 router.get("/logout",authcontoller.logout) 
 
