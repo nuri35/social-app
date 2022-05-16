@@ -11,6 +11,7 @@ import Divider from '@mui/material/Divider';
 import Avatar from '@mui/material/Avatar';
 import moment from "moment"
 import Chip from '@mui/material/Chip';
+moment.locale("tr")
 
 function FeaturedPost(props) {
   const { post } = props;
@@ -19,7 +20,8 @@ function FeaturedPost(props) {
 
  
   const convertRelativeTime = (date)=>{
-   const convertValue =   moment(date).fromNow();
+    const convertValue =  moment(date).startOf('mini').fromNow()
+  
    return convertValue
   }
 
@@ -63,7 +65,7 @@ function FeaturedPost(props) {
       `${post?.authorId?.local.name}  ${post?.authorId?.local.surname}` 
       
       }
-     subheader={convertRelativeTime(post.time)}
+     subheader={convertRelativeTime(post.createdAt)}
      />
            <Typography component="h2" variant="h5">
              {post.title}
