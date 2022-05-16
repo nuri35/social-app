@@ -22,7 +22,6 @@ const {
   } = process.env;
 
 
-
 app.use(session({
     secret:process.env.SESSION_SECRET,
     resave:true,
@@ -32,7 +31,6 @@ app.use(session({
         mongoUrl: `mongodb://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?authSource=admin` } : {
         mongoUrl: `mongodb://127.0.0.1:${process.env.DB_PORT}/${process.env.DB_NAME}` }) ,
     cookie:{
-        secure: true,
         maxAge:1000 * 60 * 60 * 24 
     }//1 gun
 
