@@ -1,5 +1,4 @@
 
-// const axios = require("axios")
 const createError = require('http-errors')
 const Blog = require("./../models/blog_model")
 
@@ -11,7 +10,6 @@ const Blog = require("./../models/blog_model")
 const createPost = async (req,res)=>{
 
     try{
-       
        
         
         const id =  req.user.id;

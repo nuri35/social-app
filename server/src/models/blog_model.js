@@ -26,19 +26,10 @@ const Schema = mongoose.Schema;
             required:true
         },
     
-        time : { type: Date, default: (new Date())} 
-      
 
 
      
-    },{ autoCreate: true ,collection:"blog"});
-
-
-
-
-
-
-
+    },{ autoCreate: true ,collection:"blog",timestamps:true});
     const blog = mongoose.model("blog",blogSchema)
 
 
