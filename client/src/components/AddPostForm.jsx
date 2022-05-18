@@ -236,8 +236,8 @@ return convert
           
           render={({ field }) => (
             <Select {...field}  variant="standard"  style={{ width: 410,margin:30,left:700,bottom:250}} >
-             {tags.map((tag,index) =>(
-             <MenuItem key={index} value={tag}>
+             {tags.map((tag) =>(
+             <MenuItem key={Math.random().toString(36).substr(2, 9)} value={tag}>
              {tag}
              </MenuItem>
              ))}

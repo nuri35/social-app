@@ -15,7 +15,8 @@ import { AuthContext } from "./Context";
 import {notification } from 'antd';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
-export default function Comments(props) {
+
+ function Comments(props) {
  
   const [loading,setLoading] = useState(false)
   
@@ -60,12 +61,12 @@ export default function Comments(props) {
    
   }
 
-  const onSubmit =  async (e)=>{
+  const sendComment =  async (e)=>{
     e.preventDefault();
+
   
-
-
     if(ısAuthenticated){
+     
       setLoading(true)
       try{
         const variable = {
@@ -73,12 +74,12 @@ export default function Comments(props) {
           writer:user.id,
           postId:props.post
     }
-   
-    
-  const commentVariable =   await axios.post("http://localhost:5000/comment/save",variable)
-
   
 
+    
+  const commentVariable =   await axios.post("http://localhost:5000/comment/save",variable,{withCredentials: true})
+
+ 
         if(commentVariable.data.success){
           setComment("")
           props.refreshFunction(commentVariable.data.result)
@@ -150,13 +151,10 @@ const antIcon = <LoadingOutlined style={{ fontSize: 24,position:"relative",left:
     
     >
      
-    
-     <FormControl fullWidth sx={{ m: 1 }} variant="standard" onSubmit={onSubmit}>
+     <FormControl fullWidth sx={{ m: 1 }} variant="standard" >
     
           <Input
             id="standard-adornment-amount"
-            // value={values.amount}
-            // onChange={handleChange('amount')}
             placeholder='Add a public comment'
           onChange={handleChange}
           value={Comment}
@@ -165,7 +163,7 @@ const antIcon = <LoadingOutlined style={{ fontSize: 24,position:"relative",left:
         </FormControl>
 
     
-        <Button sx={{left:"470px"}}   variant="contained" color='primary' disabled={Comment ? false : true}   onClick={onSubmit}>Comment</Button>
+        <Button sx={{left:"470px"}} type="submit"  variant="contained" color='primary' disabled={Comment ? false : true}   onClick={sendComment}>Comment</Button>
 
        { loading ? 
         <Spin indicator={antIcon} />
@@ -173,19 +171,18 @@ const antIcon = <LoadingOutlined style={{ fontSize: 24,position:"relative",left:
 <></>
       }
        
-    
       
     </Box>
  
   
-      {props.CommentLists && props.CommentLists.map((comment,index) =>(
+      {props.CommentLists && props.CommentLists.map((comment) =>(
 
         (!comment.responseTo && 
           
           <React.Fragment>
             
-          <SingleComment  comment={comment} postId={comment.postId} refreshFunction={props.refreshFunction} editFunction={props.editFunction}  deleteFunction={props.deleteFunction} />
-          <ReplyComment  CommentLists={props.CommentLists}  postId={comment.postId} parentCommentId={comment._id} refreshFunction={props.refreshFunction} editFunction={props.editFunction} deleteFunction={props.deleteFunction} />
+          <SingleComment comment={comment} postId={comment.postId} refreshFunction={props.refreshFunction} editFunction={props.editFunction}  deleteFunction={props.deleteFunction} />
+          <ReplyComment   CommentLists={props.CommentLists}  postId={comment.postId} parentCommentId={comment._id} refreshFunction={props.refreshFunction} editFunction={props.editFunction} deleteFunction={props.deleteFunction} />
           </React.Fragment>
           )
         
@@ -209,4 +206,4 @@ const antIcon = <LoadingOutlined style={{ fontSize: 24,position:"relative",left:
     );
   }
   
-  
+  export default Comments

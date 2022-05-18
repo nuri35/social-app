@@ -115,10 +115,6 @@ const PostsList =  ()=>{
   
   const {blogs,hasMore,loading} =  SearchPost(query,pageNumber)
 
-
-
-  
- 
   const observer = useRef()
   const lastBlogElementRef = useCallback(node =>{
 if(loading) return 
@@ -201,10 +197,10 @@ if(node) observer.current.observe(node)
         blogs.map((post,index) => {
           
       return blogs.length === index + 1  ?
-        <FeaturedPost  inputRef={lastBlogElementRef} loading={loading} post={post}  />
-        // ref={lastBlogElementRef}   
+        <FeaturedPost key={Math.random().toString(36).substr(2, 9)}  inputRef={lastBlogElementRef} loading={loading} post={post}  />
+        
     :
-    <FeaturedPost   post={post}  />
+    <FeaturedPost key={Math.random().toString(36).substr(2, 9)}  post={post}  />
 
         })
        

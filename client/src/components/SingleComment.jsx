@@ -207,7 +207,7 @@ const hideCommentInput = ()=>{
 
   
 
-  const onSubmit =  async (e)=>{
+  const commentSub =  async (e)=>{
     e.preventDefault();
 
  
@@ -223,7 +223,7 @@ const hideCommentInput = ()=>{
     }
    
     
-  const commentVariables =   await axios.post("http://localhost:5000/comment/save",variables)
+  const commentVariables =   await axios.post("http://localhost:5000/comment/save",variables,{withCredentials: true})
 
 
         if(commentVariables.data.success){
@@ -253,15 +253,15 @@ const onSubmitEdit = async (e)=>{
 
 
     const variables = {
-      content:EditInputValue,//guncellenecek ıcerık yenı ıcerık
+      content:EditInputValue,
    
-      postId:whichProps, // hangı commentı guncelleyecegımı yazıyorum
+      postId:whichProps, 
     
 }
 
 
 
-const editCommentResult =   await axios.put("http://localhost:5000/comment/editSave",variables)
+const editCommentResult =   await axios.put("http://localhost:5000/comment/editSave",variables,{withCredentials: true})
 
 
     if(editCommentResult.data.success){
@@ -293,7 +293,7 @@ const deleteAction = async (e) =>{
  
 
 
-const deleteResult =   await axios.delete(`http://localhost:5000/comment/delete/${whichProps}`)
+const deleteResult =   await axios.delete(`http://localhost:5000/comment/delete/${whichProps}`,{withCredentials: true})
 
 
 if(deleteResult.data.success){
@@ -358,13 +358,13 @@ avatar={
   <Box
         component="form"
         sx={{
-          '& > :not(style)': { m: 1,left:"-4ch",width:"73ch",top:"5px"},
+          '& > :not(style)': { m: 1 },
         }}
         noValidate
         autoComplete="off"
       
       >
-    <FormControl fullWidth sx={{ m: 1 }} variant="standard" onSubmit={onSubmitEdit}>
+    <FormControl fullWidth sx={{ m: 1 }} variant="standard" >
       
     <Input
       id="standard-adornment-amount"
@@ -377,12 +377,12 @@ avatar={
   
     
   </FormControl>
-  
+  <Button sx={{left:"360px"}}   variant="text" color='primary' onClick={hideCommentInputEdit}  >Cancel</Button>
+  <Button sx={{left:"380px"}} type="submit"   variant="contained" color='primary' disabled={editButton ? false : true}  onClick={onSubmitEdit} >Save</Button>
   </Box>
   
            
-  <Button sx={{left:"380px",top:"10px"}}   variant="text" color='primary' onClick={hideCommentInputEdit}  >Cancel</Button>
-  <Button sx={{left:"390px",top:"10px"}}   variant="contained" color='primary' disabled={editButton ? false : true}  onClick={onSubmitEdit} >Save</Button>
+
   
    </>
   
@@ -457,18 +457,17 @@ anchorOrigin={{
 <Box
       component="form"
       sx={{
-        '& > :not(style)': { m: 1,left:"13ch",width:"80ch"},
+        '& > :not(style)': { m: 1 },
       }}
       noValidate
       autoComplete="off"
     
     >
-  <FormControl fullWidth sx={{ m: 1 }} variant="standard" onSubmit={onSubmit}>
+  <FormControl fullWidth sx={{ m: 1 }} variant="standard">
     
   <Input
     id="standard-adornment-amount"
-    // value={values.amount}
-    // onChange={handleChange('amount')}
+    
     placeholder='Add a public comment'
   onChange={handleChange}
   value={Commentval}
@@ -477,14 +476,15 @@ anchorOrigin={{
 
   
 </FormControl>
+<Button sx={{left:"470px"}} type="submit"  variant="contained" color='primary' disabled={Commentval ? false : true}  onClick={commentSub}>Comment</Button>
+<Button sx={{left:"250px"}}   variant="text" color='primary'   onClick={hideCommentInput} >Cancel</Button>
 
 </Box>
 
 {user.avatar ?
-            <Avatar src={user.avatar} sx={{left:"55px",
-              position: "relative",
+            <Avatar src={user.avatar} sx={{position: "relative",
               
-              bottom:"40px"}}>
+              bottom:"90px",right:"50px"}}>
             
             </Avatar>
             : 
@@ -492,8 +492,7 @@ anchorOrigin={{
           
           } 
          
-<Button sx={{left:"500px",bottom:"40px"}}   variant="text" color='primary'   onClick={hideCommentInput} >Cancel</Button>
-<Button sx={{left:"515px",bottom:"40px"}}   variant="contained" color='primary' disabled={Commentval ? false : true}  onClick={onSubmit}>Comment</Button>
+
 
  </>
 

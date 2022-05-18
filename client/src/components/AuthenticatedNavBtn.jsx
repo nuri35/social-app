@@ -20,7 +20,7 @@ import { AuthContext } from "./Context";
 
 const useStyles = makeStyles(styles);
 
-export default function SectionNavbars() {
+function SectionNavbars() {
 
   const {user} = useContext(AuthContext)
 
@@ -139,7 +139,7 @@ export default function SectionNavbars() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseNavMenu}>
+                <MenuItem key={Math.random().toString(36).substr(2, 9)} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{setting.ad}</Typography>
                 </MenuItem>
               ))}
@@ -171,3 +171,4 @@ export default function SectionNavbars() {
   );
 }
 
+export default  SectionNavbars

@@ -27,7 +27,7 @@ import image from "./../assets/img/bg7.jpg";
 
 const useStyles = makeStyles(styles);
 
-export default function ForgetPassword(props) {
+ function ForgetPassword(props) {
   const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
   setTimeout(function () {
     setCardAnimation("");
@@ -173,3 +173,4 @@ console.log(err)
   );
 }
 
+export default  ForgetPassword

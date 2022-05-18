@@ -67,7 +67,7 @@ const { register,trigger, handleSubmit, formState:{ errors }, resetField } = use
    setOpens(true);
  };
 
- const handleCloses = (event, reason) => {
+ const handleCloses = (reason) => {
    if (reason === 'clickaway') {
      return;
    }

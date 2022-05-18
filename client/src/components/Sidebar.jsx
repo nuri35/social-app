@@ -1,5 +1,5 @@
 import React from 'react'
-// import PropTypes from 'prop-types';
+ import PropTypes from 'prop-types';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Button from "./CustomButtons/Button.js";
@@ -85,21 +85,11 @@ function Sidebar(props) {
   );
 }
 
-// Sidebar.propTypes = {
-//   archives: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       title: PropTypes.string.isRequired,
-//       url: PropTypes.string.isRequired,
-//     }),
-//   ).isRequired,
-//   description: PropTypes.string.isRequired,
-//   social: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       icon: PropTypes.elementType.isRequired,
-//       name: PropTypes.string.isRequired,
-//     }),
-//   ).isRequired,
-//   title: PropTypes.string.isRequired,
-// };
+Sidebar.propTypes = {
+ 
+  description: PropTypes.string.isRequired,
+ 
+  title: PropTypes.string.isRequired,
+};
 
 export default Sidebar;

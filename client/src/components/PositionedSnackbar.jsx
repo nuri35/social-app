@@ -4,7 +4,8 @@ import Snackbar from '@mui/material/Snackbar';
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
-export default function PositionedSnackbar({message}) {
+
+function PositionedSnackbar({message}) {
  
   
   const [open, setOpen] = useState(true);
@@ -28,3 +29,5 @@ export default function PositionedSnackbar({message}) {
   </div>
   );
 }
+
+export default  PositionedSnackbar

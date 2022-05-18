@@ -1,5 +1,4 @@
 import React,{useContext} from "react";
-// @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -19,7 +18,7 @@ import { AuthContext } from "./Context";
 
 const useStyles = makeStyles(styles);
 
-export default function SectionNavbars() {
+function SectionNavbars() {
 
   const {user} = useContext(AuthContext)
  
@@ -125,7 +124,7 @@ export default function SectionNavbars() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseNavMenu}>
+                <MenuItem key={Math.random().toString(36).substr(2, 9)} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{setting.ad}</Typography>
                 </MenuItem>
               ))}
@@ -152,3 +151,4 @@ export default function SectionNavbars() {
   );
 }
 
+export default SectionNavbars

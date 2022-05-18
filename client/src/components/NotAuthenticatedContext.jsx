@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "./../components/CustomButtons/Button";
 import Nav from "./Nav"
+
 function NotAuthenticatedContext(){
 
     return (

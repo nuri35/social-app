@@ -5,7 +5,7 @@ import SearchOffSharp from '@mui/icons-material/SearchOffSharp';
 
 import Grid from '@mui/material/Grid';
 
-export default function CustomImageList() {
+function CustomImageList() {
   return (
   
     <Grid item xs={8} md={8}>
@@ -20,3 +20,4 @@ export default function CustomImageList() {
 }
 
 
+export default  CustomImageList

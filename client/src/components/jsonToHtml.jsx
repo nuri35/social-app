@@ -13,7 +13,7 @@
             if(obj.data.style === "unordered"){
 
                 const list = obj.data.items.map(item =>{
-                    return `<li>${item}</li>`
+                    return `div><li>${item}</li></div>`
                 })
 
                 return `<ul class="blog_post_ul">
@@ -22,7 +22,7 @@
 
             }else {
                 const list = obj.data.items.map(item=>{
-                    return `<li>${item}</li>`
+                    return `<div><li>${item}</li></div>`
                 })
                 return `<ul class="blog_post_ul">
                 ${list.join("")} 

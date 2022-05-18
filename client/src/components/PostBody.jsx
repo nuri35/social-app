@@ -11,7 +11,7 @@ import { AuthContext } from "./Context";
 import AuthenticatedNav from "./AuthenticatedNav"
 import axios from "axios";
 import { Empty } from 'antd';
-// import {useDispatch} from "react-redux"
+ import {useDispatch} from "react-redux"
 
 
 function PostBody(){
@@ -24,14 +24,14 @@ function PostBody(){
     const params = useParams();
 
 
-// const dispatch = useDispatch()
+ const dispatch = useDispatch()
 
  useEffect(() => {
    
-    fetchSinglePost(params.id)
+    dispatch(fetchSinglePost(params.id))
 
 
-}, [params.id])
+}, [dispatch,params.id])
 
 
 
@@ -163,7 +163,7 @@ allComments()
    
     
     }</span>
-    <span style={{padding:"6px",  color:"#757575"}} >{moment(currentPost?.time).fromNow()}</span>
+    <span style={{padding:"6px",  color:"#757575"}} >{moment(currentPost?.createdAt).startOf('mini').fromNow()}</span>
     
        <img src={imgSrc+currentPost?.tag}  alt="about"/>
     
@@ -171,7 +171,7 @@ allComments()
      
     
     <div className="chips">
-    <Chip label={currentPost?.tag} onClick/>
+    <Chip label={currentPost?.tag} />
     </div>
             <div className="postBody_icons">
           
@@ -203,7 +203,7 @@ allComments()
 
                 :
 
-               <Empty description="No Comment"  />
+               <Empty description="No Content"  />
             }
       
         </>

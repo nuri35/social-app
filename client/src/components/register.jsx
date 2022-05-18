@@ -38,7 +38,7 @@ const regSchema = yup.object().shape({
 
 }).required()
 
-export default function RegisterPage(props) {
+function RegisterPage(props) {
   
 
   const [cardAnimaton, setCardAnimation] = useState("cardHidden");
@@ -339,3 +339,4 @@ export default function RegisterPage(props) {
   );
 }
 
+export default  RegisterPage

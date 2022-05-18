@@ -17,14 +17,6 @@ function FeaturedPost(props) {
   const { post } = props;
 
 
-
- 
-  const convertRelativeTime = (date)=>{
-    const convertValue =  moment(date).startOf('mini').fromNow()
-  
-   return convertValue
-  }
-
   const src = `http://localhost:3000/Post/`
   const İmgSrc = `https://source.unsplash.com/random/800x500?`
 
@@ -65,7 +57,7 @@ function FeaturedPost(props) {
       `${post?.authorId?.local.name}  ${post?.authorId?.local.surname}` 
       
       }
-     subheader={convertRelativeTime(post.createdAt)}
+     subheader={moment(post.createdAt).startOf('mini').fromNow()}
      />
            <Typography component="h2" variant="h5">
              {post.title}
@@ -74,7 +66,7 @@ function FeaturedPost(props) {
            <div className='diffx'  >
              {post.Subtitle}
            </div>
-          <Chip label={post.tag} onClick/>
+          <Chip label={post.tag} />
          </CardContent>
          <CardMedia
            component="img"
@@ -90,12 +82,12 @@ function FeaturedPost(props) {
 }
 
 FeaturedPost.propTypes = {
-  post: PropTypes.shape({
-    date: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    imageLabel: PropTypes.string.isRequired,
+  post: PropTypes.shape({   
+  createdAt: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+    Subtitle: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
+    tag: PropTypes.string.isRequired,
   }).isRequired,
 };
 

@@ -1,5 +1,4 @@
 import React from "react";
-// @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -15,12 +14,9 @@ import styles from "./../assets/jss/material-kit-react/views/componentsSections/
 
 const useStyles = makeStyles(styles);
 
-export default function SectionNavbars() {
+function SectionNavbars() {
 
   const classes = useStyles();
-
-
-
 
   return (
     
@@ -85,3 +81,4 @@ export default function SectionNavbars() {
   );
 }
 
+export default  SectionNavbars

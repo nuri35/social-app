@@ -5,8 +5,7 @@ import { LikeOutlined,DislikeOutlined,LikeFilled,DislikeFilled } from '@ant-desi
 import axios from "axios"
 
 
-
-export default function LikeDislike(props) {
+function LikeDislike(props) {
 
 
     const [likes, setLikes] = useState(0);
@@ -102,8 +101,8 @@ const getAction = async()=>{
 
 
 
-const onLike = async ()=>{
-  
+const onLike = async (e)=>{
+    e.preventDefault()
     try{
 
         if(likeAction === null){
@@ -154,7 +153,8 @@ const onLike = async ()=>{
 
 }
 
-const onDislike = async ()=>{
+const onDislike = async (e)=>{
+    e.preventDefault()
     try{
 
         if(dislikeAction !== null){
@@ -253,4 +253,4 @@ setDislikeAction(null)
     );
   }
   
-  
+  export default  LikeDislike
