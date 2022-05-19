@@ -16,8 +16,6 @@ chai.use(chaiHttp)
 // let commentOpt;
 // let whoIs;
 let postIdValue ;
-
-
 describe('comment Api',  () => {
 
     // before((done) => { //token almalıyız
