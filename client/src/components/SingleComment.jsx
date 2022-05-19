@@ -380,10 +380,7 @@ avatar={
   <Button sx={{left:"360px"}}   variant="text" color='primary' onClick={hideCommentInputEdit}  >Cancel</Button>
   <Button sx={{left:"380px"}} type="submit"   variant="contained" color='primary' disabled={editButton ? false : true}  onClick={onSubmitEdit} >Save</Button>
   </Box>
-  
-           
 
-  
    </>
   
   
