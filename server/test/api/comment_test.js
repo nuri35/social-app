@@ -83,7 +83,6 @@ describe('comments Api',  () => {
             expect(res.body).to.have.property('postIdbyComments').to.be.an("array")
             });
     })
-
     //  describe("comment/editSave API ",(done)=>{
 
     //     it("ıt should edit specific comment",(done) => {
@@ -115,8 +114,6 @@ describe('comments Api',  () => {
     //             });
     //         });
     //  })
-
-
 
 
     //  describe("comment/editSave API ",(done)=>{
