@@ -80,7 +80,6 @@ describe('comment Api',  () => {
     //             });
     //         });
     //  })
-
      describe("comment/getComments API ",(done)=>{
         it("ıt should get all comment",async () => {
             let res = await chai.request(server)
