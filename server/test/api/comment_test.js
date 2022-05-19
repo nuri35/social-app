@@ -114,8 +114,6 @@ describe('comments Api',  () => {
     //             });
     //         });
     //  })
-
-
     //  describe("comment/editSave API ",(done)=>{
 
     //     it("ıt should not edit specific comment",(done) => {
