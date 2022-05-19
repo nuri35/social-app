@@ -49,11 +49,9 @@ app.use(express.urlencoded({extended:true}))
 //router
 app.use('/blogs',blogRouter)
 app.use('/comment',commentRouter)
-
  app.use("/action",likeDislike)
 
  app.use("/auth",authrouter)
-
 
 
 const server = app.listen(process.env.PORT,()=>{
