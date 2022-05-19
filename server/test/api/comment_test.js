@@ -95,9 +95,7 @@ describe('comment Api',  () => {
             expect(res.body).to.be.a('object')
             expect(res.body).to.have.property('postIdbyComments').to.be.an("array")
         
-          
-           
-           
+
             });
 
       
