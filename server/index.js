@@ -44,9 +44,6 @@ app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
-
-
-//router
 app.use('/blogs',blogRouter)
 app.use('/comment',commentRouter)
  app.use("/action",likeDislike)
