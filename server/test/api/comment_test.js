@@ -4,10 +4,7 @@ const chaiHttp = require("chai-http")
 const should = require('chai').should()
 const {expect} = require('chai')
 const server = require("../../index")
-const  postId = require("./blogs_test")
 const fs = require('fs')
-const Blog = require("./../../src/models/blog_model")
-const {deneme,denemesample} = require("./deneme")
 const  chaiAsPromised = require("chai-as-promised")
 chai.use(chaiAsPromised)
 
@@ -23,81 +20,66 @@ let postIdValue ;
 
 describe('comment Api',  () => {
 
-    before((done) => { //token almalıyız
-        chai.request(server)
-            .post('/auth/login')
+    // before((done) => { //token almalıyız
+    //     chai.request(server)
+    //         .post('/auth/login')
             
-            .send({ Email: 'nurie487@gmail.com', password: 'Nuri7sen'})
+    //         .send({ Email: 'nurie487@gmail.com', password: 'Nuri7sen'})
         
-            .end((err, res) => {
-                expect(res.headers['set-cookie']).not.to.be.null;
-                expect(res).to.have.header('content-type', 'application/json; charset=utf-8')
-                expect(res.body).to.be.a('object');
+    //         .end((err, res) => {
+    //             expect(res.headers['set-cookie']).not.to.be.null;
+    //             expect(res).to.have.header('content-type', 'application/json; charset=utf-8')
+    //             expect(res.body).to.be.a('object');
                 
-                res.should.have.status(200);
-                Cookies = res.headers['set-cookie'].pop().split(';')[0];
-                userId = res.body.user.id
+    //             res.should.have.status(200);
+    //             Cookies = res.headers['set-cookie'].pop().split(';')[0];
+    //             userId = res.body.user.id
               
-               done();
-            });
+    //            done();
+    //         });
          
-     });
+    //  });
 
-     before(()=>{
-        const data = fs.readFileSync('./postId.txt',
-        {encoding:'utf8', flag:'r'});
-        postIdValue = data
-     })
-
-
-         after(async ()=>{ //testten sonra orneklerı sılmek amaclı
-        try{
-            await Blog.deleteMany({})
-
-        }catch(err){
-            console.log("bir hata ile karsılandı " + err)
-        }
-    
-
-     })
+    //  before(()=>{
+    //     const data = fs.readFileSync('./postId.txt',
+    //     {encoding:'utf8', flag:'r'});
+    //     postIdValue = data
+    //  })
 
 
-  
-   
-
-
+        
      
 
-     describe("comment/save API ",(done)=>{
+    //  describe("comment/save API ",(done)=>{
 
-        it("ıt should save new comment",(done) => {
-          const commentAdd = {
-                writer : userId ,
-                postId : postIdValue,
-                content:"guel llaaan"
-          }
-               req=  chai.request(server)
-                .post("/comment/save/")
-                req.cookies = Cookies;
-                req.set('content-type','application/json')
-                .send(commentAdd)
-                .end((err, res) => {
-                    res.should.have.status(200);
-                    res.body.should.be.a("object")
-                    res.body.result.should.be.a("array")
-                    expect(res.body.result[0]).to.be.a('object').to.have.property('writer');
-                    expect(res.body.result[0]).to.be.a('object').to.have.property('postId');
+    //     it("ıt should save new comment",(done) => {
+    //       const commentAdd = {
+    //             writer : userId ,
+    //             postId : postIdValue,
+    //             content:"guel llaaan"
+    //       }
+    //            req=  chai.request(server)
+    //             .post("/comment/save/")
+    //             req.cookies = Cookies;
+    //             req.set('content-type','application/json')
+    //             .send(commentAdd)
+    //             .end((err, res) => {
+    //                 res.should.have.status(200);
+    //                 res.body.should.be.a("object")
+    //                 res.body.result.should.be.a("array")
+    //                 expect(res.body.result[0]).to.be.a('object').to.have.property('writer');
+    //                 expect(res.body.result[0]).to.be.a('object').to.have.property('postId');
                    
-                    commentId = res.body.result[0]._id
-                    whoIs = res.body.result[0].writer
-                    commentOpt =  res.body.result[0]
+    //                 commentId = res.body.result[0]._id
+    //                 whoIs = res.body.result[0].writer
+    //                 commentOpt =  res.body.result[0]
                     
                  
-                    done()
+    //                 done()
                   
-                });
-            });
-     })
+    //             });
+    //         });
+    //  })
 
 //await ornegı
      describe("comment/getComments API ",(done)=>{
@@ -118,136 +100,90 @@ describe('comment Api',  () => {
            
             });
 
-            it("this is example",async()=>{
-               
-
-                    let result = await denemesample(1,2);
-                  
-                        expect(result).to.equal(3)
-                   
-               //sadece catch yakalayacagın zaman try kullan
-            })
-
-            it("this is example as chai promise",async()=>{
-               
-
-                 await expect(denemesample(1,2)).to.eventually.equal(3)
-              
-                   
-               
-          
-        }) //what is it
-    
-
-            it("this is error example",async(done)=>{
-                try{
-
-                    let result = await deneme(1,2);
-                        expect(result).to.be.equal(3)
-                    done()
-                }catch(err){
-                  
-                   done(err)
-                }
-            })
-    
-                it("this is callback example error",(done)=>{
-              
-    
-                        deneme(1,2).then((result)=>{
-                            expect(result).to.be.equal(3)
-                        }).catch((err)=>{
-                            done(err)
-
-                        })
-                           
-                        
-                       
-                     })
-
+      
     })
 
-     describe("comment/editSave API ",(done)=>{
+    //  describe("comment/editSave API ",(done)=>{
 
-        it("ıt should edit specific comment",(done) => {
-          const updateValue = {
-               postId : commentId,
-               content:"guncellendi lan"
-          }
-               req=  chai.request(server)
-                .put("/comment/editSave/")
-                req.cookies = Cookies;
-                req.set('content-type','application/json')
-                .send(updateValue)
-                .end((err, res) => {
+    //     it("ıt should edit specific comment",(done) => {
+    //       const updateValue = {
+    //            postId : commentId,
+    //            content:"guncellendi lan"
+    //       }
+    //            req=  chai.request(server)
+    //             .put("/comment/editSave/")
+    //             req.cookies = Cookies;
+    //             req.set('content-type','application/json')
+    //             .send(updateValue)
+    //             .end((err, res) => {
 
-                    res.should.have.status(200);
-                    expect(res.body).to.be.a('object')
-                    expect(res.body.updatedProduct).to.be.a('object')
-                    expect(res.body).to.have.property('updatedProduct').that.has.property('_id')
-                                .that.is.to.equal(commentOpt._id)
-                    expect(res.body).to.have.property('updatedProduct').that.has.property('content')
-                        .that.is.to.equal(updateValue.content)
-                    expect(res.body).to.have.property('updatedProduct').that.has.property('writer')
-                    expect(res.body).to.have.property('updatedProduct').that.has.property('postId')
+    //                 res.should.have.status(200);
+    //                 expect(res.body).to.be.a('object')
+    //                 expect(res.body.updatedProduct).to.be.a('object')
+    //                 expect(res.body).to.have.property('updatedProduct').that.has.property('_id')
+    //                             .that.is.to.equal(commentOpt._id)
+    //                 expect(res.body).to.have.property('updatedProduct').that.has.property('content')
+    //                     .that.is.to.equal(updateValue.content)
+    //                 expect(res.body).to.have.property('updatedProduct').that.has.property('writer')
+    //                 expect(res.body).to.have.property('updatedProduct').that.has.property('postId')
                     
                          
-                    done()
+    //                 done()
                   
                   
-                });
-            });
-     })
+    //             });
+    //         });
+    //  })
 
 
 
 
-     describe("comment/editSave API ",(done)=>{
+    //  describe("comment/editSave API ",(done)=>{
 
-        it("ıt should not edit specific comment",(done) => {
-          const updateValue = {
-               postId : "621e36def3748c8640785625", //commentId
-               content:"guncellendi lansdsd"
-          }
-               req=  chai.request(server)
-                .put("/comment/editSave/")
-                req.cookies = Cookies;
-                req.set('content-type','application/json')
-                .send(updateValue)
-                .end((err, res) => {
+    //     it("ıt should not edit specific comment",(done) => {
+    //       const updateValue = {
+    //            postId : "621e36def3748c8640785625", //commentId
+    //            content:"guncellendi lansdsd"
+    //       }
+    //            req=  chai.request(server)
+    //             .put("/comment/editSave/")
+    //             req.cookies = Cookies;
+    //             req.set('content-type','application/json')
+    //             .send(updateValue)
+    //             .end((err, res) => {
 
-                    res.should.have.status(404);
-                    expect(res.body).to.be.a('object')
-                    done()
+    //                 res.should.have.status(404);
+    //                 expect(res.body).to.be.a('object')
+    //                 done()
                   
                   
-                });
-            });
-     })
+    //             });
+    //         });
+    //  })
 
     
 
-     describe("comment/delete/:id API ",(done)=>{
+    //  describe("comment/delete/:id API ",(done)=>{
 
-        it("ıt should delete specific comment",(done) => {
+    //     it("ıt should delete specific comment",(done) => {
         
-               req=  chai.request(server)
-                .delete(`/comment/delete/${commentId}`)
-                req.cookies = Cookies;
-                req.set('content-type','application/json')
-                .end((err, res) => {
+    //            req=  chai.request(server)
+    //             .delete(`/comment/delete/${commentId}`)
+    //             req.cookies = Cookies;
+    //             req.set('content-type','application/json')
+    //             .end((err, res) => {
 
-                    res.should.have.status(200);
-                    res.body.should.be.a("object")
-                    expect(res.body).to.have.property('success')
-                    expect(res.body).to.have.property('message')
-                    expect(res.body).to.have.property('ıtem').that.is.to.equal(commentId)
+    //                 res.should.have.status(200);
+    //                 res.body.should.be.a("object")
+    //                 expect(res.body).to.have.property('success')
+    //                 expect(res.body).to.have.property('message')
+    //                 expect(res.body).to.have.property('ıtem').that.is.to.equal(commentId)
                    
                   
-                  done()
-                });
-            });
-     })
+    //               done()
+    //             });
+    //         });
+    //  })
 
         
    
