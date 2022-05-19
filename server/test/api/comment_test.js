@@ -83,9 +83,7 @@ describe('comment Api',  () => {
 
 //await ornegı
      describe("comment/getComments API ",(done)=>{
-
         it("ıt should get all comment",async () => {
-         
             let res = await chai.request(server)
             .post("/comment/getComments/")
             .send({
@@ -94,8 +92,6 @@ describe('comment Api',  () => {
             expect(res.body).to.be.a('object')
             expect(res.body).to.have.property('postIdbyComments').to.be.an("array")
             });
-
-      
     })
 
     //  describe("comment/editSave API ",(done)=>{
