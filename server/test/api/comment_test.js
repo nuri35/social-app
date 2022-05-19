@@ -81,7 +81,7 @@ describe('comment Api',  () => {
     //         });
     //  })
 
-//await ornegı
+
      describe("comment/getComments API ",(done)=>{
         it("ıt should get all comment",async () => {
             let res = await chai.request(server)
