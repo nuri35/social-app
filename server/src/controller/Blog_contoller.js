@@ -1,5 +1,4 @@
 
-const createError = require('http-errors')
 const Blog = require("./../models/blog_model")
 
 
@@ -35,10 +34,8 @@ const createPost = async (req,res)=>{
 const onearticleget = async (req,res)=>{
 
    
-      
     try{ 
        
-      
                 let makaleId = req.params.id;
                 const sınglearticle = await Blog.findById({_id:makaleId}).populate("authorId")
                

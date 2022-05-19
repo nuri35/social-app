@@ -5,7 +5,7 @@ const Comment = require("./../models/comment")
  
 const commentAdd = async (req,res)=>{
     try{ 
-      
+      console.log("calsıtı")
         const comment = new Comment(req.body);
 
 

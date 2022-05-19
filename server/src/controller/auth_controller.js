@@ -48,7 +48,6 @@ const login = (req,res,next)=>{
 }
 
 const getUserInfo = async(req,res,next)=>{
-    console.log(req.user)
     const data = req.user
     const isAuthInfo = req.isAuthenticated()
     res.json({data,isAuthInfo})

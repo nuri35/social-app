@@ -8,6 +8,6 @@ router.post("/getComments",commentController.getComments)
 
 router.put("/editSave",isopensession,commentController.editSave)
 
-router.delete("/delete/:id",isopensession,commentController.deleteComment)
+router.delete("/delete/:id",commentController.deleteComment)
 
 module.exports=router
