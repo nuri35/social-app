@@ -16,7 +16,6 @@ chai.use(chaiHttp)
 // let whoIs;
 let postIdValue ;
 describe('comments Api',  () => {
-
     // before((done) => { //token almalıyız
     //     chai.request(server)
     //         .post('/auth/login')
@@ -42,10 +41,6 @@ describe('comments Api',  () => {
     //     {encoding:'utf8', flag:'r'});
     //     postIdValue = data
     //  })
-
-
-        
-     
 
     //  describe("comment/save API ",(done)=>{
 
