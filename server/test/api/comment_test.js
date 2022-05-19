@@ -91,7 +91,6 @@ describe('comment Api',  () => {
             .send({
                 postId  : postIdValue
             });
-            
             expect(res.body).to.be.a('array')
             expect(res.body).to.have.property('postIdbyComments').to.be.an("array")
         
