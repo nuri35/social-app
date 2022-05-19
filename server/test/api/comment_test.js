@@ -10,11 +10,11 @@ chai.use(chaiAsPromised)
 
 chai.use(chaiHttp)
 
-let Cookies;
-let userId ;
-let commentId;
-let commentOpt;
-let whoIs;
+// let Cookies;
+// let userId ;
+// let commentId;
+// let commentOpt;
+// let whoIs;
 let postIdValue ;
 
 
@@ -92,7 +92,7 @@ describe('comment Api',  () => {
             });
     })
 
-    
+
     //  describe("comment/editSave API ",(done)=>{
 
     //     it("ıt should edit specific comment",(done) => {
