@@ -9,14 +9,13 @@ const  chaiAsPromised = require("chai-as-promised")
 chai.use(chaiAsPromised)
 
 chai.use(chaiHttp)
-
 // let Cookies;
 // let userId ;
 // let commentId;
 // let commentOpt;
 // let whoIs;
 let postIdValue ;
-describe('comment Api',  () => {
+describe('comments Api',  () => {
 
     // before((done) => { //token almalıyız
     //     chai.request(server)
