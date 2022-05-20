@@ -71,12 +71,8 @@ const mongoose = require("mongoose")
 
 
 
-
-
-
-
     const user = mongoose.model("user",userSchema)
 
 
 
-    module.exports = user; //artık user modelı kullanılabılır auth controllerda kullanalım
+    module.exports = user; 
