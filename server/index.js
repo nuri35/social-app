@@ -20,8 +20,6 @@ const {
     DB_USER,
     DB_PASSWORD
   } = process.env;
-
-
 app.use(session({
     secret:process.env.SESSION_SECRET,
     resave:true,
