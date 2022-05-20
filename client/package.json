@@ -52,6 +52,7 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
     "simplebar-react": "^2.3.6",
+    "socket.io-client": "^4.5.1",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },
@@ -63,20 +64,25 @@
       "react-app"
     ],
     "rules": {
-      "react/jsx-no-duplicate-props": [2,{ "ignoreCase": true }],
-     
-      "import/no-anonymous-default-export": [2, {
-        "allowArray": true,
-        "allowArrowFunction": true,
-        "allowAnonymousClass": true,
-        "allowAnonymousFunction": true,
-        "allowCallExpression": true, 
-        "allowLiteral": true,
-        "allowObject": true
-      }]
-
-     
-    } 
+      "react/jsx-no-duplicate-props": [
+        2,
+        {
+          "ignoreCase": true
+        }
+      ],
+      "import/no-anonymous-default-export": [
+        2,
+        {
+          "allowArray": true,
+          "allowArrowFunction": true,
+          "allowAnonymousClass": true,
+          "allowAnonymousFunction": true,
+          "allowCallExpression": true,
+          "allowLiteral": true,
+          "allowObject": true
+        }
+      ]
+    }
   },
   "browserslist": {
     "production": [
@@ -95,4 +101,3 @@
     "gulp-sass": "^5.1.0"
   }
 }
-
