@@ -56,7 +56,6 @@ const mongoose = require("mongoose")
         type:Date,
         default:new Date()
       }
-
     },
     google           : {
 
