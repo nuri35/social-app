@@ -11,7 +11,8 @@ import { AuthContext } from "./Context";
 import AuthenticatedNav from "./AuthenticatedNav"
 import axios from "axios";
 import { Empty } from 'antd';
- import {useDispatch} from "react-redux"
+import {useDispatch} from "react-redux"
+import io from "socket.io-client";
 
 
 function PostBody(){
@@ -20,9 +21,18 @@ function PostBody(){
    
 
     const imgSrc = `https://source.unsplash.com/random/800x500?`
-
+ const [socket, setSocket] = useState(null)
     const params = useParams();
 
+    useEffect(() => {
+    setSocket(io.connect("http://localhost:6500"))
+      
+       }, [])
+
+     useEffect(() => {
+        socket.emit("newUser",user)
+          
+     }, [socket,user])
 
  const dispatch = useDispatch()
 

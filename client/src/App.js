@@ -1,4 +1,4 @@
-import React,{useContext,useEffect} from 'react'
+import React,{useContext} from 'react'
 import {BrowserRouter as Router, Routes,Route,Navigate } from "react-router-dom"
 import { makeStyles } from '@material-ui/core/styles'
 import {
@@ -20,7 +20,7 @@ import ForgetPassword from "./components/forgetPassword"
 import { AuthContext } from "./components/Context";
 import PostBody from "./components/PostBody"
 import PasswordReset from "./components/PasswordReset"
-import io from "socket.io-client";
+
 
   const useStyle = makeStyles((theme) => ({
     root:{
@@ -46,10 +46,7 @@ const App = () => {
 
   const {ısAuthenticated} = useContext(AuthContext)
 
-  useEffect(() => {
-   const socket = io.connect("http://localhost:6500")
-   console.log(socket)
-  }, [])
+ 
 
   const classes = useStyle();
 
