@@ -44,7 +44,6 @@ app.use('/blogs',blogRouter)
 app.use('/comment',commentRouter)
 app.use("/action",likeDislike)
 app.use("/auth",authrouter)
-
 const server = app.listen(process.env.PORT,()=>{
     console.log("bu port dınlenıyor: " + process.env.PORT)
 })
