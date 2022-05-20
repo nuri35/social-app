@@ -70,7 +70,6 @@ const mongoose = require("mongoose")
       avatar         : String,
   },
  
-     
     },{collection:"user",timestamps:true});
 
 
