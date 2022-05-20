@@ -1,3 +1,6 @@
+[![Build Status](https://d781-212-253-203-216.eu.ngrok.io/buildStatus/icon?job=social+app)](https://d781-212-253-203-216.eu.ngrok.io/job/social%20app/)
+
+
 # social-app
 
 
