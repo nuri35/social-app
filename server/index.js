@@ -32,7 +32,6 @@ app.use(session({
         secure: false,
         maxAge:1000 * 60 * 60 * 24 
     }
-
 }));
 app.use(passport.initialize());
 app.use(passport.session());
