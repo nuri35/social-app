@@ -31,7 +31,7 @@ app.use(session({
     cookie:{
         secure: false,
         maxAge:1000 * 60 * 60 * 24 
-    }//1 gun
+    }
 
 }));
 app.use(passport.initialize());
@@ -41,13 +41,10 @@ app.use(cookieParser())
  app.use(bodyParser.json({limit:"50mb",extended:true})) 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
-
 app.use('/blogs',blogRouter)
 app.use('/comment',commentRouter)
- app.use("/action",likeDislike)
-
- app.use("/auth",authrouter)
-
+app.use("/action",likeDislike)
+app.use("/auth",authrouter)
 
 const server = app.listen(process.env.PORT,()=>{
     console.log("bu port dınlenıyor: " + process.env.PORT)
