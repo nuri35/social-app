@@ -19,24 +19,23 @@ services:
     ports:
       - 27017:27017
 
-    env_file: .env
     networks:
       - webapp
   
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=/run/secrets/db_password
+      - MONGO_INITDB_ROOT_PASSWORD=example
     
       
   backend:
     
-    build: .
+    build: ./server/.
     depends_on:
       - mongo
     restart: on-failure
     links:
       - mongo
-    env_file: .env
+    env_file: server/.env
 
     volumes:
       - /home/full/path:/tmp/cache
@@ -45,13 +44,13 @@ services:
     environment:
       - DB_HOST=mongo
       - DB_USER=root
-      - DB_PASSWORD=/run/secrets/db_password
+      - DB_PASSWORD=example
       - DB_NAME=Blog
       - DB_PORT=27017
       - NODE_ENV=development
      
     ports:
-      - 6868:$PORT
+      - 6868:5000
 
 
     networks:
@@ -77,6 +76,4 @@ secrets:
     file: db_password.txt
 
 
-
-# redis server eklenecek 
-# react server eklenecek
+# /run/secrets/db_password

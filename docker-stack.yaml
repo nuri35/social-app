@@ -12,7 +12,7 @@ services:
       - db-data:/var/lib/mongo/data
     ports:
       - 27017:27017
-    env_file: .env
+    env_file: ./server/.env
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=example
@@ -24,8 +24,7 @@ services:
       - db_password
       
   
-    
-    
+  
 
   backend:
     
@@ -46,7 +45,7 @@ services:
           delay: 5s
           max_attempts: 3
           window: 120s    
-    env_file: .env
+    env_file: ./server/.env
     environment:
       - DB_HOST=mongo
       - DB_USER=root

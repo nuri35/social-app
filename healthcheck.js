@@ -1,9 +1,6 @@
 const http = require('http');
 
 const Vonage = require('@vonage/server-sdk')
-
-
-
 const vonage = new Vonage({
   apiKey: process.env.API_KEY,
   apiSecret: process.env.API_SECRET,
@@ -17,7 +14,6 @@ const options = {
   port: process.env.PORT,
   path: '/blogs/search?page=1&&q=a'
 };
-
 
 
 
