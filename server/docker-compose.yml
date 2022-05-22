@@ -75,3 +75,8 @@ volumes:
 secrets:
   db_password:
     file: db_password.txt
+
+
+
+# redis server eklenecek 
+# react server eklenecek
