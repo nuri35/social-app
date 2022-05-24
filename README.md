@@ -4,9 +4,7 @@
 
 
   <img src="https://img.shields.io/npm/v/readme-md-generator.svg?orange=blue" />
-  <a href="https://d0b4-212-253-219-66.eu.ngrok.io/job/social%20app/">
-    <img alt="downloads" src="https://d0b4-212-253-219-66.eu.ngrok.io/buildStatus/icon?job=social+app" target="_blank" />
-  </a>
+  <a href='https://d0b4-212-253-219-66.eu.ngrok.io/job/social%20app/'><img src='https://d0b4-212-253-219-66.eu.ngrok.io/buildStatus/icon?job=social+app'></a>
   <a href="https://github.com/kefranabg/readme-md-generator/blob/master/LICENSE">
     <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-yellow.svg" target="_blank" />
   </a>
