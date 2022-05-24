@@ -28,6 +28,7 @@ export const fetchSinglePost = (id) => async(dispatch)=>{
 
     try{
         const {data} = await api.fetchSinglePost(id)
+      
         dispatch({
             type:types.FETCH_SINGLE_POST,
             payload:data,
@@ -63,7 +64,7 @@ export  const SearchPost =  (query,pageNumber) =>{
     let cancel 
    axios({
        method:"GET",
-       url:"http://localhost:5000/blogs/search",
+       url:`http://localhost:5000/blogs/search`,
        params:{q:query,page:pageNumber},
        withCredentials:true,
        cancelToken:new axios.CancelToken(c=>cancel = c)

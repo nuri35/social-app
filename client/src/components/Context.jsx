@@ -7,9 +7,9 @@ export const AuthContext = createContext()
 const AuthProvider = ({children}) => {
   const [user,setUser] = useState()
   const [ısAuthenticated,setIsAuthenticated] = useState(false)
-  
+  console.log(process.env.REACT_APP_BACK_HOST)
   useEffect(() => {
-    Axios.get("http://localhost:5000/auth/user", { withCredentials: true }).then(res => {
+    Axios.get(`http://localhost:5000/auth/user`, { withCredentials: true }).then(res => {
     if(res.data.isAuthInfo){
       setUser(res.data.data);
       setIsAuthenticated(res.data.isAuthInfo)

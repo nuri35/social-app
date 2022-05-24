@@ -111,8 +111,8 @@ const { register,trigger, handleSubmit, formState:{ errors }, resetField } = use
 
 
 const googleLogin = () => {
- 
-  window.open("http://localhost:5000/auth/google", "_self");
+  console.log(process.env.REACT_APP_BACK_HOST)
+  window.open(`http://localhost:5000/auth/google`, "_self");
 };
 
  

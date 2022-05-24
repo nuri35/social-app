@@ -1,4 +1,4 @@
-import React,{useEffect,useContext, useState} from "react"
+import React,{useEffect,useContext, useState,useRef} from "react"
 import {useParams} from "react-router-dom"
 import {useSelector } from "react-redux";
 import Nav from "./Nav"
@@ -19,22 +19,23 @@ function PostBody(){
 
     const {user,ısAuthenticated} = useContext(AuthContext)
    
-
+    const socket =  useRef()
     const imgSrc = `https://source.unsplash.com/random/800x500?`
- const [socket, setSocket] = useState(null)
+
     const params = useParams();
+    const dispatch = useDispatch()
 
     useEffect(() => {
-    setSocket(io.connect("http://localhost:6500"))
+        socket.current = io.connect("http://localhost:6500")
       
        }, [])
 
      useEffect(() => {
-        socket.emit("newUser",user)
+         socket.current.emit("newUser",user)
           
      }, [socket,user])
 
- const dispatch = useDispatch()
+
 
  useEffect(() => {
    
