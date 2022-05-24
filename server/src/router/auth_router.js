@@ -2,7 +2,7 @@ const router = require("express").Router()
 const authcontoller = require("./../controller/auth_controller")
 const passport = require("passport")
 
-const CLİENT_URL = "http://localhost:3000/"
+const CLİENT_URL = `http://localhost:3000/`
 
 require("./../controller/password")(passport)
 

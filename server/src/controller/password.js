@@ -49,7 +49,7 @@ module.exports = function(passport){
 
             }
             catch(err){
-
+console.log(err)
                 // return done(err); bunlara gerı donulecek error handle
             }
 
@@ -93,7 +93,7 @@ const {email,picture,email_verified} = profile._json;
 
                 done(null,user.google)
             }
-
+        
             done(null,user.google)
         } else {
             const newUser = new User();
@@ -106,7 +106,7 @@ const {email,picture,email_verified} = profile._json;
             newUser.google.id=newUser._id,
 
             await newUser.save()
-
+            
             done(null,newUser.google)
            
         }

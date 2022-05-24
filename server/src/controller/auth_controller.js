@@ -57,6 +57,7 @@ const getUserInfo = async(req,res,next)=>{
 
 
 const loginFailed = (req,res,next)=>{
+    console.log("calıstı")
 res.json({success:false,message:"Failure"})
 }
 
