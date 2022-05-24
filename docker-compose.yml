@@ -1,5 +1,4 @@
 version: "3.9"
-
 services:
 
   autoheal:
@@ -10,8 +9,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
-  mongo:
 
+  mongo:
     image: mongo
     restart: on-failure
     volumes:
@@ -20,60 +19,104 @@ services:
       - 27017:27017
 
     networks:
-      - webapp
+      - app
   
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=example
+      - MONGO_INITDB_ROOT_PASSWORD=/run/secrets/db_password
+
+
+  
     
-      
   backend:
     
-    build: ./server/.
+    build: ./server
     depends_on:
       - mongo
     restart: on-failure
     links:
       - mongo
+      
     env_file: server/.env
-
+   
     volumes:
-      - /home/full/path:/tmp/cache
+      - /home/full/path:/tmp/cache  
 
     tty: true
+   
     environment:
+      - FRONT_HOST=localhost
       - DB_HOST=mongo
       - DB_USER=root
-      - DB_PASSWORD=example
+      - DB_PASSWORD=/run/secrets/db_password
       - DB_NAME=Blog
       - DB_PORT=27017
       - NODE_ENV=development
      
     ports:
-      - 6868:5000
-
+      - 5000:5000
 
     networks:
-      - webapp
+      - app
+      - front
+     
 
     secrets:
       - db_password
 
 
+  
+  frontend:
+    build: ./client
+    ports:
+      - 3000:3000
+    tty: true
+    
+    environment:
+      - REACT_APP_BACK_HOST=localhost
+   
+    restart: on-failure
+    # command: npm start
+    networks:
+      - front 
+    depends_on:
+      - backend      
 
+    links:
+      - backend
 
+  socket:
+    build: ./socket
+    ports:
+      - 6500:6500
+    tty: true
+    env_file: socket/.env
+    restart: on-failure
+
+    depends_on:
+      - frontend
+
+    networks:
+      - front
+    links:
+      - frontend
+
+  
 
 networks:
-  webapp:
+  app:
     driver: bridge
-
-
+  front:
+    driver: bridge
 volumes:
   db-data:
-
 secrets:
   db_password:
     file: db_password.txt
 
 
-# /run/secrets/db_password
+
+
+
+
+# CI=true
