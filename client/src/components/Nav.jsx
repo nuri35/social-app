@@ -25,20 +25,32 @@ function SectionNavbars() {
       
         
             <Header
+            
             brand="BLOGİUM"
             
            
             rightLinks={
               <List className={classes.list}>
-                    <ListItem className={classes.listItem}>
+                 <ListItem className={classes.listItem}>
                   <Button
                        component={Link}
-                       to=""
+                       to="/"
                     className={classes.navLink}
                     
                     color="transparent"
                   >
-                  My Story
+                 Home
+                  </Button>
+                </ListItem>
+                    <ListItem className={classes.listItem}>
+                  <Button
+                       component={Link}
+                       to="/New-story"
+                    className={classes.navLink}
+                    
+                    color="transparent"
+                  >
+                 Write a story
                   </Button>
                 </ListItem>
                 

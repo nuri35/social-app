@@ -1,5 +1,6 @@
 import React,{useContext} from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Menu from '@mui/material/Menu';
@@ -9,16 +10,15 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Avatar from '@mui/material/Avatar';
 import MenuItem from '@mui/material/MenuItem';
-import Typography from '@mui/material/Typography';
 import styles from "../assets/jss/material-kit-react/views/componentsSections/navbarsStyle";
-import { MailOutlined ,BellOutlined,LogoutOutlined} from '@ant-design/icons';
+import {BellOutlined,LogoutOutlined} from '@ant-design/icons';
 import Badge from '@mui/material/Badge';
 import { AuthContext } from "./Context";
-
+import Button from "./CustomButtons/Button";
 
 const useStyles = makeStyles(styles);
 
-function SectionNavbars() {
+function SectionNavbars({socket}) {
 
   const {user} = useContext(AuthContext)
  
@@ -27,9 +27,7 @@ function SectionNavbars() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
  
 
-  // const handleOpenNavMenu = (event) => {
-  //   setAnchorElNav(event.currentTarget);
-  // };
+ 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -67,18 +65,7 @@ function SectionNavbars() {
               <List className={classes.list}>
                   
                 <Box sx={{ flexGrow: 0 }}>
-                <ListItem className={classes.listItem}>
                
-                <MenuItem>
-        <IconButton size="small" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={2} color="error">
-            <MailOutlined />
-          </Badge>
-        </IconButton>
-      
-      </MenuItem>
-    
-                </ListItem>
                 <ListItem className={classes.listItem}>
                
                 <MenuItem>
@@ -124,16 +111,31 @@ function SectionNavbars() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={Math.random().toString(36).substr(2, 9)} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{setting.ad}</Typography>
+                <MenuItem  onClick={handleCloseNavMenu}>
+                   <Button
+            color="transparent"
+            component={Link}
+            to="/New-story"
+            className={classes.navLink}
+          >
+           { setting.ad}
+          </Button>
+                
                 </MenuItem>
               ))}
               
-              <MenuItem onClick={logoutHandle} >
+              <MenuItem  onClick={logoutHandle} >
              
+              <Button
+            color="transparent"
          
-         <Typography textAlign="center" > <LogoutOutlined /> Logout</Typography>
-           
+            target="_blank"
+            className={classes.navLink}
+          >
+           <LogoutOutlined / > 
+           Logout
+          </Button>
+        
                 </MenuItem>
              
             </Menu>

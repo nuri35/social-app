@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "./../components/CustomButtons/Button";
 import Nav from "./Nav"
-
+import { Link } from "react-router-dom";
 function NotAuthenticatedContext(){
 
     return (
@@ -24,9 +24,9 @@ function NotAuthenticatedContext(){
    </div>
    
      </div>
-
     
-     <Button color="black" round="true">Start Writing</Button>
+    
+     <Button color="black"component={Link}  to="/login"  round="true">Start Writing</Button>
      </>
     
    

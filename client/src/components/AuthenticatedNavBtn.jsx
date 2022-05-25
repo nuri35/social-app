@@ -10,33 +10,24 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Avatar from '@mui/material/Avatar';
 import MenuItem from '@mui/material/MenuItem';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import styles from "../assets/jss/material-kit-react/views/componentsSections/navbarsStyle";
-import {BellOutlined,LogoutOutlined} from '@ant-design/icons';
-import Badge from '@mui/material/Badge';
+import {LogoutOutlined} from '@ant-design/icons';
 import { AuthContext } from "./Context";
-
+import { Link } from "react-router-dom";
+import Buttonx from "./CustomButtons/Button";
 
 const useStyles = makeStyles(styles);
 
 function SectionNavbars() {
 
   const {user} = useContext(AuthContext)
-
-// const nameSlice = ()=>{
-//   const sliceName =  user.name.charAt(0) + user.surname.charAt(0)   ;
-//   return sliceName
-// }
-// anchorElNav
   const classes = useStyles();
   const [ setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
  
 
-  // const handleOpenNavMenu = (event) => {
-  //   setAnchorElNav(event.currentTarget);
-  // };
+ 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -72,7 +63,7 @@ function SectionNavbars() {
 }
 
 
-  const settings = [{ad:"Profile",link:""}, {ad:"Stats",link:""},{ad:"Stories",link:""},{ad:"Write a story",link:""},{ad:"Blogs",link:""}];
+  const settings = [{ad:"Home",url:"/"},{ad:"Profile",url:""}, {ad:"Stats",url:""},{ad:"Stories",url:""},{ad:"Blogs",url:""}];
   
   return (
     
@@ -82,35 +73,23 @@ function SectionNavbars() {
         
             <Header
             brand="BLOGİUM"
+
             
            
             rightLinks={
-              <List className={classes.list}>
+              <List >
                   
                 <Box sx={{ flexGrow: 0 }}>
                 <ListItem className={classes.listItem}>
                
-                <Button variant="outlined" size="small" color="success" onClick={handleOpen}>
-                Publish
-                </Button>
+                <Buttonx  size="sm" color="success" onClick={handleOpen}>
+                   <span>Save and Publish </span>         
+                </Buttonx>
                 </ListItem>
-                <ListItem className={classes.listItem}>
                
-                <MenuItem>
-        <IconButton size="small" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <BellOutlined />
-          </Badge>
-        </IconButton>
-      
-      </MenuItem>
-   
-                </ListItem>
-           
                 <ListItem className={classes.listItem}>
-        
-            <Tooltip title="More" >
-            <IconButton onClick={handleOpenUserMenu}  sx={{ p: 0 }}>
+        <Tooltip title="More" >
+            <IconButton onClick={handleOpenUserMenu}  sx={{ p: 1 }}>
               {user.avatar ?
             <Avatar src={user.avatar}>
             
@@ -139,8 +118,16 @@ function SectionNavbars() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={Math.random().toString(36).substr(2, 9)} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{setting.ad}</Typography>
+                <MenuItem  onClick={handleCloseNavMenu}>
+                    <Buttonx
+            color="transparent"
+            component={Link}
+            to={setting.url}
+            className={classes.navLink}
+          >
+           { setting.ad}
+          </Buttonx>
+                
                 </MenuItem>
               ))}
               

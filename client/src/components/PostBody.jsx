@@ -1,4 +1,4 @@
-import React,{useEffect,useContext, useState,useRef} from "react"
+import React,{useEffect,useContext, useState} from "react"
 import {useParams} from "react-router-dom"
 import {useSelector } from "react-redux";
 import Nav from "./Nav"
@@ -12,30 +12,18 @@ import AuthenticatedNav from "./AuthenticatedNav"
 import axios from "axios";
 import { Empty } from 'antd';
 import {useDispatch} from "react-redux"
-import io from "socket.io-client";
 
 
-function PostBody(){
 
+function PostBody({socket}){
+    const imgSrc = `https://source.unsplash.com/random/800x500?`
     const {user,ısAuthenticated} = useContext(AuthContext)
    
-    const socket =  useRef()
-    const imgSrc = `https://source.unsplash.com/random/800x500?`
-
     const params = useParams();
     const dispatch = useDispatch()
+  
 
-    useEffect(() => {
-        socket.current = io.connect("http://localhost:6500")
-      
-       }, [])
-
-     useEffect(() => {
-         socket.current.emit("newUser",user)
-          
-     }, [socket,user])
-
-
+  
 
  useEffect(() => {
    
@@ -138,7 +126,7 @@ allComments()
         <>
 
           {ısAuthenticated ?
-            <AuthenticatedNav >
+            <AuthenticatedNav socket={socket} >
 
 </AuthenticatedNav>
            
@@ -190,7 +178,7 @@ allComments()
                
                {
                    ısAuthenticated ?
-                   <LikeDislike post postId={params.id} userId={user.id}  />
+                   <LikeDislike post postId={params.id} userId={user.id} receiverName={currentPost.authorId.google.name} senderName={user.name} socket={socket}  />
                    :
                    <></>
                }
@@ -204,7 +192,7 @@ allComments()
          
             <div className="postPage" style={{ width: '100%', padding: '3rem 4em' }}>
            
-            <Comments CommentLists={CommentLists} post={currentPost?._id} refreshFunction={updateComment} editFunction={editComment} deleteFunction={deleteComment} />
+            <Comments socket={socket} CommentLists={CommentLists} post={currentPost?._id} refreshFunction={updateComment} editFunction={editComment} deleteFunction={deleteComment}  />
        </div>
           
         </div>

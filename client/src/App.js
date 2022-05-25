@@ -1,4 +1,4 @@
-import React,{useContext} from 'react'
+import React,{useContext,useEffect,useState} from 'react'
 import {BrowserRouter as Router, Routes,Route,Navigate } from "react-router-dom"
 import { makeStyles } from '@material-ui/core/styles'
 import {
@@ -20,7 +20,7 @@ import ForgetPassword from "./components/forgetPassword"
 import { AuthContext } from "./components/Context";
 import PostBody from "./components/PostBody"
 import PasswordReset from "./components/PasswordReset"
-
+import io from "socket.io-client";
 
   const useStyle = makeStyles((theme) => ({
     root:{
@@ -44,9 +44,20 @@ import PasswordReset from "./components/PasswordReset"
 
 const App = () => {
 
-  const {ısAuthenticated} = useContext(AuthContext)
+  const {user,ısAuthenticated} = useContext(AuthContext)
+  const [socket,setSocket] = useState(null);
 
+  useEffect(() => {
+    setSocket(io.connect("http://localhost:6500"))  
+   
+   }, [])
+
+ useEffect(() => {
+  if (!socket) return;
  
+     socket.emit("newUser",user)
+      
+ }, [socket,user])
 
   const classes = useStyle();
 
@@ -65,7 +76,7 @@ const App = () => {
    
       <Routes>
      
-      <Route  path="/" element={<PostsList />} />
+      <Route  path="/" element={<PostsList socket={socket}  />} />
       <Route  path="/:tag" element={<PostsList />} />
       <Route   path="verify"  element={<Profile/>}/>
             <Route   path="User/Profile"  element={<Profile/>}/>
@@ -77,7 +88,7 @@ const App = () => {
             <Route  path="/register"    element={ ısAuthenticated ? <Navigate to="/" /> : <Register />} />
             <Route  path="/forget-password"  element={ ısAuthenticated ? <Navigate to="/" /> : <ForgetPassword />}/>
             <Route  path="/auth/resetPassword/:activatTokenForPass"  element={ ısAuthenticated ? <Navigate to="/" /> : <PasswordReset />}/>
-            <Route   path="/Post/:id"  element={<PostBody />} />
+            <Route   path="/Post/:id"  element={<PostBody socket={socket} />} />
             <Route  path="*" element={<PageNotFound />} />
           
            

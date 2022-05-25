@@ -23,12 +23,7 @@ const NewStory = () => {
 <>
 {ısAuthenticated ?
             <AuthenticatedNavBtn >
-
-
-
 </AuthenticatedNavBtn>
-
-
             : 
           <NotAuthenticatedContext />
           

@@ -14,7 +14,6 @@ import {
 
 } from "@material-ui/core"
 import { SearchPost } from '../actions/post';
-
 import { AuthContext } from "./Context";
 import Nav from "./Nav"
 import AuthenticatedNav from "./AuthenticatedNav"
@@ -105,12 +104,13 @@ const sidebar = {
 
   const theme = createTheme();
   
-const PostsList =  ()=>{
+const PostsList =  ({socket})=>{
 
 
   const [query,setQuery] = useState("")
   const [pageNumber,setPageNumber] = useState(1)
-
+  const {ısAuthenticated} = useContext(AuthContext)
+  
   
   
   const {blogs,hasMore,loading} =  SearchPost(query,pageNumber)
@@ -141,10 +141,6 @@ if(node) observer.current.observe(node)
   }
 
   
-
-
-
-  const {ısAuthenticated} = useContext(AuthContext)
  
   return (
       
@@ -155,7 +151,7 @@ if(node) observer.current.observe(node)
           <ThemeProvider theme={theme}>
         
            {ısAuthenticated ?
-            <AuthenticatedNav >
+            <AuthenticatedNav socket={socket} >
 
 </AuthenticatedNav>
            
@@ -197,10 +193,10 @@ if(node) observer.current.observe(node)
         blogs.map((post,index) => {
           
       return blogs.length === index + 1  ?
-        <FeaturedPost key={Math.random().toString(36).substr(2, 9)}  inputRef={lastBlogElementRef} loading={loading} post={post}  />
+        <FeaturedPost key={Math.random().toString(36).substr(2, 9)}  inputRef={lastBlogElementRef} loading={loading} post={post}   />
         
     :
-    <FeaturedPost key={Math.random().toString(36).substr(2, 9)}  post={post}  />
+    <FeaturedPost key={Math.random().toString(36).substr(2, 9)}  post={post} />
 
         })
        

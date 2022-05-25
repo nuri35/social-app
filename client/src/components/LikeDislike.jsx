@@ -1,5 +1,4 @@
 import React , {useState,useEffect,useMemo}from 'react'
-// import { useDispatch } from "react-redux";
 import Tooltip from '@mui/material/Tooltip';
 import { LikeOutlined,DislikeOutlined,LikeFilled,DislikeFilled } from '@ant-design/icons';
 import axios from "axios"
@@ -14,7 +13,7 @@ function LikeDislike(props) {
     const [dislikes, setDislikes] = useState(0);
     const [dislikeAction, setDislikeAction] = useState(null);
 
-   
+console.log(props)
     
     let variable = useMemo(() => {
         return {};
@@ -107,6 +106,12 @@ const onLike = async (e)=>{
 
         if(likeAction === null){
 
+            props.socket.emit('sendNotifaction', {
+                senderName: props.senderName,
+                receiverName: props.receiverName,
+                type:1
+               
+            })
         
             const result =   await axios.post("http://localhost:5000/action/upLike",variable)
 
@@ -129,7 +134,7 @@ const onLike = async (e)=>{
 
     }else{
         const resultUn =   await axios.post("http://localhost:5000/action/unLike",variable)
-
+//burda llike atılan bıldırımı sılersın
         if(resultUn.data.success){
 
                 
