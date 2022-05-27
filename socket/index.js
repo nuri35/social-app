@@ -33,6 +33,7 @@ io.on('connection', (socket) => {
           type,
         });
       });
+//burda kaldın getNotification bu ısımle socket.on dıyerek clıentta alıcaksın
 
     socket.on('disconnect',()=>{
         removeUser(socket.id);
