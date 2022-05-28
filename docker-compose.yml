@@ -23,10 +23,10 @@ services:
   
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=example
+      - MONGO_INITDB_ROOT_PASSWORD=/run/secrets/db_password
 
 
-  # /run/secrets/db_password
+
     
   backend:
     
@@ -45,10 +45,9 @@ services:
     tty: true
    
     environment:
-      - FRONT_HOST=localhost
       - DB_HOST=mongo
       - DB_USER=root
-      - DB_PASSWORD=example
+      - DB_PASSWORD=/run/secrets/db_password
       - DB_NAME=Blog
       - DB_PORT=27017
       - NODE_ENV=development
@@ -71,10 +70,6 @@ services:
     ports:
       - 3000:3000
     tty: true
-    
-    environment:
-      - REACT_APP_BACK_HOST=localhost
-   
     restart: on-failure
     networks:
       - front 

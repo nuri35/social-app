@@ -33,10 +33,10 @@ app.use(session({
         maxAge:1000 * 60 * 60 * 24 
     }
 }));
-console.log(process.env.FRONT_HOST)
+
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors({origin:process.env.NODE_ENV === "localhost" ?`${process.env.WEB_SITE_URL}` : `http://${process.env.FRONT_HOST}:3000`  ,credentials:true})) 
+app.use(cors({origin:`${process.env.WEB_SITE_URL}` ,credentials:true})) 
 app.use(cookieParser())
  app.use(bodyParser.json({limit:"50mb",extended:true})) 
 app.use(express.json())
