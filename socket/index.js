@@ -18,6 +18,13 @@ const addNewUser = (username, socketId) => {
   const removeUser = (socketId) => {
     onlineUsers = onlineUsers.filter((user) => user.socketId !== socketId);
   };
+
+  
+const getUser = (username) => {
+ 
+  return  onlineUsers.find((user) => user.username === username);
+
+};
 io.on('connection', (socket) => {
     console.log(socket.id + " socket running")
    
@@ -26,14 +33,29 @@ io.on('connection', (socket) => {
         addNewUser(username, socket.id);
       });
     
-      socket.on("sendNotification", ({ senderName, receiverName, type }) => {
+      socket.on("sendNotification", ({ senderName, receiverName, type,avatar }) => {
+      
         const receiver = getUser(receiverName);
-        io.to(receiver.socketId).emit("getNotification", {
+  
+        socket.to(receiver.socketId).emit("getNotification", {
           senderName,
           type,
+          avatar,
+          receiveSocketId: receiver.socketId
         });
       });
-//burda kaldın getNotification bu ısımle socket.on dıyerek clıentta alıcaksın
+
+      socket.on("deleteNotification", ({ senderName, receiverName,type }) => {
+      
+        const receiver = getUser(receiverName);
+  
+        socket.to(receiver.socketId).emit("deleteNotificationget", {
+          senderName,
+          type,
+          receiveSocketId: receiver.socketId
+        });
+      });
+
 
     socket.on('disconnect',()=>{
         removeUser(socket.id);
