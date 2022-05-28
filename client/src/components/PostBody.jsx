@@ -33,6 +33,27 @@ function PostBody({socket}){
 }, [dispatch,params.id])
 
 
+const [notifications,setNotifications] = useState([])
+
+useEffect(() => {
+ socket?.on("getNotification",(data)=>{
+  setNotifications((prev)=>[...prev,data]);
+ })
+}, [socket])
+
+useEffect(() => {
+    socket?.on("deleteNotificationget",(data)=>{
+      
+     const result =  notifications.filter((val)=>{
+        return  data.receiveSocketId  !== val.receiveSocketId
+        })
+        setNotifications(result)
+    
+    })
+   }, [socket,notifications])
+
+  
+ 
 
 const currentPost = useSelector(state => state.posts.currentPost)
 
@@ -126,7 +147,7 @@ allComments()
         <>
 
           {ısAuthenticated ?
-            <AuthenticatedNav socket={socket} >
+            <AuthenticatedNav  notifications={notifications} >
 
 </AuthenticatedNav>
            
@@ -178,7 +199,7 @@ allComments()
                
                {
                    ısAuthenticated ?
-                   <LikeDislike post postId={params.id} userId={user.id} receiverName={currentPost.authorId.google.name} senderName={user.name} socket={socket}  />
+                   <LikeDislike post postId={params.id} userId={user.id} receiverName={currentPost.authorId.google.name} senderName={user.name}  socket={socket} userİmageSender={user.avatar} />
                    :
                    <></>
                }

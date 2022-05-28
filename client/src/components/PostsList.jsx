@@ -110,9 +110,9 @@ const PostsList =  ({socket})=>{
   const [query,setQuery] = useState("")
   const [pageNumber,setPageNumber] = useState(1)
   const {ısAuthenticated} = useContext(AuthContext)
-  
-  
-  
+ 
+
+
   const {blogs,hasMore,loading} =  SearchPost(query,pageNumber)
 
   const observer = useRef()

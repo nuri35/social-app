@@ -51,11 +51,12 @@ const App = () => {
     setSocket(io.connect("http://localhost:6500"))  
    
    }, [])
+  
 
  useEffect(() => {
   if (!socket) return;
  
-     socket.emit("newUser",user)
+     socket.emit("newUser",user?.name)
       
  }, [socket,user])
 

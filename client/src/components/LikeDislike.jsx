@@ -5,7 +5,7 @@ import axios from "axios"
 
 
 function LikeDislike(props) {
-
+    const {socket} = props
 
     const [likes, setLikes] = useState(0);
     const [likeAction, setLikeAction] = useState(null);
@@ -13,7 +13,7 @@ function LikeDislike(props) {
     const [dislikes, setDislikes] = useState(0);
     const [dislikeAction, setDislikeAction] = useState(null);
 
-console.log(props)
+
     
     let variable = useMemo(() => {
         return {};
@@ -99,20 +99,20 @@ const getAction = async()=>{
 
 
 
-
 const onLike = async (e)=>{
     e.preventDefault()
     try{
 
         if(likeAction === null){
 
-            props.socket.emit('sendNotifaction', {
+            socket.emit('sendNotification', {
                 senderName: props.senderName,
                 receiverName: props.receiverName,
+                avatar:props.userİmageSender,
                 type:1
                
             })
-        
+         //   sen refresh yaptıgındada bildiirm kalacak yada bıldırıem tıklayınca cunku database kaydedecek sonra ordan cekmıs olcak aynı chat sıstemı gıbı ama badge ınecek sayısı o bıldırıme tıkladıgında 
             const result =   await axios.post("http://localhost:5000/action/upLike",variable)
 
       if(result.data.success){
@@ -133,8 +133,16 @@ const onLike = async (e)=>{
 
 
     }else{
+
+        socket.emit('deleteNotification', {
+            senderName: props.senderName,
+            receiverName: props.receiverName,
+            type:1
+          
+           
+        })
         const resultUn =   await axios.post("http://localhost:5000/action/unLike",variable)
-//burda llike atılan bıldırımı sılersın
+
         if(resultUn.data.success){
 
                 

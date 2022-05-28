@@ -141,3 +141,31 @@ code {
 
 
 
+
+
+.avNoti{
+  display: flex;
+  padding: 10px;
+}
+
+
+
+.notif__headerInfo{
+  display: flex;
+  margin-left: 20px;
+  
+     
+
+}
+
+.notifaction{
+  display: flex;
+  flex-direction: column;
+  flex: 0.65;
+  padding: 5px;
+display: flex;
+align-items: left;
+
+justify-content: space-between;
+border-bottom: 1px solid  lightgray;
+}
