@@ -130,6 +130,8 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+.txt*
+
 node_modules/
 .DS_Store
 .vscode
