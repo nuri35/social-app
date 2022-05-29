@@ -33,7 +33,7 @@ io.on('connection', (socket) => {
         addNewUser(username, socket.id);
       });
     
-      socket.on("sendNotification", ({ senderName, receiverName, type,avatar }) => {
+      socket.on("sendNotification", ({ senderName, receiverName, type,avatar,commOrPost}) => {
       
         const receiver = getUser(receiverName);
   
@@ -41,7 +41,10 @@ io.on('connection', (socket) => {
           senderName,
           type,
           avatar,
-          receiveSocketId: receiver.socketId
+          receiveSocketId: receiver.socketId,
+          commOrPost,
+          
+        
         });
       });
 

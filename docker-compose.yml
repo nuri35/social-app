@@ -109,8 +109,4 @@ secrets:
     file: db_password.txt
 
 
-
-
-
-
-# CI=true
+# CI=true  add package.json for not error in frontend 
