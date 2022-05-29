@@ -147,7 +147,7 @@ allComments()
         <>
 
           {ısAuthenticated ?
-            <AuthenticatedNav  notifications={notifications} >
+            <AuthenticatedNav  notifications={notifications} > 
 
 </AuthenticatedNav>
            
@@ -213,7 +213,7 @@ allComments()
          
             <div className="postPage" style={{ width: '100%', padding: '3rem 4em' }}>
            
-            <Comments socket={socket} CommentLists={CommentLists} post={currentPost?._id} refreshFunction={updateComment} editFunction={editComment} deleteFunction={deleteComment}  />
+            <Comments socket={socket} CommentLists={CommentLists} post={currentPost?._id} receiverName={currentPost.authorId.google.name}   refreshFunction={updateComment} editFunction={editComment} deleteFunction={deleteComment}  />
        </div>
           
         </div>

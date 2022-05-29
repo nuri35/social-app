@@ -23,7 +23,7 @@ import IconButton from '@mui/material/IconButton';
 
 const SingleComment = (props) => {
 
-  
+ const {socket} = props
   const {user,ısAuthenticated} = useContext(AuthContext)
 
   const [popoverContent,setPopoverContent] = useState(false)
@@ -179,7 +179,7 @@ const hideCommentInput = ()=>{
     
     
       ısAuthenticated && !editInput ?
-      <LikeDislike comment commentId={props.comment._id} userId={user.id} />
+      <LikeDislike comment commentId={props.comment._id} userId={user.id}  receiverName={props.receiverName} senderName={user.name}  socket={socket} userİmageSender={user.avatar} />
       :
       <></>
     ,
@@ -215,6 +215,9 @@ const hideCommentInput = ()=>{
     if(ısAuthenticated){
       setLoading(true)
       try{
+
+      
+
         const variables = {
           content:Commentval,
           writer:user.id,
@@ -227,6 +230,16 @@ const hideCommentInput = ()=>{
 
 
         if(commentVariables.data.success){
+          socket.emit('sendNotification', {
+            senderName: user.name,
+            receiverName: props.receiverName,
+            avatar:user.avatar,
+            type:2,
+            commOrPost : false
+           
+           
+        })
+
           setCommentval("")
           setCommentInput(false)
           props.refreshFunction(commentVariables.data.result)
@@ -290,14 +303,23 @@ const deleteAction = async (e) =>{
   setLoading(true)
 
   try{
- 
+
+  
 
 
 const deleteResult =   await axios.delete(`http://localhost:5000/comment/delete/${whichProps}`,{withCredentials: true})
 
 
 if(deleteResult.data.success){
-    
+  
+
+  socket.emit('deleteNotification', {
+    senderName: user.name,
+    receiverName: props.receiverName,
+    type:2
+  
+   
+})
  
   setIsVisible(!isVisible)
   deleteNotifaction(deleteResult.data.message)

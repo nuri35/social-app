@@ -21,10 +21,16 @@ function LikeDislike(props) {
       
   },[]);
 
-    // let variable = {}
+  let commOrPost = useMemo(() => {
+    return true;
+  
+  
+},[]);
+
+    
 
     if(props.post){
-
+        commOrPost = true
          variable = {
            postId:props.postId,
            user:props.userId
@@ -32,7 +38,7 @@ function LikeDislike(props) {
 
 
     }else{
-
+        commOrPost = false
          variable = {
             commentId:props.commentId,
             user:props.userId
@@ -105,22 +111,25 @@ const onLike = async (e)=>{
 
         if(likeAction === null){
 
-            socket.emit('sendNotification', {
-                senderName: props.senderName,
-                receiverName: props.receiverName,
-                avatar:props.userİmageSender,
-                type:1
-               
-            })
-         //   sen refresh yaptıgındada bildiirm kalacak yada bıldırıem tıklayınca cunku database kaydedecek sonra ordan cekmıs olcak aynı chat sıstemı gıbı ama badge ınecek sayısı o bıldırıme tıkladıgında 
+         
+     
             const result =   await axios.post("http://localhost:5000/action/upLike",variable)
 
       if(result.data.success){
+
+        socket.emit('sendNotification', {
+            senderName: props.senderName,
+            receiverName: props.receiverName,
+            avatar:props.userİmageSender,
+            type:1,
+            commOrPost
+        })
 
                 setLikes(likes +1)
                 setLikeAction("liked")
 
                 if(dislikeAction !== null){
+                   
                     setDislikeAction(null)
                     setDislikes(dislikes -1)
                 }
@@ -134,17 +143,18 @@ const onLike = async (e)=>{
 
     }else{
 
-        socket.emit('deleteNotification', {
-            senderName: props.senderName,
-            receiverName: props.receiverName,
-            type:1
-          
-           
-        })
+      
         const resultUn =   await axios.post("http://localhost:5000/action/unLike",variable)
 
         if(resultUn.data.success){
-
+            socket.emit('deleteNotification', {
+                senderName: props.senderName,
+                receiverName: props.receiverName,
+                type:1,
+                commOrPost
+              
+               
+            })
                 
             setLikes(likes -1)
             setLikeAction(null)
@@ -172,11 +182,18 @@ const onDislike = async (e)=>{
 
         if(dislikeAction !== null){
 
+          
         
             const resultDiss =   await axios.post("http://localhost:5000/action/unDislike",variable)
 
       if(resultDiss.data.success){
-
+        socket.emit('deleteNotification', {
+            senderName: props.senderName,
+            receiverName: props.receiverName,
+            type:-1,
+            commOrPost
+           
+        })
 setDislikes(dislikes - 1)
 setDislikeAction(null)
 
@@ -187,17 +204,27 @@ setDislikeAction(null)
 
 
     }else{
+
+      
+       
         const resultUpDiss =   await axios.post("http://localhost:5000/action/upDislike",variable)
 
         if(resultUpDiss.data.success){
-
+            socket.emit('sendNotification', {
+                senderName: props.senderName,
+                receiverName: props.receiverName,
+                avatar:props.userİmageSender,
+                type:-1,
+                commOrPost
+               
+            })
             setDislikes(dislikes +1)
             setDislikeAction("disliked")
 
 
 
             if(likeAction !== null){
-               
+              
             setLikeAction(null)
             setLikes(likes -1)
             }

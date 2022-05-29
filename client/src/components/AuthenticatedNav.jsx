@@ -59,14 +59,26 @@ function SectionNavbars({notifications}) {
 
   }
   
-const displayNotification = ({senderName,type,avatar})=>{
+const displayNotification = ({senderName,type,avatar,commOrPost})=>{
 let action;
+let postOrComm;
 
 if(type === 1 ){
 action = "Liked"
 }else if (type === 2){
 action = "Commented"
+}else if (type === -1){
+  action = "Disliked"
 }
+
+if(commOrPost){
+  postOrComm = "Post"
+}else{
+  postOrComm = "Comment"
+}
+
+
+
 return (
  
   <div className='notifaction'>
@@ -81,7 +93,7 @@ return (
             
    </Avatar>
    </div>
-  {`${senderName} ${action} your  post`}
+  {`${senderName} ${action} your  ${postOrComm}`}
  
 </MenuItem>
 </div>

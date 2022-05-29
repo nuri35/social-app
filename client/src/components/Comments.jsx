@@ -17,7 +17,7 @@ import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
  function Comments(props) {
- 
+  const {socket} = props
   const [loading,setLoading] = useState(false)
   
   const {user,ısAuthenticated} = useContext(AuthContext)
@@ -61,14 +61,18 @@ import { LoadingOutlined } from '@ant-design/icons';
    
   }
 
+
+
   const sendComment =  async (e)=>{
     e.preventDefault();
 
-  
+   
     if(ısAuthenticated){
      
       setLoading(true)
       try{
+
+
         const variable = {
           content:Comment,
           writer:user.id,
@@ -76,11 +80,20 @@ import { LoadingOutlined } from '@ant-design/icons';
     }
   
 
-    
+   
   const commentVariable =   await axios.post("http://localhost:5000/comment/save",variable,{withCredentials: true})
 
  
         if(commentVariable.data.success){
+          socket.emit('sendNotification', {
+            senderName: user.name,
+            receiverName: props.receiverName,
+            avatar:user.avatar,
+            type:2,
+            commOrPost : true
+           
+           
+        })
           setComment("")
           props.refreshFunction(commentVariable.data.result)
         
@@ -181,7 +194,8 @@ const antIcon = <LoadingOutlined style={{ fontSize: 24,position:"relative",left:
           
           <React.Fragment>
             
-          <SingleComment comment={comment} postId={comment.postId} refreshFunction={props.refreshFunction} editFunction={props.editFunction}  deleteFunction={props.deleteFunction} />
+          <SingleComment comment={comment} socket={socket} receiverName={props.receiverName}  postId={comment.postId} refreshFunction={props.refreshFunction} editFunction={props.editFunction}  deleteFunction={props.deleteFunction} />
+
           <ReplyComment   CommentLists={props.CommentLists}  postId={comment.postId} parentCommentId={comment._id} refreshFunction={props.refreshFunction} editFunction={props.editFunction} deleteFunction={props.deleteFunction} />
           </React.Fragment>
           )
