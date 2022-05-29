@@ -87,7 +87,7 @@ import { LoadingOutlined } from '@ant-design/icons';
         if(commentVariable.data.success){
           socket.emit('sendNotification', {
             senderName: user.name,
-            receiverName: props.receiverName,
+            receiverId:props.receiverId,
             avatar:user.avatar,
             type:2,
             commOrPost : true
@@ -115,7 +115,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 
   }
 
-  
+
 const antIcon = <LoadingOutlined style={{ fontSize: 24,position:"relative",left:"200px" }} spin /> ;
 
 
@@ -194,9 +194,9 @@ const antIcon = <LoadingOutlined style={{ fontSize: 24,position:"relative",left:
           
           <React.Fragment>
             
-          <SingleComment comment={comment} socket={socket} receiverName={props.receiverName}  postId={comment.postId} refreshFunction={props.refreshFunction} editFunction={props.editFunction}  deleteFunction={props.deleteFunction} />
+          <SingleComment comment={comment} socket={socket} receiverId={comment.writer._id}  postId={comment.postId} refreshFunction={props.refreshFunction} editFunction={props.editFunction}  deleteFunction={props.deleteFunction} />
 
-          <ReplyComment   CommentLists={props.CommentLists}  postId={comment.postId} parentCommentId={comment._id} refreshFunction={props.refreshFunction} editFunction={props.editFunction} deleteFunction={props.deleteFunction} />
+          <ReplyComment   CommentLists={props.CommentLists} socket={socket} receiverId={comment.writer._id}  postId={comment.postId} parentCommentId={comment._id} refreshFunction={props.refreshFunction} editFunction={props.editFunction} deleteFunction={props.deleteFunction} />
           </React.Fragment>
           )
         

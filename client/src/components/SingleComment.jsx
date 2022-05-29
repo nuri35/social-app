@@ -179,7 +179,7 @@ const hideCommentInput = ()=>{
     
     
       ısAuthenticated && !editInput ?
-      <LikeDislike comment commentId={props.comment._id} userId={user.id}  receiverName={props.receiverName} senderName={user.name}  socket={socket} userİmageSender={user.avatar} />
+      <LikeDislike comment commentId={props.comment._id} userId={user.id} receiverId={props.receiverId} senderName={user.name}  socket={socket} userİmageSender={user.avatar} />
       :
       <></>
     ,
@@ -232,7 +232,7 @@ const hideCommentInput = ()=>{
         if(commentVariables.data.success){
           socket.emit('sendNotification', {
             senderName: user.name,
-            receiverName: props.receiverName,
+            receiverId:props.receiverId,
             avatar:user.avatar,
             type:2,
             commOrPost : false
@@ -315,8 +315,9 @@ if(deleteResult.data.success){
 
   socket.emit('deleteNotification', {
     senderName: user.name,
-    receiverName: props.receiverName,
-    type:2
+    receiverId:props.receiverId,
+    type:2,
+  
   
    
 })

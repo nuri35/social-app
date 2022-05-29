@@ -54,9 +54,9 @@ const App = () => {
   
 
  useEffect(() => {
-  if (!socket) return;
  
-     socket.emit("newUser",user?.name)
+ 
+     socket?.emit("newUser",user?.id)
       
  }, [socket,user])
 

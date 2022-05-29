@@ -8,7 +8,7 @@ import SingleComment from './SingleComment';
 
 function ReplyComment(props){
 
-   
+   const {socket} = props
     const [ChildCommentNumber, setChildCommentNumber] = useState(0)
     const [OpenReplyComments, setOpenReplyComments] = useState(false)
     useEffect(() => {
@@ -24,14 +24,14 @@ function ReplyComment(props){
         setChildCommentNumber(commentNumber)
     }, [props.CommentLists, props.parentCommentId])
 
-
+console.log(props.CommentLists)
     let renderReplyComment = (parentCommentId) =>
         props.CommentLists.map((comment) => (
             <React.Fragment>
                 {comment.responseTo === parentCommentId &&
                     <div style={{ width: '100%', marginLeft: '40px' }}>
-                        <SingleComment comment={comment} postId={comment.postId} refreshFunction={props.refreshFunction}  editFunction={props.editFunction} deleteFunction={props.deleteFunction} />
-                        <ReplyComment CommentLists={props.CommentLists} parentCommentId={comment._id} postId={comment.postId} refreshFunction={props.refreshFunction} editFunction={props.editFunction} deleteFunction={props.deleteFunction} />
+                        <SingleComment comment={comment} postId={comment.postId} socket={socket} receiverId={comment.writer._id} refreshFunction={props.refreshFunction}  editFunction={props.editFunction} deleteFunction={props.deleteFunction} />
+                        <ReplyComment CommentLists={props.CommentLists} socket={socket} receiverId={comment.writer._id}  parentCommentId={comment._id} postId={comment.postId} refreshFunction={props.refreshFunction} editFunction={props.editFunction} deleteFunction={props.deleteFunction} />
                     </div>
                 }
             </React.Fragment>

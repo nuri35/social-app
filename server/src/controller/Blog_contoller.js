@@ -35,7 +35,7 @@ const onearticleget = async (req,res)=>{
 
    
     try{ 
-                console.log("calsıtı")
+               
                 let makaleId = req.params.id;
                 const sınglearticle = await Blog.findById({_id:makaleId}).populate("authorId")
                

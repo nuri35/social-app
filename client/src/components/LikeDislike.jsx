@@ -116,12 +116,12 @@ const onLike = async (e)=>{
             const result =   await axios.post("http://localhost:5000/action/upLike",variable)
 
       if(result.data.success){
-
+      
         socket.emit('sendNotification', {
             senderName: props.senderName,
-            receiverName: props.receiverName,
             avatar:props.userİmageSender,
             type:1,
+            receiverId:props.receiverId,
             commOrPost
         })
 
@@ -149,9 +149,9 @@ const onLike = async (e)=>{
         if(resultUn.data.success){
             socket.emit('deleteNotification', {
                 senderName: props.senderName,
-                receiverName: props.receiverName,
+                receiverId:props.receiverId,
                 type:1,
-                commOrPost
+               
               
                
             })
@@ -189,9 +189,9 @@ const onDislike = async (e)=>{
       if(resultDiss.data.success){
         socket.emit('deleteNotification', {
             senderName: props.senderName,
-            receiverName: props.receiverName,
+            receiverId:props.receiverId,
             type:-1,
-            commOrPost
+          
            
         })
 setDislikes(dislikes - 1)
@@ -212,7 +212,7 @@ setDislikeAction(null)
         if(resultUpDiss.data.success){
             socket.emit('sendNotification', {
                 senderName: props.senderName,
-                receiverName: props.receiverName,
+                receiverId:props.receiverId,
                 avatar:props.userİmageSender,
                 type:-1,
                 commOrPost

@@ -41,6 +41,8 @@ useEffect(() => {
  })
 }, [socket])
 
+
+
 useEffect(() => {
     socket?.on("deleteNotificationget",(data)=>{
       
@@ -113,10 +115,10 @@ setCommentLists(deletedArr)
 
 
 
+
  
 useEffect(() => {
 
-    
 const allComments = async ()=>{
     const postVariable = {
         postId : params.id
@@ -199,7 +201,7 @@ allComments()
                
                {
                    ısAuthenticated ?
-                   <LikeDislike post postId={params.id} userId={user.id} receiverName={currentPost.authorId.google.name} senderName={user.name}  socket={socket} userİmageSender={user.avatar} />
+                   <LikeDislike post postId={params.id} userId={user.id} receiverId={currentPost.authorId._id}  senderName={user.name}  socket={socket} userİmageSender={user.avatar} />
                    :
                    <></>
                }
@@ -213,7 +215,7 @@ allComments()
          
             <div className="postPage" style={{ width: '100%', padding: '3rem 4em' }}>
            
-            <Comments socket={socket} CommentLists={CommentLists} post={currentPost?._id} receiverName={currentPost.authorId.google.name}   refreshFunction={updateComment} editFunction={editComment} deleteFunction={deleteComment}  />
+            <Comments socket={socket} CommentLists={CommentLists} post={currentPost?._id} receiverId={currentPost.authorId._id}   refreshFunction={updateComment} editFunction={editComment} deleteFunction={deleteComment}  />
        </div>
           
         </div>
