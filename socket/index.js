@@ -34,10 +34,10 @@ io.on('connection', (socket) => {
       });
   
     
-      socket.on("sendNotification", ({ senderName,receiverId, type,avatar,commOrPost}) => {
-  
+      socket.on("sendNotification", ({ senderName,receiverId, type,avatar,commOrPost,postId}) => {
+
         const receiver = getUser(receiverId);
-    console.log(receiver)
+
         if(receiver !== undefined){
      
           socket.to(receiver.socketId).emit("getNotification", {
@@ -46,6 +46,7 @@ io.on('connection', (socket) => {
             avatar,
             receiveSocketId: receiver.socketId,
             commOrPost,
+            postId
             
             
           
