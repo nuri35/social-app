@@ -24,7 +24,7 @@ function ReplyComment(props){
         setChildCommentNumber(commentNumber)
     }, [props.CommentLists, props.parentCommentId])
 
-console.log(props.CommentLists)
+
     let renderReplyComment = (parentCommentId) =>
         props.CommentLists.map((comment) => (
             <React.Fragment>

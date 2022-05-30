@@ -179,7 +179,7 @@ const hideCommentInput = ()=>{
     
     
       ısAuthenticated && !editInput ?
-      <LikeDislike comment commentId={props.comment._id} userId={user.id} receiverId={props.receiverId} senderName={user.name}  socket={socket} userİmageSender={user.avatar} />
+      <LikeDislike comment commentId={props.comment._id} userId={user.id} postId={props.postId}  receiverId={props.receiverId} senderName={user.name}  socket={socket} userİmageSender={user.avatar} />
       :
       <></>
     ,
@@ -235,7 +235,8 @@ const hideCommentInput = ()=>{
             receiverId:props.receiverId,
             avatar:user.avatar,
             type:2,
-            commOrPost : false
+            commOrPost : false,
+            postId:props.postId
            
            
         })

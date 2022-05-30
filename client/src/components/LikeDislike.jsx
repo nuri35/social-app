@@ -122,7 +122,8 @@ const onLike = async (e)=>{
             avatar:props.userİmageSender,
             type:1,
             receiverId:props.receiverId,
-            commOrPost
+            commOrPost,
+            postId:props.postId
         })
 
                 setLikes(likes +1)
@@ -215,7 +216,8 @@ setDislikeAction(null)
                 receiverId:props.receiverId,
                 avatar:props.userİmageSender,
                 type:-1,
-                commOrPost
+                commOrPost,
+                postId:props.postId
                
             })
             setDislikes(dislikes +1)

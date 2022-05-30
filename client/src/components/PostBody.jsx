@@ -33,6 +33,7 @@ function PostBody({socket}){
 }, [dispatch,params.id])
 
 
+
 const [notifications,setNotifications] = useState([])
 
 useEffect(() => {
@@ -215,7 +216,7 @@ allComments()
          
             <div className="postPage" style={{ width: '100%', padding: '3rem 4em' }}>
            
-            <Comments socket={socket} CommentLists={CommentLists} post={currentPost?._id} receiverId={currentPost.authorId._id}   refreshFunction={updateComment} editFunction={editComment} deleteFunction={deleteComment}  />
+            <Comments socket={socket} CommentLists={CommentLists}  post={currentPost?._id}  receiverId={currentPost.authorId._id}   refreshFunction={updateComment} editFunction={editComment} deleteFunction={deleteComment}  />
        </div>
           
         </div>

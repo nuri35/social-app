@@ -90,7 +90,8 @@ import { LoadingOutlined } from '@ant-design/icons';
             receiverId:props.receiverId,
             avatar:user.avatar,
             type:2,
-            commOrPost : true
+            commOrPost : true,
+            postId:props.post
            
            
         })

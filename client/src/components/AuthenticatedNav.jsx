@@ -16,10 +16,11 @@ import Badge from '@mui/material/Badge';
 import { AuthContext } from "./Context";
 import Button from "./CustomButtons/Button";
 import { Empty} from 'antd';
+import CardActionArea from '@mui/material/CardActionArea';
 
 
 const useStyles = makeStyles(styles);
-
+const src = `http://localhost:3000/Post/`
 function SectionNavbars({notifications}) {
 
   const {user} = useContext(AuthContext)
@@ -51,7 +52,7 @@ function SectionNavbars({notifications}) {
   const handleCloseNotification = () => {
     setAnchorElNoti(null);
   };
-
+console.log(notifications)
   const logoutHandle = async()=>{
 
       window.open("http://localhost:5000/auth/logout", "_self");
@@ -59,7 +60,7 @@ function SectionNavbars({notifications}) {
 
   }
   
-const displayNotification = ({senderName,type,avatar,commOrPost})=>{
+const displayNotification = ({senderName,type,avatar,commOrPost,postId})=>{
 let action;
 let postOrComm;
 
@@ -82,7 +83,7 @@ if(commOrPost){
 return (
  
   <div className='notifaction'>
-
+  <CardActionArea  href={src+postId}>
   
   <MenuItem >
   
@@ -96,6 +97,7 @@ return (
   {`${senderName} ${action} your  ${postOrComm}`}
  
 </MenuItem>
+</CardActionArea>
 </div>
 );
 
