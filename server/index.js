@@ -11,6 +11,7 @@ const blogRouter = require("./src/router/blogRouter")
 const authrouter = require("./src/router/auth_router") 
 const commentRouter = require("./src/router/commnet_router")
  const likeDislike = require("./src/router/action")
+const notifyRouter = require("./src/router/notifyRouter")
 const passport = require("passport");
 database.main()
 const {
@@ -45,6 +46,8 @@ app.use('/blogs',blogRouter)
 app.use('/comment',commentRouter)
 app.use("/action",likeDislike)
 app.use("/auth",authrouter)
+ app.use("/notify",notifyRouter)
+
 const server = app.listen(process.env.PORT,()=>{
     console.log("bu port dınlenıyor: " + process.env.PORT)
 })
