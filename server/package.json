@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon  index.js",
+    "start": "node index.js",
+    "dev": "nodemon -L index.js",
     "test": "cross-env NODE_ENV=localhost mocha  --exit --recursive",
     "coverage": "nyc --reporter html  npm run test"
   },
@@ -53,5 +54,3 @@
     "nyc": "^15.1.0"
   }
 }
-
-
