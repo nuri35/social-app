@@ -202,7 +202,7 @@ allComments()
                
                {
                    ısAuthenticated ?
-                   <LikeDislike post postId={params.id} userId={user.id} receiverId={currentPost.authorId._id}  senderName={user.name}  socket={socket} userİmageSender={user.avatar} />
+                   <LikeDislike post postId={params.id} userId={user.id} user={user} receiverId={currentPost.authorId._id}  senderName={user.name}  socket={socket} userİmageSender={user.avatar} />
                    :
                    <></>
                }

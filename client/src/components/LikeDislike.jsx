@@ -2,11 +2,12 @@ import React , {useState,useEffect,useMemo}from 'react'
 import Tooltip from '@mui/material/Tooltip';
 import { LikeOutlined,DislikeOutlined,LikeFilled,DislikeFilled } from '@ant-design/icons';
 import axios from "axios"
-
-
+import { useDispatch ,useSelector} from 'react-redux'
+import { createNotify }from '../actions/notify'
 function LikeDislike(props) {
-    const {socket} = props
-
+    const { socket } = useSelector(state => state)
+    const {user} = props
+    const dispatch = useDispatch()
     const [likes, setLikes] = useState(0);
     const [likeAction, setLikeAction] = useState(null);
 
@@ -116,16 +117,16 @@ const onLike = async (e)=>{
             const result =   await axios.post("http://localhost:5000/action/upLike",variable)
 
       if(result.data.success){
-      
-        socket.emit('sendNotification', {
-            senderName: props.senderName,
-            avatar:props.userİmageSender,
-            type:1,
-            receiverId:props.receiverId,
-            commOrPost,
-            postId:props.postId
-        })
 
+        const msg = {
+            id: props.userId,
+            text: 'like your post.',
+            recipients: [props.receiverId],
+            url: `/post/${props.postId}`,
+        
+        }
+        dispatch(createNotify({msg,socket,user}))
+      
                 setLikes(likes +1)
                 setLikeAction("liked")
 

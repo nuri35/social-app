@@ -52,7 +52,7 @@ function SectionNavbars({notifications}) {
   const handleCloseNotification = () => {
     setAnchorElNoti(null);
   };
-console.log(notifications)
+
   const logoutHandle = async()=>{
 
       window.open("http://localhost:5000/auth/logout", "_self");
