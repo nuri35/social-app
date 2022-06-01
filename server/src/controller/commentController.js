@@ -78,9 +78,10 @@ const deleteComment = async (req,res)=>{
 
     try{
       
-    const deleteValue =   await Comment.findByIdAndDelete(req.params.id);
+    const deleteValue =   await Comment.findByIdAndDelete(req.params.id).populate('responseTo','writer')
+  
     
-     res.status(200).json({success:true,message:"Comment Deleted",ıtem:deleteValue._id})
+     res.status(200).json({success:true,message:"Comment Deleted",ıtem:deleteValue})
     }catch(err){
        console.log(err)
     }
