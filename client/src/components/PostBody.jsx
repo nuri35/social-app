@@ -202,7 +202,7 @@ allComments()
                
                {
                    ısAuthenticated ?
-                   <LikeDislike post postId={params.id} userId={user.id} user={user} receiverId={currentPost.authorId._id}  senderName={user.name}  socket={socket} userİmageSender={user.avatar} />
+                   <LikeDislike post postId={params.id} userId={user.id} user={user} receiverId={currentPost.authorId._id}   />
                    :
                    <></>
                }
@@ -216,7 +216,7 @@ allComments()
          
             <div className="postPage" style={{ width: '100%', padding: '3rem 4em' }}>
            
-            <Comments socket={socket} CommentLists={CommentLists}  post={currentPost?._id}  receiverId={currentPost.authorId._id}   refreshFunction={updateComment} editFunction={editComment} deleteFunction={deleteComment}  />
+            <Comments  CommentLists={CommentLists}  post={currentPost?._id}  receiverId={currentPost.authorId._id}   refreshFunction={updateComment} editFunction={editComment} deleteFunction={deleteComment}  />
        </div>
           
         </div>

@@ -151,7 +151,7 @@ if(node) observer.current.observe(node)
           <ThemeProvider theme={theme}>
         
            {ısAuthenticated ?
-            <AuthenticatedNav socket={socket} >
+            <AuthenticatedNav  >
 
 </AuthenticatedNav>
            

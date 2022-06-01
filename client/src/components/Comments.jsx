@@ -2,6 +2,7 @@ import React , {useState,useContext}from 'react'
 import axios from "axios"
 import Box from '@mui/material/Box';
 import Input from '@mui/material/Input';
+import { useDispatch,useSelector} from 'react-redux'
 import FormControl from '@mui/material/FormControl';
 import Popover from '@mui/material/Popover';
 import Tooltip from '@mui/material/Tooltip';
@@ -15,13 +16,13 @@ import { AuthContext } from "./Context";
 import {notification } from 'antd';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
-
+import { createNotify }from '../actions/notify'
  function Comments(props) {
-  const {socket} = props
+ 
   const [loading,setLoading] = useState(false)
-  
+  const dispatch = useDispatch()
   const {user,ısAuthenticated} = useContext(AuthContext)
-
+  const { socket } = useSelector(state => state)
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -85,16 +86,20 @@ import { LoadingOutlined } from '@ant-design/icons';
 
  
         if(commentVariable.data.success){
-          socket.emit('sendNotification', {
-            senderName: user.name,
-            receiverId:props.receiverId,
-            avatar:user.avatar,
-            type:2,
-            commOrPost : true,
-            postId:props.post
-           
-           
-        })
+
+           // Notify
+        const msg = {
+          id: commentVariable.data.result[0]._id,
+          text: 'has commented on your post.',
+          recipients: [props.receiverId],
+          url: `/post/${props.post}`
+         
+      }
+        
+   
+      
+        dispatch(createNotify({msg,socket,user}))
+
           setComment("")
           props.refreshFunction(commentVariable.data.result)
         
@@ -195,9 +200,9 @@ const antIcon = <LoadingOutlined style={{ fontSize: 24,position:"relative",left:
           
           <React.Fragment>
             
-          <SingleComment comment={comment} socket={socket} receiverId={comment.writer._id}  postId={comment.postId} refreshFunction={props.refreshFunction} editFunction={props.editFunction}  deleteFunction={props.deleteFunction} />
+          <SingleComment  postId={comment.postId}  comment={comment}  receiverId={props.receiverId}   refreshFunction={props.refreshFunction} editFunction={props.editFunction}  deleteFunction={props.deleteFunction} />
 
-          <ReplyComment   CommentLists={props.CommentLists} socket={socket} receiverId={comment.writer._id}  postId={comment.postId} parentCommentId={comment._id} refreshFunction={props.refreshFunction} editFunction={props.editFunction} deleteFunction={props.deleteFunction} />
+          <ReplyComment   CommentLists={props.CommentLists}   postId={comment.postId} parentCommentId={comment._id} refreshFunction={props.refreshFunction} editFunction={props.editFunction} deleteFunction={props.deleteFunction} />
           </React.Fragment>
           )
         

@@ -3,6 +3,7 @@ import Input from '@mui/material/Input';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import "antd/dist/antd.min.css"
+import { useDispatch,useSelector} from 'react-redux'
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import { Comment } from 'antd';
@@ -20,12 +21,13 @@ import LikeDislike from "./LikeDislike"
 import Popover from '@mui/material/Popover';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
-
+import { removeNotify,createNotify }from '../actions/notify'
 const SingleComment = (props) => {
 
- const {socket} = props
-  const {user,ısAuthenticated} = useContext(AuthContext)
 
+  const {user,ısAuthenticated} = useContext(AuthContext)
+  const dispatch = useDispatch()
+  const { socket } = useSelector(state => state)
   const [popoverContent,setPopoverContent] = useState(false)
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -179,7 +181,7 @@ const hideCommentInput = ()=>{
     
     
       ısAuthenticated && !editInput ?
-      <LikeDislike comment commentId={props.comment._id} userId={user.id} postId={props.postId}  receiverId={props.receiverId} senderName={user.name}  socket={socket} userİmageSender={user.avatar} />
+      <LikeDislike comment commentId={props.comment._id} userId={user.id} postId={props.postId}  receiverId={props.receiverId} senderName={user.name}   userİmageSender={user.avatar} />
       :
       <></>
     ,
@@ -205,7 +207,7 @@ const hideCommentInput = ()=>{
 
   ];
 
-  
+
 
   const commentSub =  async (e)=>{
     e.preventDefault();
@@ -230,17 +232,20 @@ const hideCommentInput = ()=>{
 
 
         if(commentVariables.data.success){
-          socket.emit('sendNotification', {
-            senderName: user.name,
-            receiverId:props.receiverId,
-            avatar:user.avatar,
-            type:2,
-            commOrPost : false,
-            postId:props.postId
-           
-           
-        })
 
+         
+          const msg = {
+            id: commentVariables.data.result[0]._id,
+            text: 'mentioned you in a comment.',
+            recipients: [props.comment.writer._id],
+            url: `/post/${props.postId}`
+           
+        }
+          
+     
+        
+          dispatch(createNotify({msg,socket,user}))
+         
           setCommentval("")
           setCommentInput(false)
           props.refreshFunction(commentVariables.data.result)
@@ -298,6 +303,8 @@ const editCommentResult =   await axios.put("http://localhost:5000/comment/editS
 
 }
 
+
+
 const deleteAction = async (e) =>{
   e.preventDefault();
 
@@ -312,17 +319,19 @@ const deleteResult =   await axios.delete(`http://localhost:5000/comment/delete/
 
 
 if(deleteResult.data.success){
+
+
+const msg = {
+  id: whichProps,
+  text: props.comment.responseTo ? 'mentioned you in a comment.' : 'has commented on your post.',
+  recipients: props.comment.responseTo ?   [deleteResult.data.ıtem.responseTo.writer]  : [props.receiverId],
+  url: `/post/${props.postId}`,
+}
   
 
-  socket.emit('deleteNotification', {
-    senderName: user.name,
-    receiverId:props.receiverId,
-    type:2,
-  
-  
-   
-})
- 
+dispatch(removeNotify({msg,socket}))
+
+
   setIsVisible(!isVisible)
   deleteNotifaction(deleteResult.data.message)
 

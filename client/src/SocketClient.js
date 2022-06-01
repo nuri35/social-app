@@ -24,6 +24,7 @@ const SocketClient = () => {
     useEffect(() => {
        
         socket.on("createNotifyToClient",(msg)=>{
+          
             dispatch({type: NOTIFY_TYPES.CREATE_NOTIFY, payload: msg})
           })
 

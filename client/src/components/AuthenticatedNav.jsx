@@ -15,14 +15,17 @@ import {BellOutlined,LogoutOutlined} from '@ant-design/icons';
 import Badge from '@mui/material/Badge';
 import { AuthContext } from "./Context";
 import Button from "./CustomButtons/Button";
+import { useSelector,useDispatch } from 'react-redux'
 import { Empty} from 'antd';
 import CardActionArea from '@mui/material/CardActionArea';
-
-
+import { isReadNotify } from '../actions/notify'
+import { Badge as MyBadge } from 'antd';
 const useStyles = makeStyles(styles);
-const src = `http://localhost:3000/Post/`
-function SectionNavbars({notifications}) {
 
+function SectionNavbars() {
+  const dispatch = useDispatch()
+  const {  notify } = useSelector(state => state)
+  const {data} = notify
   const {user} = useContext(AuthContext)
   const classes = useStyles();
   const [setAnchorElNav] = React.useState(null);
@@ -59,43 +62,48 @@ function SectionNavbars({notifications}) {
    
 
   }
+
+  const handleIsRead = (msg) => {
+    
+    dispatch(isReadNotify({msg}))
+}
   
-const displayNotification = ({senderName,type,avatar,commOrPost,postId})=>{
-let action;
-let postOrComm;
+const displayNotification = ({url,text,user,isRead})=>{
 
-if(type === 1 ){
-action = "Liked"
-}else if (type === 2){
-action = "Commented"
-}else if (type === -1){
-  action = "Disliked"
-}
-
-if(commOrPost){
-  postOrComm = "Post"
-}else{
-  postOrComm = "Comment"
-}
-
+const mainUrl = "http://localhost:3000"
 
 
 return (
- 
+  
   <div className='notifaction'>
-  <CardActionArea  href={src+postId}>
+  <CardActionArea href={mainUrl + url}  >
   
   <MenuItem >
-  
+  {
+    !isRead ?
+    <MyBadge color={'green'}  />
+    :
+    <></>
+  }
+ 
   <div className="avNoti">
 
- 
-  <Avatar src={avatar}>
+ {user.google ? 
+ <Avatar src={user.google.avatar}>
+            
+ </Avatar>
+ : 
+ <Avatar src={user.avatar}>
             
    </Avatar>
+}
+
    </div>
-  {`${senderName} ${action} your  ${postOrComm}`}
  
+   <div>
+           <strong className="mr-1"> {user.google ? user.google.name : user.username} </strong>
+                    <span> {text} </span>
+                      </div>
 </MenuItem>
 </CardActionArea>
 </div>
@@ -128,12 +136,17 @@ return (
                 <MenuItem >
         <IconButton onClick={handleOpenNotification} size="small" aria-label="show 4 new mails" color="inherit">
        
-
-          <Badge  badgeContent={notifications?.length > 0 ?  `${notifications?.length}` : "0"} color="error">
-            <BellOutlined />
-          </Badge>
+       
+  <Badge color="error"
+       badgeContent={data.filter(n => !n.isRead).length}
+       
+  >
+      <BellOutlined /> 
+  </Badge>
+           
+       
         </IconButton>
-      
+     
       </MenuItem>
             </Tooltip>
 
@@ -158,10 +171,16 @@ return (
 </div>
 
           {
-          notifications?.length >0 ?
+          data?.length >0 ?
        
-
-          notifications.map((n) => displayNotification(n))
+           
+          data.map((n,index) => 
+          <div key={index} onClick={() => handleIsRead(n)}>
+         { displayNotification(n)}
+          </div>
+         
+          
+          )
           :
           <div>
 

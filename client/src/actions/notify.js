@@ -1,4 +1,4 @@
-import {getNotify,postDataAPI } from './../api/notify'
+import {getNotify,postDataAPI,patchDataAPI,deleteDataAPI } from './../api/notify'
 export const NOTIFY_TYPES = {
     GET_NOTIFIES: 'GET_NOTIFIES',
     CREATE_NOTIFY: 'CREATE_NOTIFY',
@@ -26,6 +26,7 @@ export const getNotifies = () => async (dispatch) => {
 
 export const createNotify = ({msg,socket,user}) => async (dispatch) => {
     try {
+       
         const res = await postDataAPI(msg)
 
         socket.emit('createNotify', {
@@ -35,6 +36,35 @@ export const createNotify = ({msg,socket,user}) => async (dispatch) => {
                 avatar: user.avatar
             }
         })
+    } catch (err) {
+     
+       console.log(err)
+    }
+}
+
+
+
+export const isReadNotify = ({msg}) => async (dispatch) => {
+   
+    dispatch({type: NOTIFY_TYPES.UPDATE_NOTIFY, payload: {...msg, isRead: true}})
+    try {
+       
+        await patchDataAPI(msg._id,null)
+
+      
+    } catch (err) {
+     
+       console.log(err)
+    }
+}
+
+
+
+export const removeNotify = ({msg, socket}) => async (dispatch) => {
+    try {
+        await deleteDataAPI(msg)
+        
+        socket.emit('removeNotify', msg)
     } catch (err) {
        console.log(err)
     }

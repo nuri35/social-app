@@ -3,7 +3,8 @@ import Tooltip from '@mui/material/Tooltip';
 import { LikeOutlined,DislikeOutlined,LikeFilled,DislikeFilled } from '@ant-design/icons';
 import axios from "axios"
 import { useDispatch ,useSelector} from 'react-redux'
-import { createNotify }from '../actions/notify'
+import { createNotify,removeNotify }from '../actions/notify'
+import toast, { Toaster } from 'react-hot-toast';
 function LikeDislike(props) {
     const { socket } = useSelector(state => state)
     const {user} = props
@@ -15,23 +16,24 @@ function LikeDislike(props) {
     const [dislikeAction, setDislikeAction] = useState(null);
 
 
-    
+      
+   
+    const notify = () => toast('we will not share with creator as notification Sorry.', {
+        icon: '👏',
+      });
+
     let variable = useMemo(() => {
         return {};
       
       
   },[]);
 
-  let commOrPost = useMemo(() => {
-    return true;
-  
-  
-},[]);
+
 
     
 
     if(props.post){
-        commOrPost = true
+      
          variable = {
            postId:props.postId,
            user:props.userId
@@ -39,7 +41,7 @@ function LikeDislike(props) {
 
 
     }else{
-        commOrPost = false
+       
          variable = {
             commentId:props.commentId,
             user:props.userId
@@ -112,7 +114,7 @@ const onLike = async (e)=>{
 
         if(likeAction === null){
 
-         
+          
      
             const result =   await axios.post("http://localhost:5000/action/upLike",variable)
 
@@ -125,6 +127,7 @@ const onLike = async (e)=>{
             url: `/post/${props.postId}`,
         
         }
+      
         dispatch(createNotify({msg,socket,user}))
       
                 setLikes(likes +1)
@@ -145,18 +148,20 @@ const onLike = async (e)=>{
 
     }else{
 
-      
+      ///unlike your like post
         const resultUn =   await axios.post("http://localhost:5000/action/unLike",variable)
 
         if(resultUn.data.success){
-            socket.emit('deleteNotification', {
-                senderName: props.senderName,
-                receiverId:props.receiverId,
-                type:1,
-               
-              
-               
-            })
+           
+            const msg = {
+                id: props.userId,
+                text: 'like your post.',
+                recipients: [props.receiverId],
+                url: `/post/${props.postId}`,
+            
+            }
+          
+            dispatch(removeNotify({msg,socket}))
                 
             setLikes(likes -1)
             setLikeAction(null)
@@ -171,7 +176,7 @@ const onLike = async (e)=>{
 
 
     }catch(err){
-        console.log(err)
+       
     }
 
   
@@ -189,13 +194,9 @@ const onDislike = async (e)=>{
             const resultDiss =   await axios.post("http://localhost:5000/action/unDislike",variable)
 
       if(resultDiss.data.success){
-        socket.emit('deleteNotification', {
-            senderName: props.senderName,
-            receiverId:props.receiverId,
-            type:-1,
-          
-           
-        })
+      
+        
+
 setDislikes(dislikes - 1)
 setDislikeAction(null)
 
@@ -212,18 +213,10 @@ setDislikeAction(null)
         const resultUpDiss =   await axios.post("http://localhost:5000/action/upDislike",variable)
 
         if(resultUpDiss.data.success){
-            socket.emit('sendNotification', {
-                senderName: props.senderName,
-                receiverId:props.receiverId,
-                avatar:props.userİmageSender,
-                type:-1,
-                commOrPost,
-                postId:props.postId
-               
-            })
+            
             setDislikes(dislikes +1)
             setDislikeAction("disliked")
-
+            notify()
 
 
             if(likeAction !== null){
@@ -251,7 +244,7 @@ setDislikeAction(null)
     return (
       
         <React.Fragment>
-
+ <Toaster />
 <span>
         <Tooltip title="Like" onClick={onLike}>
        
