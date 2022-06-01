@@ -1,0 +1,114 @@
+version: "3.9"
+
+services:
+      
+  socket:
+    build: ./socket
+    ports:
+      - 6500:6500
+    tty: true
+    env_file: socket/.env
+    restart: on-failure
+
+    depends_on:
+      - frontend
+
+    networks:
+      - app
+
+  backend:
+    
+    build:
+      context:  ./server
+      args:
+        NODE_ENV: production
+
+    depends_on:
+      - mongo
+
+    deploy:
+      replicas: 5
+      update_config:
+        parallelism: 2
+        delay: 10s
+        failure_action: rollback
+ 
+      restart_policy:
+          condition: on-failure
+          delay: 5s
+          max_attempts: 3
+          window: 120s    
+    env_file: ./server/.env
+    environment:
+      - DB_HOST=mongo
+      - DB_USER=root
+      - DB_PASSWORD=example
+      - DB_NAME=Blog
+      - DB_PORT=27017
+      - NODE_ENV=production
+
+    command: npm start
+    
+    ports:
+      - 6868:5000
+
+   
+    networks:
+      - webapp
+
+    secrets:
+      - db_password
+
+
+  frontend:
+    build:
+      context:  ./client
+      args:
+        NODE_ENV: production
+    ports:
+      - 3000:3000
+    tty: true
+    restart: on-failure
+
+    command: npm run build
+    networks:
+      - webapp 
+    depends_on:
+      - backend   
+
+  mongo:
+
+    image: mongo
+    
+   
+    volumes:
+      - db-data:/var/lib/mongo/data
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=example
+   
+    networks:
+      - webapp
+
+    secrets:
+      - db_password
+      
+
+networks:
+  webapp:
+    driver: overlay
+    # attachable: true
+    # external: false
+
+secrets:
+  db_password:
+    file: db_password.txt
+
+
+volumes:
+  db-data:
+
+# https://www.youtube.com/watch?v=3xDAU5cvi5E
+# https://www.youtube.com/watch?v=gm_L69NHuHM&t=4883s

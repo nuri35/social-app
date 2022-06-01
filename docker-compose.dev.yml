@@ -10,6 +10,79 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
 
+  socket:
+    build: ./socket
+    ports:
+      - 6500:6500
+    tty: true
+    env_file: socket/.env
+    restart: on-failure
+
+    depends_on:
+      - frontend
+
+    networks:
+      - app
+
+    
+  backend:
+    
+    build:
+      context:  ./server
+      args:
+        NODE_ENV: development
+
+    depends_on:
+      - mongo
+    restart: on-failure
+   
+      
+    env_file: server/.env
+   
+    volumes:
+      - ./server:/usr/src/app
+      - /usr/src/app/node_modules
+  
+    tty: true
+  #  /run/secrets/db_password
+    environment:
+      - DB_HOST=mongo
+      - DB_USER=root
+      - DB_PASSWORD=example
+      - DB_NAME=Blog
+      - DB_PORT=27017
+      - NODE_ENV=development
+
+    command: npm run dev
+     
+    ports:
+      - 5000:5000
+
+    networks:
+      - app
+    
+    secrets:
+      - db_password
+
+
+    
+
+  frontend:
+    build:
+      context:  ./client
+      dockerfile: Dockerfile.dev
+
+    ports:
+      - 3000:3000
+    tty: true
+    restart: on-failure
+
+    networks:
+      - app 
+    depends_on:
+      - backend      
+
+
   mongo:
     image: mongo
     restart: on-failure
@@ -23,90 +96,19 @@ services:
   
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=/run/secrets/db_password
+      - MONGO_INITDB_ROOT_PASSWORD=example
 
-
-
-    
-  backend:
-    
-    build: ./server
-    depends_on:
-      - mongo
-    restart: on-failure
-    links:
-      - mongo
-      
-    env_file: server/.env
-   
-    volumes:
-      - /home/full/path:/tmp/cache  
-
-    tty: true
-   
-    environment:
-      - DB_HOST=mongo
-      - DB_USER=root
-      - DB_PASSWORD=/run/secrets/db_password
-      - DB_NAME=Blog
-      - DB_PORT=27017
-      - NODE_ENV=development
-     
-    ports:
-      - 5000:5000
-
-    networks:
-      - app
-      - front
-     
-
-    secrets:
-      - db_password
-
-
-  
-  frontend:
-    build: ./client
-    ports:
-      - 3000:3000
-    tty: true
-    restart: on-failure
-    networks:
-      - front 
-    depends_on:
-      - backend      
-
-    links:
-      - backend
-
-  socket:
-    build: ./socket
-    ports:
-      - 6500:6500
-    tty: true
-    env_file: socket/.env
-    restart: on-failure
-
-    depends_on:
-      - frontend
-
-    networks:
-      - front
-    links:
-      - frontend
+ 
 
   
 
 networks:
   app:
     driver: bridge
-  front:
-    driver: bridge
+ 
 volumes:
   db-data:
 secrets:
   db_password:
     file: db_password.txt
 
-
-# CI=true  add package.json for not error in frontend 
