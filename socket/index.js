@@ -9,20 +9,20 @@ const io = new Server(process.env.SOCKET_PORT,{
     }
 });
 
-let onlineUsers = []
+let users = []
 const addNewUser = (userId, socketId) => {
-    !onlineUsers.some((user) => user.userId === userId) &&
-      onlineUsers.push({ userId, socketId });
+    !users.some((user) => user.userId === userId) &&
+    users.push({ userId, socketId });
   };
 
   const removeUser = (socketId) => {
-    onlineUsers = onlineUsers.filter((user) => user.socketId !== socketId);
+    users = users.filter((user) => user.socketId !== socketId);
   };
 
   
 const getUser = (receiverId) => {
  
-  return  onlineUsers.find((user) => user.userId === receiverId);
+  return  users.find((user) => user.userId === receiverId);
 
 };
 io.on('connection', (socket) => {
@@ -34,38 +34,10 @@ io.on('connection', (socket) => {
       });
   
     
-      socket.on("sendNotification", ({ senderName,receiverId, type,avatar,commOrPost,postId}) => {
-
-        const receiver = getUser(receiverId);
-
-        if(receiver !== undefined){
-     
-          socket.to(receiver.socketId).emit("getNotification", {
-            senderName,
-            type,
-            avatar,
-            receiveSocketId: receiver.socketId,
-            commOrPost,
-            postId
-            
-            
-          
-          });
-      }
-    
-      
-      });
-
-      socket.on("deleteNotification", ({ senderName,type ,receiverId}) => {
-      
-        const receiver = getUser(receiverId);
-  
-        socket.to(receiver.socketId).emit("deleteNotificationget", {
-          senderName,
-          type,
-          receiveSocketId: receiver.socketId
-        });
-      });
+      socket.on('createNotify', msg => {
+        const client = users.find(user => msg.recipients.includes(user.id))
+        client && socket.to(`${client.socketId}`).emit('createNotifyToClient', msg)
+    })
 
 
     socket.on('disconnect',()=>{
