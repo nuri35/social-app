@@ -59,7 +59,7 @@ const App = () => {
 
   },[dispatch])
 
- 
+
  
  useEffect(() => {
   if(ısAuthenticated) {

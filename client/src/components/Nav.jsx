@@ -26,7 +26,7 @@ function SectionNavbars() {
         
             <Header
             
-            brand="BLOGİUM"
+            brand="BLOGİUMasas"
             
            
             rightLinks={
