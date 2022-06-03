@@ -11,13 +11,16 @@ services:
 
 
   socket:
-    build: ./socket
+    build:
+      context:  ./socket
+      args:
+        NODE_ENV: development
     ports:
       - 6500:6500
     tty: true
     env_file: socket/.env
     restart: on-failure
-
+    command: npm run dev
     depends_on:
       - frontend
 

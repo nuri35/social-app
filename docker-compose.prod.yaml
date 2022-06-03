@@ -3,26 +3,22 @@ version: "3.9"
 services:
       
   socket:
-    build: ./socket
+    image: nurettinsenbackend/socket
     ports:
       - 6500:6500
     tty: true
     env_file: socket/.env
-    restart: on-failure
+   
 
     depends_on:
       - frontend
 
     networks:
-      - app
+      - webapp
 
   backend:
-    
-    build:
-      context:  ./server
-      args:
-        NODE_ENV: production
-
+    image: nurettinsenbackend/server
+   
     depends_on:
       - mongo
 
@@ -46,8 +42,6 @@ services:
       - DB_NAME=Blog
       - DB_PORT=27017
       - NODE_ENV=production
-
-    command: npm start
     
     ports:
       - 6868:5000
@@ -61,16 +55,16 @@ services:
 
 
   frontend:
-    build:
-      context:  ./client
-      args:
-        NODE_ENV: production
+    image: nurettinsenbackend/client
+      
     ports:
-      - 3000:3000
+      - 80:80
     tty: true
-    restart: on-failure
-
-    command: npm run build
+   
+    environment:
+    
+      - CHOKIDAR_USEPOLLING=true
+    
     networks:
       - webapp 
     depends_on:
@@ -110,5 +104,3 @@ secrets:
 volumes:
   db-data:
 
-# https://www.youtube.com/watch?v=3xDAU5cvi5E
-# https://www.youtube.com/watch?v=gm_L69NHuHM&t=4883s
