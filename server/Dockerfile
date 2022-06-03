@@ -9,6 +9,5 @@ RUN if ["$NODE_ENV" = "development"]; \
         fi
 
 COPY . /usr/src/app  
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=4 CMD node healthcheck.js
 EXPOSE 5000
 CMD ["npm", "start"]

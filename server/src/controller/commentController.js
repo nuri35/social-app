@@ -78,9 +78,14 @@ const deleteComment = async (req,res)=>{
 
     try{
       
-    const deleteValue =   await Comment.findByIdAndDelete(req.params.id).populate('responseTo','writer')
+    const deleteValue =   await Comment.findByIdAndDelete({_id:req.params.id, $or: [
+        {writer: req.user.id},
+        {authorId: req.user.id}
+    ]}).populate('responseTo','writer').populate('postId','authorId')
   
-    
+    //burda kal yarın en usttekı nested yorumu sılınce nested yorumlar database de kalıyor çare bul ayrıca en usttekı yorumu sılınce notify dada usttekı yoruma ılıskın notıfy sılınıyor nestedlardakı notfıy bılıdırımler sılınmıyor bı yarın ogleden sonra düşün en sonda like dıslıke comment o zaten basıt yaparsın
+
+
      res.status(200).json({success:true,message:"Comment Deleted",ıtem:deleteValue})
     }catch(err){
        console.log(err)
