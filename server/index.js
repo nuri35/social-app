@@ -1,4 +1,4 @@
-const express = require("express")
+// const express = require("express")
 const app = express()
 require('dotenv').config();
 const database = require("./src/controller/database")
@@ -7,11 +7,9 @@ const bodyParser = require("body-parser")
 const cors = require("cors")
 const session = require("express-session")
 const cookieParser = require('cookie-parser')
-const blogRouter = require("./src/router/blogRouter")
-const authrouter = require("./src/router/auth_router") 
-const commentRouter = require("./src/router/commnet_router")
- const likeDislike = require("./src/router/action")
-const notifyRouter = require("./src/router/notifyRouter")
+
+
+
 const passport = require("passport");
 database.main()
 const {
@@ -37,16 +35,17 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors({origin:`${process.env.WEB_SITE_URL}` ,credentials:true})) 
+app.use(cors({origin:process.env.NODE_ENV === "production" ?  `/`  :  `${process.env.WEB_SITE_URL}` ,credentials:true})) 
 app.use(cookieParser())
- app.use(bodyParser.json({limit:"50mb",extended:true})) 
+app.use(bodyParser.json({limit:"50mb",extended:true})) 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
-app.use('/blogs',blogRouter)
-app.use('/comment',commentRouter)
-app.use("/action",likeDislike)
-app.use("/auth",authrouter)
- app.use("/notify",notifyRouter)
+app.use('/api',require("./src/router/blogRouter"))
+app.use('/api',require("./src/router/commentRouter"))
+app.use("/api",require("./src/router/actionRouter"))
+app.use("/auth",require("./src/router/authRouter"))
+app.use("/api", require("./src/router/authRouter") )
+ app.use("/api", require("./src/router/notifyRouter"))
 
 const server = app.listen(process.env.PORT,()=>{
     console.log("bu port dınlenıyor: " + process.env.PORT)
