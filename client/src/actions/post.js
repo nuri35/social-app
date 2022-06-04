@@ -64,7 +64,7 @@ export  const SearchPost =  (query,pageNumber) =>{
     let cancel 
    axios({
        method:"GET",
-       url:`http://localhost:5000/blogs/search`,
+       url:`/api/search`,
        params:{q:query,page:pageNumber},
        withCredentials:true,
        cancelToken:new axios.CancelToken(c=>cancel = c)

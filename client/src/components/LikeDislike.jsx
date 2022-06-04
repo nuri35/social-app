@@ -58,7 +58,7 @@ const getAction = async()=>{
       
    
     
-  const result =   await axios.post("http://localhost:5000/action/getLikes",variable)
+  const result =   await axios.post("/api/likes",variable)
 
 
               if(result.data.success){
@@ -77,7 +77,7 @@ const getAction = async()=>{
               }
 
 
-              const resultDis =   await axios.post("http://localhost:5000/action/getDislikes",variable)
+              const resultDis =   await axios.post("/api/dislikes",variable)
 
         
               if(resultDis.data.success){
@@ -116,7 +116,7 @@ const onLike = async (e)=>{
 
           
      
-            const result =   await axios.post("http://localhost:5000/action/upLike",variable)
+            const result =   await axios.post("/api/upLike",variable)
 
       if(result.data.success){
 
@@ -149,7 +149,7 @@ const onLike = async (e)=>{
     }else{
 
       ///unlike your like post
-        const resultUn =   await axios.post("http://localhost:5000/action/unLike",variable)
+        const resultUn =   await axios.post("/api/unLike",variable)
 
         if(resultUn.data.success){
            
@@ -191,7 +191,7 @@ const onDislike = async (e)=>{
 
           
         
-            const resultDiss =   await axios.post("http://localhost:5000/action/unDislike",variable)
+            const resultDiss =   await axios.post("/api/unDislike",variable)
 
       if(resultDiss.data.success){
       
@@ -210,7 +210,7 @@ setDislikeAction(null)
 
       
        
-        const resultUpDiss =   await axios.post("http://localhost:5000/action/upDislike",variable)
+        const resultUpDiss =   await axios.post("/api/upDislike",variable)
 
         if(resultUpDiss.data.success){
             

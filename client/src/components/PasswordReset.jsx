@@ -78,7 +78,7 @@ function PasswordReset(props){
   //     const activationEmail = async () =>{
   //         try{
 
-  //           const res = await axios.post("http://localhost:5000/auth/verify",{activation_token})
+  //           const res = await axios.post("/api/verify",{activation_token})
            
   //           setMessage(res.data.message)
   //     handleClicks()
@@ -103,7 +103,7 @@ function PasswordReset(props){
 
         try{
 
-            const resetPassword = await axios.post("http://localhost:5000/auth/resetPassword",passwordValue)
+            const resetPassword = await axios.post("/api/resetPassword",passwordValue)
 
             resetField("password")
             resetField("resetPassword")

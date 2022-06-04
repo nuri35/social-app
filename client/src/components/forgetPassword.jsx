@@ -71,7 +71,7 @@ const onSubmit = async(data)=>{
   try{
     
 
-    const forgetPass = await axios.post("http://localhost:5000/auth/forgetPass",data)
+    const forgetPass = await axios.post("/api/forgetPass",data)
 
 
       setMessage(forgetPass.data.message)

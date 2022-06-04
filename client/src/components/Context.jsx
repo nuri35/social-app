@@ -9,7 +9,7 @@ const AuthProvider = ({children}) => {
   const [ısAuthenticated,setIsAuthenticated] = useState(false)
  
   useEffect(() => {
-    Axios.get(`http://localhost:5000/auth/user`, { withCredentials: true }).then(res => {
+    Axios.get(`/api/auth`, { withCredentials: true }).then(res => {
     if(res.data.isAuthInfo){
       setUser(res.data.data);
       setIsAuthenticated(res.data.isAuthInfo)

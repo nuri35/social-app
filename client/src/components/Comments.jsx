@@ -82,7 +82,7 @@ import { createNotify }from '../actions/notify'
   
 
    
-  const commentVariable =   await axios.post("http://localhost:5000/comment/save",variable,{withCredentials: true})
+  const commentVariable =   await axios.post("api/comment",variable,{withCredentials: true})
 
  
         if(commentVariable.data.success){
@@ -200,7 +200,7 @@ const antIcon = <LoadingOutlined style={{ fontSize: 24,position:"relative",left:
           
           <React.Fragment>
             
-          <SingleComment  postId={comment.postId}  comment={comment}  receiverId={props.receiverId}   refreshFunction={props.refreshFunction} editFunction={props.editFunction}  deleteFunction={props.deleteFunction} />
+          <SingleComment  CommentLists={props.CommentLists} postId={comment.postId}  comment={comment}  receiverId={props.receiverId}   refreshFunction={props.refreshFunction} editFunction={props.editFunction}  deleteFunction={props.deleteFunction} />
 
           <ReplyComment   CommentLists={props.CommentLists}   postId={comment.postId} parentCommentId={comment._id} refreshFunction={props.refreshFunction} editFunction={props.editFunction} deleteFunction={props.deleteFunction} />
           </React.Fragment>

@@ -1,11 +1,5 @@
 import axios from "axios"
 
+export const createPost = async (post)=> await axios.post("/api/post",post,{withCredentials: true})
 
-const API = axios.create({baseURL:"http://localhost:5000"})
-
-
-
-
-export const createPost = async (post)=> await API.post("/blogs",post,{withCredentials: true})
-
-export const fetchSinglePost = async (id)=> await API.get(`/blogs/Post/${id}`,{withCredentials: true})
+export const fetchSinglePost = async (id)=> await axios.get(`/api/post/${id}`,{withCredentials: true})

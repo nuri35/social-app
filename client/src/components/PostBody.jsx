@@ -126,7 +126,7 @@ const allComments = async ()=>{
 }
 try{
 
-    const  commentsBypostId =  await axios.post("http://localhost:5000/comment/getComments",postVariable)
+    const  commentsBypostId =  await axios.post("/api/getComments",postVariable)
 
     if(commentsBypostId.data.success){
       setCommentLists(commentsBypostId.data.postIdbyComments)

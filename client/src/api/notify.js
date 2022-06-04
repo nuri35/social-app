@@ -1,22 +1,22 @@
 import axios from "axios"
-const API = axios.create({baseURL:"http://localhost:5000"})
+
 
 
 export const getNotify = async () => {
-    const res = await API.get(`/notify/notifies`, {withCredentials: true})
+    const res = await axios.get(`/api/notifies`, {withCredentials: true})
     return res;
 }
 
 
 export const postDataAPI = async (msg) => {
  
-    const res = await API.post(`/notify/createNotify`,msg, {withCredentials: true})
+    const res = await axios.post(`/api/notify`,msg, {withCredentials: true})
     return res;
 }
 
 
 export const patchDataAPI = async (url, post) => {
-    const res = await API.patch(`/notify/isReadNotify/${url}`, post, {
+    const res = await axios.patch(`/api/isReadNotify/${url}`, post, {
         withCredentials: true
     })
     return res;
@@ -24,7 +24,7 @@ export const patchDataAPI = async (url, post) => {
 
 
 export const deleteDataAPI = async (msg) => {
-    const res = await API.delete(`/notify/removeNotify/${msg.id}?url=${msg.url}`, {
+    const res = await axios.delete(`/api/notify/${msg.id}?url=${msg.url}`, {
         withCredentials: true
     })
     return res;

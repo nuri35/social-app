@@ -52,7 +52,7 @@ const App = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     
-    const socket = io.connect("http://localhost:6500")
+    const socket = io.connect(process.env.NODE_ENV === "development" ? `http://localhost:6500` : `/socket` )
 
     dispatch({type: GLOBALTYPES.SOCKET, payload: socket})
     return () => socket.close()

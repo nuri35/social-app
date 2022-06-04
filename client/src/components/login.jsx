@@ -81,7 +81,7 @@ const { register,trigger, handleSubmit, formState:{ errors }, resetField } = use
  const onSubmit = async(data)=>{
 
   try{
-    const login = await axios.post("http://localhost:5000/auth/login",data,{
+    const login = await axios.post("/api/login",data,{
       withCredentials: true
     })
 
@@ -112,7 +112,7 @@ const { register,trigger, handleSubmit, formState:{ errors }, resetField } = use
 
 const googleLogin = () => {
 
-  window.open(`http://localhost:5000/auth/google`, "_self");
+  window.open(`http://localhost:5000/api/google`, "_self");
 };
 
   return (

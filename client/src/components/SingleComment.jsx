@@ -228,7 +228,7 @@ const hideCommentInput = ()=>{
     }
    
     
-  const commentVariables =   await axios.post("http://localhost:5000/comment/save",variables,{withCredentials: true})
+  const commentVariables =   await axios.post("/api/comment",variables,{withCredentials: true})
 
 
         if(commentVariables.data.success){
@@ -280,7 +280,7 @@ const onSubmitEdit = async (e)=>{
 
 
 
-const editCommentResult =   await axios.put("http://localhost:5000/comment/editSave",variables,{withCredentials: true})
+const editCommentResult =   await axios.put("/api/comment",variables,{withCredentials: true})
 
 
     if(editCommentResult.data.success){
@@ -305,6 +305,7 @@ const editCommentResult =   await axios.put("http://localhost:5000/comment/editS
 
 
 
+
 const deleteAction = async (e) =>{
   e.preventDefault();
 
@@ -312,33 +313,45 @@ const deleteAction = async (e) =>{
 
   try{
 
+   
+   const deleteArr = [...props.CommentLists.filter(cm => cm.responseTo === props.comment._id ), props.comment]
+
+ 
+   deleteArr.forEach(async(element) => {
+
+
+   const deleteResult =   await axios.delete(`/api/comment/${element._id}`,{withCredentials: true})
   
-
-
-const deleteResult =   await axios.delete(`http://localhost:5000/comment/delete/${whichProps}`,{withCredentials: true})
-
-
 if(deleteResult.data.success){
 
-
-const msg = {
-  id: whichProps,
-  text: props.comment.responseTo ? 'mentioned you in a comment.' : 'has commented on your post.',
-  recipients: props.comment.responseTo ?   [deleteResult.data.ıtem.responseTo.writer]  : [props.receiverId],
-  url: `/post/${props.postId}`,
-}
-  
-
-dispatch(removeNotify({msg,socket}))
-
-
-  setIsVisible(!isVisible)
-  deleteNotifaction(deleteResult.data.message)
-
-  props.deleteFunction(deleteResult.data.ıtem)
-  setLoading(false)
  
-}
+
+  const msg = {
+    id: whichProps,
+    text: props.comment.responseTo ? 'mentioned you in a comment.' : 'has commented on your post.',
+    recipients: props.comment.responseTo ?   [deleteResult.data.ıtem.responseTo.writer]  : [props.receiverId],
+    url: `/post/${props.postId}`,
+  }
+   
+  
+  dispatch(removeNotify({msg,socket}))
+  
+  
+    setIsVisible(!isVisible)
+    deleteNotifaction(deleteResult.data.message)
+  
+    props.deleteFunction(deleteResult.data.ıtem)
+    setLoading(false)
+   
+  }
+
+
+
+  });
+
+
+
+
 
   }catch(err){
     console.log(err)

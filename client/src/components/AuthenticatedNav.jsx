@@ -58,7 +58,7 @@ function SectionNavbars() {
 
   const logoutHandle = async()=>{
 
-      window.open("http://localhost:5000/auth/logout", "_self");
+      window.open("/api/logout", "_self");
    
 
   }

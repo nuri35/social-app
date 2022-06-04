@@ -104,7 +104,7 @@ function RegisterPage(props) {
   const onSubmit = async(data)=>{
     
     try{
-      const registerVal = await axios.post("http://localhost:5000/auth/register",data)
+      const registerVal = await axios.post("/api/register",data)
 
      
       if(registerVal.data){
