@@ -42,6 +42,7 @@ services:
       - DB_NAME=Blog
       - DB_PORT=27017
       - NODE_ENV=production
+      - CLİENT_URL=
     
     ports:
       - 6868:5000
@@ -58,7 +59,7 @@ services:
     image: nurettinsenbackend/client
       
     ports:
-      - 80:80
+      - 3000:3000
     tty: true
    
     environment:
@@ -88,6 +89,18 @@ services:
 
     secrets:
       - db_password
+
+  nginx:
+    image: nginx:1.21.5-alpine
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/nginx-prod.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - webapp
       
 
 networks:
