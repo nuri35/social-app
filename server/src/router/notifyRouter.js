@@ -4,9 +4,9 @@ const router = require("express").Router()
 
 
 router.get("/notifies",notifyController.getNotify)
-router.post("/createNotify",notifyController.createNotify)
+router.post("/notify",notifyController.createNotify)
 router.patch("/isReadNotify/:id",notifyController.isReadNotify)
-router.delete('/removeNotify/:id', notifyController.removeNotify)
+router.delete('/notify/:id', notifyController.removeNotify)
 
 
 

@@ -1,10 +1,10 @@
 const router = require("express").Router()
- const actionController = require("../controller/action_controller")
+ const actionController = require("../controller/actionController")
 
 
 
-router.post("/getLikes",actionController.getLike)
-router.post("/getDislikes",actionController.getDislike)
+router.post("/likes",actionController.getLike)
+router.post("/dislikes",actionController.getDislike)
 
 router.post("/upLike",actionController.upLike)
 router.post("/unLike",actionController.unLike)

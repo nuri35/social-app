@@ -1,13 +1,12 @@
 const router = require("express").Router()
-const blogcontoller = require("./../controller/Blog_contoller")
+const blogcontoller = require("./../controller/BlogController")
 
-const isopensession = require("../middleweare/auth_middleweare");
+const isopensession = require("../middleweare/authMiddleweare");
 
 
+router.post("/post",isopensession,blogcontoller.createPost)
 
-router.post("/",isopensession,blogcontoller.createPost)
-
- router.get("/Post/:id",blogcontoller.onearticleget)
+ router.get("/post/:id",blogcontoller.onearticleget)
 
 router.get("/search",blogcontoller.searchpost)
 
