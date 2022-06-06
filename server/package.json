@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon -L index.js",
+    "dev": "nodemon  index.js ",
     "test": "cross-env NODE_ENV=localhost mocha  --exit --recursive",
     "coverage": "nyc --reporter html  npm run test"
   },

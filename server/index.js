@@ -1,4 +1,4 @@
-// const express = require("express")
+const express = require("express")
 const app = express()
 require('dotenv').config();
 const database = require("./src/controller/database")
@@ -35,7 +35,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors({origin:process.env.NODE_ENV === "production" ?  `/`  :  `${process.env.WEB_SITE_URL}` ,credentials:true})) 
+app.use(cors({origin:process.env.WEB_SITE_URL  ,credentials:true})) 
 app.use(cookieParser())
 app.use(bodyParser.json({limit:"50mb",extended:true})) 
 app.use(express.json())
@@ -45,7 +45,7 @@ app.use('/api',require("./src/router/commentRouter"))
 app.use("/api",require("./src/router/actionRouter"))
 app.use("/auth",require("./src/router/authRouter"))
 app.use("/api", require("./src/router/authRouter") )
- app.use("/api", require("./src/router/notifyRouter"))
+app.use("/api", require("./src/router/notifyRouter"))
 
 const server = app.listen(process.env.PORT,()=>{
     console.log("bu port dınlenıyor: " + process.env.PORT)

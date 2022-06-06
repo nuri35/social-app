@@ -18,7 +18,7 @@ router.get("/failed",authcontoller.loginFailed)
 router.get("/google",passport.authenticate("google",{scope:["email","profile"]})) 
 
 router.get("/google/callback",passport.authenticate("google",{
-    successRedirect: process.env.NODE_ENV === "production" ?  `/`  :  `${process.env.WEB_SITE_URL}`,
+    successRedirect: process.env.NODE_ENV === "development" ?  `${process.env.WEB_SITE_URL_DEV}`  :  `${process.env.WEB_SITE_URL}`,
     failureRedirect:"/auth/failed"
 }))
 

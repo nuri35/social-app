@@ -1,4 +1,4 @@
-node_modules/
+node_modules
 .env
 Dockerfile
 .dockerignore
@@ -8,5 +8,6 @@ README.md
 LICENSE
 coverage
 docker-compose*
+
 
 
