@@ -82,7 +82,7 @@ import { createNotify }from '../actions/notify'
   
 
    
-  const commentVariable =   await axios.post("api/comment",variable,{withCredentials: true})
+  const commentVariable =   await axios.post("/api/comment",variable,{withCredentials: true})
 
  
         if(commentVariable.data.success){
@@ -109,6 +109,7 @@ import { createNotify }from '../actions/notify'
        
 
       }catch(err){
+        console.log(err.message)
         console.log(err)
       }
 

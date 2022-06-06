@@ -17,7 +17,8 @@ function FeaturedPost(props) {
   const { post } = props;
 
 
-  const src = `http://localhost:3000/Post/`
+  const src =  `http://localhost:3000/Post/`
+  const srcDev =  `http://localhost:80/Post/`
   const İmgSrc = `https://source.unsplash.com/random/800x500?`
 
 
@@ -28,7 +29,7 @@ function FeaturedPost(props) {
     
       <Grid item xs={8} md={10} >
       <Divider />
-     <CardActionArea  href={src+post._id} ref={props.inputRef} >
+     <CardActionArea  href={process.env.NODE_ENV === "localhost" ? src+post._id :  srcDev+post._id} ref={props.inputRef} >
     
        <Card  sx={{display:"flex", margin:2,maxHeight:500 }} >
       

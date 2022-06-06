@@ -111,7 +111,7 @@ const { register,trigger, handleSubmit, formState:{ errors }, resetField } = use
 
 
 const googleLogin = () => {
-
+  
   window.open(`http://localhost:5000/api/google`, "_self");
 };
 
