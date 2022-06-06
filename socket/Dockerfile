@@ -1,4 +1,4 @@
-FROM node:15
+FROM node:14
 RUN npm install --global nodemon
 WORKDIR /usr/src/app
 COPY package*.json /usr/src/app

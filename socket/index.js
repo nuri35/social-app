@@ -25,7 +25,9 @@ const getUser = (receiverId) => {
   return  users.find((user) => user.userId === receiverId);
 
 };
+
 io.on('connection', (socket) => {
+ 
     console.log(socket.id + " socket running")
    
 
