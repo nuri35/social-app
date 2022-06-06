@@ -8,8 +8,6 @@ services:
       - 6500:6500
     tty: true
     env_file: socket/.env
-   
-
     depends_on:
       - frontend
 
@@ -42,10 +40,10 @@ services:
       - DB_NAME=Blog
       - DB_PORT=27017
       - NODE_ENV=production
-      - CLİENT_URL=
+    
     
     ports:
-      - 6868:5000
+      - 5000:5000
 
    
     networks:
@@ -75,7 +73,6 @@ services:
 
     image: mongo
     
-   
     volumes:
       - db-data:/var/lib/mongo/data
     ports:
