@@ -64,19 +64,19 @@ function SectionNavbars() {
   }
 
   const handleIsRead = (msg) => {
-    
+
     dispatch(isReadNotify({msg}))
 }
   
 const displayNotification = ({url,text,user,isRead})=>{
 
-const mainUrl = "http://localhost:3000"
+
 
 
 return (
   
   <div className='notifaction'>
-  <CardActionArea href={mainUrl + url}  >
+  <CardActionArea href={url}  >
   
   <MenuItem >
   {

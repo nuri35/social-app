@@ -1,13 +1,14 @@
-import React , {useState,useEffect,useMemo}from 'react'
+import React , {useState,useEffect,useMemo,useContext}from 'react'
 import Tooltip from '@mui/material/Tooltip';
 import { LikeOutlined,DislikeOutlined,LikeFilled,DislikeFilled } from '@ant-design/icons';
 import axios from "axios"
 import { useDispatch ,useSelector} from 'react-redux'
 import { createNotify,removeNotify }from '../actions/notify'
 import toast, { Toaster } from 'react-hot-toast';
+import { AuthContext } from "./Context";
 function LikeDislike(props) {
     const { socket } = useSelector(state => state)
-    const {user} = props
+    const {user} = useContext(AuthContext)
     const dispatch = useDispatch()
     const [likes, setLikes] = useState(0);
     const [likeAction, setLikeAction] = useState(null);
@@ -29,10 +30,11 @@ function LikeDislike(props) {
   },[]);
 
 
-
     
-
+    
     if(props.post){
+
+     
       
          variable = {
            postId:props.postId,
@@ -41,6 +43,8 @@ function LikeDislike(props) {
 
 
     }else{
+
+    
        
          variable = {
             commentId:props.commentId,
@@ -120,13 +124,14 @@ const onLike = async (e)=>{
 
       if(result.data.success){
 
-        const msg = {
+      let  msg = {
             id: props.userId,
-            text: 'like your post.',
+            text: props.post ? 'like your post.' : 'like your comment.',
             recipients: [props.receiverId],
             url: `/post/${props.postId}`,
         
         }
+      
       
         dispatch(createNotify({msg,socket,user}))
       
@@ -153,9 +158,10 @@ const onLike = async (e)=>{
 
         if(resultUn.data.success){
            
-            const msg = {
+          
+         let   msg = {
                 id: props.userId,
-                text: 'like your post.',
+                text: props.post ? 'like your post.' : 'like your comment.',
                 recipients: [props.receiverId],
                 url: `/post/${props.postId}`,
             

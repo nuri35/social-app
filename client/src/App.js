@@ -52,7 +52,7 @@ const App = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     
-    const socket = io()  
+    const socket =  io()  
 
     dispatch({type: GLOBALTYPES.SOCKET, payload: socket})
     return () => socket.close()

@@ -26,9 +26,9 @@ export const getNotifies = () => async (dispatch) => {
 
 export const createNotify = ({msg,socket,user}) => async (dispatch) => {
     try {
-       
+      
         const res = await postDataAPI(msg)
-
+     
         socket.emit('createNotify', {
             ...res.data.notify,
             user: {
@@ -48,7 +48,7 @@ export const isReadNotify = ({msg}) => async (dispatch) => {
    
     dispatch({type: NOTIFY_TYPES.UPDATE_NOTIFY, payload: {...msg, isRead: true}})
     try {
-       
+     
         await patchDataAPI(msg._id,null)
 
       
