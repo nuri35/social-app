@@ -43,7 +43,7 @@ const isReadNotify = async (req,res,next)=>{
  
     try{
      
-      
+     
         const notifies = await Notifies.findOneAndUpdate({_id: req.params.id}, {
             isRead: true
         })
