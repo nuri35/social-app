@@ -9,7 +9,6 @@ const session = require("express-session")
 const cookieParser = require('cookie-parser')
 
 
-
 const passport = require("passport");
 database.main()
 const {

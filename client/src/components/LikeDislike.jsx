@@ -118,8 +118,7 @@ const onLike = async (e)=>{
 
         if(likeAction === null){
 
-          
-     
+        
             const result =   await axios.post("/api/upLike",variable)
 
       if(result.data.success){
