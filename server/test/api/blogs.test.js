@@ -72,27 +72,23 @@ describe('blogs Api', () => {
         });
     })
 
-///////////////////yarın burdan devam
+         describe("get /search ",(done)=>{
 
+            it("all blogs get",(done) => {
+                let q = "a"
+                request(server)
+                    .get(`/api/search?page=${1}&&q=${q}`)
+                    .expect(200)
+                    .end((err, res) => {
+                 
+                        expect(res.body).to.be.a('object');
+                        expect(res.body).to.have.property('searcharticles').to.be.a('array')
+                       
 
-    //      describe("get /search ",(done)=>{
-
-    //         it("all blogs get",(done) => {
-    //             let q = "abcd"
-    //             chai.request(server)
-    //                 .get(`/blogs/search?page=${1}&&q=${q}`)
-
-    //                 .end((err, res) => {
-
-
-    //                     res.body.should.be.a("object")
-    //                     expect(res.body.searcharticles).to.be.a('array')
-    //                     res.should.have.status(200);
-
-    //                    done();
-    //                 });
-    //             });
-    //      })
+                       done(err);
+                    });
+                });
+         })
 
     //      describe("GET post/:id ",(done)=>{
 
