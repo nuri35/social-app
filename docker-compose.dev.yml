@@ -54,7 +54,6 @@ services:
       - DB_USER=root
       - DB_PASSWORD=example
       - DB_NAME=Blog
-      - DB_PORT=27017
       - NODE_ENV=development
 
     command: npm run dev
