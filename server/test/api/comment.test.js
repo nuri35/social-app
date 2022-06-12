@@ -14,7 +14,23 @@ const request = require('supertest')
 chai.use(chaiAsPromised)
 chai.use(sinonChai)
 
+  // before((done) => {
+    //     request(server)
+    //         .post('/api/login')
+    //         .send({ Email: 'nurie487@gmail.com', password: 'Nuri7sen' })
+    //         .expect(200)
+    //         .end((err, res) => {
+    //             expect(res.headers['set-cookie']).not.to.be.null;
+            
+    //             expect(res.body).to.be.a('object');
+    //             Cookies = res.headers['set-cookie'].pop().split(';')[0];
 
+    //             done();
+    //         });
+
+    // }); 
+
+    
 describe('comments Api',  () => {
     // before((done) => { //token almalıyız
     //     chai.request(server)

@@ -1,84 +1,69 @@
-const Notifies = require('../models/notifyModel')
+const Notifies = require("../models/notifyModel");
 
-const getNotify = async (req,res,next)=>{
- 
-    try{
-    
+const getNotify = async (req, res, next) => {
+  try {
+    const notifies = await Notifies.find({ recipients: req.user.id })
+      .sort("-createdAt")
+      .populate("user", "google.name google.avatar");
 
-        const notifies = await Notifies.find({recipients: req.user.id})
-        .sort('-createdAt').populate('user', 'google.name google.avatar')
-       
-        return res.json({notifies})
-
-  }catch(err){
-    return res.status(500).json({msg: err.message})
+    return res.json({ notifies });
+  } catch (err) {
+    return res.status(500).json({ msg: err.message });
   }
-}
+};
 
+const createNotify = async (req, res, next) => {
+  try {
+    const { id, recipients, url, text } = req.body;
 
+    if (recipients.includes(req.user.id.toString())) return;
 
-const createNotify = async (req,res,next)=>{
- 
-    try{
-      
-        const { id, recipients, url, text } = req.body
+    const notify = new Notifies({
+      id,
+      recipients,
+      url,
+      text,
+      user: req.user.id,
+    });
 
-        if(recipients.includes(req.user.id.toString())) return;
-
-        const notify = new Notifies({
-            id, recipients, url, text,user: req.user.id
-        })
-
-        await notify.save()
-        return res.json({notify})
-
-  }catch(err){
-   
-     return res.status(500).json({msg: err.message})
+    await notify.save();
+    return res.json({ notify });
+  } catch (err) {
+    return res.status(500).json({ msg: err.message });
   }
-}
+};
 
+const isReadNotify = async (req, res, next) => {
+  try {
+    const notifies = await Notifies.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        isRead: true,
+      }
+    );
 
-const isReadNotify = async (req,res,next)=>{
- 
-    try{
-     
-     
-        const notifies = await Notifies.findOneAndUpdate({_id: req.params.id}, {
-            isRead: true
-        })
-
-        return res.json({notifies})
-
-  }catch(err){
-
-     return res.status(500).json({msg: err.message})
+    return res.json({ notifies });
+  } catch (err) {
+    return res.status(500).json({ msg: err.message });
   }
-}
+};
 
-const removeNotify = async (req,res,next)=>{
- 
-    try{
-        
-        const notify = await Notifies.findOneAndDelete({
-            id: req.params.id, url: req.query.url
-        })
-        
-        return res.json({notify})
-      
+const removeNotify = async (req, res, next) => {
+  try {
+    const notify = await Notifies.findOneAndDelete({
+      id: req.params.id,
+      url: req.query.url,
+    });
 
-  }catch(err){
-
-     return res.status(500).json({msg: err.message})
+    return res.json({ notify });
+  } catch (err) {
+    return res.status(500).json({ msg: err.message });
   }
-}
-
-
+};
 
 module.exports = {
-    getNotify,
-    createNotify,
-    isReadNotify,
-    removeNotify
-  
-}
+  getNotify,
+  createNotify,
+  isReadNotify,
+  removeNotify,
+};
