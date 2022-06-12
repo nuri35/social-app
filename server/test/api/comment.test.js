@@ -1,19 +1,20 @@
-
 const chai = require("chai")
-const chaiHttp = require("chai-http")
-const should = require('chai').should()
-const {expect} = require('chai')
+const chaiAsPromised = require('chai-as-promised')
 const server = require("../../index")
-const fs = require('fs')
-const  chaiAsPromised = require("chai-as-promised")
-chai.use(chaiAsPromised)
-chai.use(chaiHttp)
+const sinon = require("sinon");
+const sinonChai = require('sinon-chai')
+const request = require('supertest')
 // let Cookies;
 // let userId ;
 // let commentId;
 // let commentOpt;
 // let whoIs;
-let postIdValue ;
+// let postIdValue ;
+
+chai.use(chaiAsPromised)
+chai.use(sinonChai)
+
+
 describe('comments Api',  () => {
     // before((done) => { //token almalıyız
     //     chai.request(server)
@@ -71,17 +72,17 @@ describe('comments Api',  () => {
     //             });
     //         });
     //  })
-     describe("comment/getComments API ",(done)=>{
-        it("ıt should get all comment",async () => {
-            let res = await chai.request(server)
-            .post("/comment/getComments/")
-            .send({
-                postId  : postIdValue
-            });
-            expect(res.body).to.be.a('object')
-            expect(res.body).to.have.property('postIdbyComments').to.be.an("array")
-            });
-    })
+    //  describe("comment/getComments API ",(done)=>{
+    //     it("ıt should get all comment",async () => {
+    //         let res = await chai.request(server)
+    //         .post("/comment/getComments/")
+    //         .send({
+    //             postId  : postIdValue
+    //         });
+    //         expect(res.body).to.be.a('object')
+    //         expect(res.body).to.have.property('postIdbyComments').to.be.an("array")
+    //         });
+    // })
     //  describe("comment/editSave API ",(done)=>{
 
     //     it("ıt should edit specific comment",(done) => {
