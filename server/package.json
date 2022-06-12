@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon  index.js ",
-    "test": "cross-env NODE_ENV=localhost mocha  --exit --recursive",
+    "test": "cross-env NODE_ENV=development mocha  --exit --recursive",
     "coverage": "nyc --reporter html  npm run test"
   },
   "keywords": [],
@@ -46,10 +46,10 @@
   "devDependencies": {
     "chai": "^4.3.6",
     "chai-as-promised": "^7.1.1",
-    "chai-http": "^4.3.0",
     "cross-env": "^7.0.3",
     "mocha": "^10.0.0",
     "nyc": "^15.1.0",
+    "rewire": "^6.0.0",
     "sinon": "^14.0.0",
     "sinon-chai": "^3.7.0",
     "supertest": "^6.2.3"

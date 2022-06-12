@@ -22,10 +22,7 @@ app.use(session({
     secret:process.env.SESSION_SECRET,
     resave:true,
     saveUninitialized:true,
-    
-    store:  MongoStore.create(process.env.NODE_ENV === "production" ? {mongoUrl: `mongodb://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?authSource=admin`} : process.env.NODE_ENV === "development" ? {
-        mongoUrl: `mongodb://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?authSource=admin` } : {
-        mongoUrl: `mongodb://127.0.0.1:${process.env.DB_PORT}/${process.env.DB_NAME}` }) ,
+    store:  MongoStore.create({mongoUrl: `mongodb://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?authSource=admin`}) ,
     cookie:{
         secure: false,
         maxAge:1000 * 60 * 60 * 24 
@@ -43,7 +40,7 @@ app.use('/api',require("./src/router/blogRouter"))
 app.use('/api',require("./src/router/commentRouter"))
 app.use("/api",require("./src/router/actionRouter"))
 app.use("/auth",require("./src/router/authRouter"))
-app.use("/api", require("./src/router/authRouter") )
+app.use("/api", require("./src/router/authRouter"))
 app.use("/api", require("./src/router/notifyRouter"))
 
 const server = app.listen(process.env.PORT,()=>{

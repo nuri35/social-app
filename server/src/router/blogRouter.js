@@ -4,7 +4,7 @@ const blogcontoller = require("./../controller/BlogController")
 const isopensession = require("../middleweare/authMiddleweare");
 
 
-router.post("/post",isopensession,blogcontoller.createPost)
+router.post("/post",isopensession,blogcontoller.createPost) 
 
  router.get("/post/:id",blogcontoller.onearticleget)
 
