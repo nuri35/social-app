@@ -141,20 +141,20 @@ describe("Comments Api", () => {
         });
     });
   });
-  //  describe("comment/delete/:id API ",(done)=>{
-  //     it("ıt should delete specific comment",(done) => {
-  //            req=  chai.request(server)
-  //             .delete(`/comment/delete/${commentId}`)
-  //             req.cookies = Cookies;
-  //             req.set('content-type','application/json')
-  //             .end((err, res) => {
-  //                 res.should.have.status(200);
-  //                 res.body.should.be.a("object")
-  //                 expect(res.body).to.have.property('success')
-  //                 expect(res.body).to.have.property('message')
-  //                 expect(res.body).to.have.property('ıtem').that.is.to.equal(commentId)
-  //               done()
-  //             });
-  //         });
-  //  })
+  describe("/api/comment/:id Delete ", (done) => {
+    it("ıt should delete specific comment", (done) => {
+      req = request(server).delete(`/api/comment/${commentId}`);
+      req.cookies = Cookies;
+      req.set("content-type", "application/json").end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body).to.be.a("object");
+        expect(res.body).to.have.keys("success", "message", "ıtem");
+        expect(res.body)
+          .to.have.property("ıtem")
+          .that.has.property("_id")
+          .that.is.to.equal(commentId);
+        done(err);
+      });
+    });
+  });
 });
