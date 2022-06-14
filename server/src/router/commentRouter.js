@@ -1,13 +1,13 @@
-const router = require("express").Router()
-const commentController = require("../controller/commentController")
+const router = require("express").Router();
+const commentController = require("../controller/commentController");
 const isopensession = require("../middleweare/authMiddleweare");
 
-router.post("/comment",isopensession,commentController.commentAdd)
+router.post("/comment", isopensession, commentController.commentAdd);
 
-router.post("/getComments",commentController.getComments)
+router.post("/getComments", commentController.getComments);
 
-router.put("/comment",isopensession,commentController.editSave)
+router.put("/comment", isopensession, commentController.editSave);
 
-router.delete("/comment/:id",commentController.deleteComment)
+router.delete("/comment/:id", isopensession, commentController.deleteComment);
 
-module.exports=router
+module.exports = router;
