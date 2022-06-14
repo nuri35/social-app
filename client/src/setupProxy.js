@@ -1,28 +1,21 @@
-const { createProxyMiddleware } = require('http-proxy-middleware');
+const { createProxyMiddleware } = require("http-proxy-middleware");
 
-module.exports = function(app) {
+module.exports = function (app) {
   app.use(
-    '/api/*',
+    "/api/*",
     createProxyMiddleware({
       target: `http://localhost:5000`,
-      secure:false,
+      secure: false,
       changeOrigin: true,
-     
     })
   );
 
   app.use(
-    '/socket.io',
+    "/socket.io",
     createProxyMiddleware({
       target: `http://localhost:6500`,
-      secure:false,
+      secure: false,
       changeOrigin: true,
-     
     })
   );
-
-  
 };
-
-
-

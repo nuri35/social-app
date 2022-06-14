@@ -6,17 +6,14 @@ import Raw from "@editorjs/raw";
 import SimpleImage from "@editorjs/simple-image";
 import Quote from "@editorjs/quote";
 
-
 export const EDITOR_JS_TOOLS = {
-  raw:Raw,
-  quote:Quote,
+  raw: Raw,
+  quote: Quote,
   list: List,
   code: Code,
   marker: Marker,
   checklist: CheckList,
-  simpleImage: SimpleImage
+  simpleImage: SimpleImage,
 };
 
-  
-
-  export default EDITOR_JS_TOOLS
+export default EDITOR_JS_TOOLS;
