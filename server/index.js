@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 require("dotenv").config();
 const database = require("./src/controller/database");
+const client = require("./src/redis/index");
 const MongoStore = require("connect-mongo");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -10,6 +11,22 @@ const cookieParser = require("cookie-parser");
 
 const passport = require("passport");
 database.main();
+
+client.on("connect", () => {
+  console.log("redis client state connected");
+});
+
+client.on("error", (err) => {
+  console.log("redis client state error", err);
+});
+
+client
+  .connect()
+  .then((res) => {})
+  .catch((err) => {
+    console.log(err);
+  });
+
 const { DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD } = process.env;
 app.use(
   session({
