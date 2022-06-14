@@ -6,9 +6,9 @@ const getNotify = async (req, res, next) => {
       .sort("-createdAt")
       .populate("user", "google.name google.avatar");
 
-    return res.json({ notifies });
+    res.status(200).json({ notifies });
   } catch (err) {
-    return res.status(500).json({ msg: err.message });
+    res.status(500).json({ msg: err.message });
   }
 };
 
@@ -16,7 +16,9 @@ const createNotify = async (req, res, next) => {
   try {
     const { id, recipients, url, text } = req.body;
 
-    if (recipients.includes(req.user.id.toString())) return;
+    if (recipients.includes(req.user.id.toString())) {
+      return res.status(400).json(null);
+    }
 
     const notify = new Notifies({
       id,
@@ -27,9 +29,9 @@ const createNotify = async (req, res, next) => {
     });
 
     await notify.save();
-    return res.json({ notify });
+    res.status(200).json({ notify });
   } catch (err) {
-    return res.status(500).json({ msg: err.message });
+    res.status(500).json({ msg: err.message });
   }
 };
 

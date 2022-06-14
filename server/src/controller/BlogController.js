@@ -52,8 +52,6 @@ const searchpost = async (req, res) => {
 
     res.status(200).json({ searcharticles });
   } catch (err) {
-
-
     res.status(401).json({ message: "hata durumu oluştu" });
   }
 };

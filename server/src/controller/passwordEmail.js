@@ -1,27 +1,21 @@
+const nodemailer = require("nodemailer");
 
-  
+const passwordEmail = (to, url) => {
+  let transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_PASS,
+    },
+  });
 
+  transporter.sendMail(
+    {
+      from: "Node js uygulaması",
+      to: to, //yazdıgı emaıl ıle kaydoluyor ya ıste oraya bır emaıl yolllyuoruz
+      subject: "Şifre Sıfırlama  ✔",
 
-const nodemailer = require("nodemailer")
-
-
-const passwordEmail =  (to,url)=>{
-
-
-    let transporter = nodemailer.createTransport({
-        service:"gmail",
-        auth: {
-          user: process.env.GMAIL_USER, 
-          pass: process.env.GMAIL_PASS, 
-        },
-      });
-   
-       transporter.sendMail({
-          from:"Node js uygulaması",
-          to:to, //yazdıgı emaıl ıle kaydoluyor ya ıste oraya bır emaıl yolllyuoruz
-          subject: "Şifre Sıfırlama  ✔", 
-          
-          html: `<!doctype html>
+      html: `<!doctype html>
           <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
           
           <head>
@@ -385,25 +379,18 @@ const passwordEmail =  (to,url)=>{
           </body>
           
           </html>
-                        `
-           
-      
- 
-      
-         
-      },(error,info)=>{
-          if(error){
-             return error
-          }else{
-            return info
-          }
-        
-       
-          transporter.close()
-   
-      })
-   
-}
+                        `,
+    },
+    (error, info) => {
+      if (error) {
+        return error;
+      } else {
+        return info;
+      }
 
+      transporter.close();
+    }
+  );
+};
 
 module.exports = passwordEmail;

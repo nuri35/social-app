@@ -1,25 +1,22 @@
+const nodemailer = require("nodemailer");
 
-const nodemailer = require("nodemailer")
+const sendEmail = (to, url) => {
+  let transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_PASS,
+    },
+  });
 
+  transporter.sendMail(
+    {
+      from: "Node js uygulaması",
+      to: to, //yazdıgı emaıl ıle kaydoluyor ya ıste oraya bır emaıl yolllyuoruz
 
-const sendEmail =  (to,url)=>{
+      subject: "Email onaylama  ✔", // Subject line
 
-
-    let transporter = nodemailer.createTransport({
-        service:"gmail",
-        auth: {
-          user: process.env.GMAIL_USER, 
-          pass: process.env.GMAIL_PASS, 
-        },
-      });
-   
-       transporter.sendMail({
-          from:"Node js uygulaması",
-          to:to, //yazdıgı emaıl ıle kaydoluyor ya ıste oraya bır emaıl yolllyuoruz
-          
-          subject: "Email onaylama  ✔", // Subject line
-        
-        html: `<!DOCTYPE html>
+      html: `<!DOCTYPE html>
         <html>
         
         <head>
@@ -217,21 +214,18 @@ const sendEmail =  (to,url)=>{
             </table>
         </body>
         
-        </html>`
-         
-      },(error,info)=>{
-          if(error){
-             return error
-          }else{
-            return info
-          }
-        
-       
-          transporter.close()
-   
-      })
-   
-}
+        </html>`,
+    },
+    (error, info) => {
+      if (error) {
+        return error;
+      } else {
+        return info;
+      }
 
+      transporter.close();
+    }
+  );
+};
 
 module.exports = sendEmail;
