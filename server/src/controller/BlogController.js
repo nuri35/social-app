@@ -40,16 +40,23 @@ const searchpost = async (req, res) => {
   let perpage = 3;
   const value = req.query.q;
   const pageNumber = req.query.page;
-  const blogList = [];
+
   try {
-    const redisPosts = await client.keys("Blog*");
+    const redisPosts = await client.keys("Blogs/dataPagin");
     if (redisPosts.length > 0) {
-      redisPosts.map(async (val) => {
-        const cacheBlog = await client.get(val);
-        blogList.push(JSON.parse(cacheBlog));
-      });
-      //burda akıp gıdıyor yarın sabah halledersın
-      res.status(200).json({ searcharticles: blogList });
+      const cacheBlog = await client.lRange("Blogs/dataPagin", 0, -1);
+      async.map(
+        cacheBlog,
+        async function (cacheBlog) {
+          let parseData = JSON.parse(cacheBlog);
+          let job = { ...parseData };
+          return job;
+        },
+        function (err, searcharticles) {
+          if (err) throw err;
+          res.status(200).json({ searcharticles });
+        }
+      );
     } else {
       const searcharticles = await Blog.find({
         $or: [
@@ -62,13 +69,20 @@ const searchpost = async (req, res) => {
         .limit(perpage)
         .populate("authorId");
 
-      searcharticles.map(async (val) => {
-        let cacheKey = `Blog:` + uuidv4();
+      async.map(
+        searcharticles,
+        async function (searcharticle) {
+          let cacheKey = `Blog:` + uuidv4();
 
-        await client.set(cacheKey, JSON.stringify(val));
-      });
+          await client.lPush("Blogs/dataPagin", JSON.stringify(searcharticle));
+          return searcharticles;
+        },
+        function (err, searcharticles) {
+          if (err) throw err;
 
-      res.status(200).json({ searcharticles });
+          res.status(200).json({ searcharticles });
+        }
+      );
     }
   } catch (err) {
     res.status(401).json({ message: "hata durumu oluştu" });
