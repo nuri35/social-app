@@ -1,238 +1,167 @@
-
-import { styled,alpha } from '@mui/material/styles';
-import Sidebar from './Sidebar';
-import React,{useState,useRef,useCallback,useContext} from 'react'
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import FeaturedPost from './FeaturedPost';
-import NoRresult from "./NoRresult"
-import MuiGrid from '@mui/material/Grid';
-import InputBase from '@mui/material/InputBase';
-import {
-
-  Toolbar,
-
-
-} from "@material-ui/core"
-import { SearchPost } from '../actions/post';
+import { styled, alpha } from "@mui/material/styles";
+import Sidebar from "./Sidebar";
+import React, { useState, useRef, useCallback, useContext } from "react";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import FeaturedPost from "./FeaturedPost";
+import NoRresult from "./NoRresult";
+import MuiGrid from "@mui/material/Grid";
+import InputBase from "@mui/material/InputBase";
+import { Toolbar } from "@material-ui/core";
+import { SearchPost } from "../actions/post";
 import { AuthContext } from "./Context";
-import Nav from "./Nav"
-import AuthenticatedNav from "./AuthenticatedNav"
+import Nav from "./Nav";
+import AuthenticatedNav from "./AuthenticatedNav";
 
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from "@mui/icons-material/Search";
 const sidebar = {
-  
-    title: 'Think',
-    description:
-      'A man"s homeland is wherever he prospers. Aristophanes.',
-     
-    tags: [
-      { title: 'Sport', url: 'Sport' },
-      { title: 'Fitness', url: 'Fitness' },
-      { title: 'Programming ', url: 'Programming' },
-      { title: 'Health ', url: 'Health' },
-      { title: 'Science ', url: 'Science' },
-      { title: 'Culturel ', url: 'Culturel' },
-      { title: 'Technology ', url: 'Technology' },
-      { title: 'Business ', url: 'Business' },
-      { title: 'Politics', url: 'Politics' },
-      { title: 'Foods', url: 'Foods' },
-      { title: 'Other', url: 'Other' },
-      { title: 'Self-improvement', url: 'Self-improvement' },
-      { title: 'Nature', url: 'Nature' },
+  title: "Think",
+  description: 'A man"s homeland is wherever he prospers. Aristophanes.',
 
-    ],
-   
-  };
+  tags: [
+    { title: "Sport", url: "Sport" },
+    { title: "Fitness", url: "Fitness" },
+    { title: "Programming ", url: "Programming" },
+    { title: "Health ", url: "Health" },
+    { title: "Science ", url: "Science" },
+    { title: "Culturel ", url: "Culturel" },
+    { title: "Technology ", url: "Technology" },
+    { title: "Business ", url: "Business" },
+    { title: "Politics", url: "Politics" },
+    { title: "Foods", url: "Foods" },
+    { title: "Other", url: "Other" },
+    { title: "Self-improvement", url: "Self-improvement" },
+    { title: "Nature", url: "Nature" },
+  ],
+};
 
+const Grid = styled(MuiGrid)(({ theme }) => ({
+  width: "100%",
 
-  const Grid = styled(MuiGrid)(({ theme }) => ({
-    width: '100%',
-    
-    ...theme.typography.body2,
-    '& [role="separator"]': {
-      margin: theme.spacing(0, 2),
-    },
-  }));
-  
+  ...theme.typography.body2,
+  '& [role="separator"]': {
+    margin: theme.spacing(0, 2),
+  },
+}));
 
-      
-  const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-      padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
-      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
-        width: '12ch',
-        '&:focus': {
-          width: '20ch',
-        },
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: "12ch",
+      "&:focus": {
+        width: "20ch",
       },
     },
-  }));
+  },
+}));
 
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginLeft: 0,
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
+    marginLeft: theme.spacing(1),
+    width: "auto",
+  },
+}));
 
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
 
-  const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
+const theme = createTheme();
+
+const PostsList = ({ socket }) => {
+  const [query, setQuery] = useState("");
+  const [pageNumber, setPageNumber] = useState(1);
+  const { ısAuthenticated } = useContext(AuthContext);
+
+  const { blogs, hasMore, loading } = SearchPost(query, pageNumber);
+
+  const observer = useRef();
+  const lastBlogElementRef = useCallback(
+    (node) => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPageNumber((prevPageNumber) => prevPageNumber + 1);
+        }
+      });
+      if (node) observer.current.observe(node);
     },
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(1),
-      width: 'auto',
-    },
-  }));
-  
-  
-  const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }));
-   
+    [loading, hasMore]
+  );
 
-  const theme = createTheme();
-  
-const PostsList =  ({socket})=>{
-
-
-  const [query,setQuery] = useState("")
-  const [pageNumber,setPageNumber] = useState(1)
-  const {ısAuthenticated} = useContext(AuthContext)
- 
-
-
-  const {blogs,hasMore,loading} =  SearchPost(query,pageNumber)
-
-  const observer = useRef()
-  const lastBlogElementRef = useCallback(node =>{
-if(loading) return 
-if(observer.current) observer.current.disconnect()
-observer.current = new IntersectionObserver(entries =>{
-    if(entries[0].isIntersecting && hasMore){ //burda verıyı gecıp gecmedıgını kontrol etmelıyız
-      setPageNumber(prevPageNumber => prevPageNumber + 1)
-
-    }
- 
-    
-})
-if(node) observer.current.observe(node)
-  },[loading,hasMore])
-
-  function handleSearch(e){
-
-    setQuery(e.target.value)
-    setPageNumber(1)
-
-  
-   
-  
+  function handleSearch(e) {
+    setQuery(e.target.value);
+    setPageNumber(1);
   }
 
-  
- 
   return (
-      
-   
-    
+    <ThemeProvider theme={theme}>
+      {ısAuthenticated ? <AuthenticatedNav></AuthenticatedNav> : <Nav></Nav>}
 
+      <Toolbar>
+        <Search>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            value={query}
+            onChange={handleSearch}
+            placeholder="Search…"
+            inputProps={{ "aria-label": "search" }}
+          />
+        </Search>
+      </Toolbar>
 
-          <ThemeProvider theme={theme}>
-        
-           {ısAuthenticated ?
-            <AuthenticatedNav  >
+      <div className="home">
+        <Grid columns={{ xs: 4, sm: 8, md: 10 }}>
+          {blogs.length > 0 &&
+            blogs.map((post, index) => {
+              return blogs.length === index + 1 ? (
+                <FeaturedPost
+                  key={Math.random().toString(36).substr(2, 9)}
+                  inputRef={lastBlogElementRef}
+                  loading={loading}
+                  post={post}
+                />
+              ) : (
+                <FeaturedPost
+                  key={Math.random().toString(36).substr(2, 9)}
+                  post={post}
+                />
+              );
+            })}
 
-</AuthenticatedNav>
-           
-            : 
-            <Nav  >
-           
-            </Nav>
-          
-          }
-            
+          {blogs.length === 0 && <NoRresult />}
+        </Grid>
 
-                <Toolbar>
-      <Search   >
-                      <SearchIconWrapper>
-                        <SearchIcon />
-                      </SearchIconWrapper>
-                      <StyledInputBase
-                         value={query}
-                     onChange={handleSearch}
-                  
-                        placeholder="Search…"
-                        inputProps={{ 'aria-label': 'search' }}
-                      />
-                    </Search>
-                    </Toolbar> 
-
-          
-    <div className="home">
-
-    
-     
-        
-          <Grid    columns={{ xs: 4, sm: 8, md: 10 }} >
-          
-          
-        {
-        blogs.length > 0 &&
-        
-        blogs.map((post,index) => {
-          
-      return blogs.length === index + 1  ?
-        <FeaturedPost key={Math.random().toString(36).substr(2, 9)}  inputRef={lastBlogElementRef} loading={loading} post={post}   />
-        
-    :
-    <FeaturedPost key={Math.random().toString(36).substr(2, 9)}  post={post} />
-
-        })
-       
-     
-        }
-      
-
-      {blogs.length === 0 &&
-
-    <NoRresult />
-              
-              }
-
-    </Grid>
-  
-    <Sidebar
+        <Sidebar
           title={sidebar.title}
-          description={sidebar.description}      
-      tags={sidebar.tags}
-    
-   
-            />   
-
-
-</div>
-
+          description={sidebar.description}
+          tags={sidebar.tags}
+        />
+      </div>
     </ThemeProvider>
-  
- 
   );
-}
+};
 
-export default PostsList
-
-
-
-
-
-    
+export default PostsList;

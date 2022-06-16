@@ -58,7 +58,7 @@ export const SearchPost = (query, pageNumber) => {
             ...new Set([...prevBlog, ...res.data.searcharticles.map((b) => b)]),
           ];
         });
-        setHasMore(res.data.searcharticles.length);
+        setHasMore(res.data.searcharticles.length > 0);
         setLoading(false);
         setuserInfo(res.data.userInfo);
       })
