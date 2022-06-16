@@ -1,6 +1,6 @@
 const Blog = require("./../models/blog_model");
 const client = require("./../redis/index");
-const { v4: uuidv4 } = require("uuid");
+var _ = require("lodash");
 const async = require("async");
 
 const createPost = async (req, res) => {
@@ -36,6 +36,8 @@ const onearticleget = async (req, res) => {
   }
 };
 
+//catche konusunda sımdı yukardkaınıde yap daha sonra yorumlarda ekleme yorum getırmeyı hızlı yaparsın zaten yarın 21 rıne kadarda  yorum gunceleme yorum sılme kısımlarının cachını yap youtubeden  ornek turkce vıdeolar sonra ıngılzıce vıdeolardan bakarak bıtırsıın bu dedıgımı sonra tatmın olmak adına genel projelerden veya udemyden sonra cache konusunu sımdılık bu kadar dıyebılrız.
+
 const searchpost = async (req, res) => {
   let perpage = 3;
 
@@ -60,6 +62,7 @@ const searchpost = async (req, res) => {
         },
         function (err, searcharticles) {
           if (err) throw err;
+          //query control maybe
           res.status(200).json({ searcharticles });
         }
       );
