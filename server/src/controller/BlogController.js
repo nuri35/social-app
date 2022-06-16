@@ -6,13 +6,13 @@ const async = require("async");
 const createPost = async (req, res) => {
   const id = req.user.id;
   req.body.authorId = id;
-  const cacheKey = `Blog:` + uuidv4();
+
   try {
     const newblog = new Blog(req.body);
-
+    newblog.populate("authorId");
     let saved = await newblog.save();
-    const data = JSON.stringify(newblog);
-    await client.set(cacheKey, data);
+
+    await client.rPush("Blogs/dataPagin", JSON.stringify(saved));
     res.status(200).json({ message: "Successfully published", saved });
   } catch (err) {
     console.log(err);
@@ -38,15 +38,23 @@ const onearticleget = async (req, res) => {
 
 const searchpost = async (req, res) => {
   let perpage = 3;
+
+  let i = 0;
+
   const value = req.query.q;
   const pageNumber = req.query.page;
 
   try {
     const redisPosts = await client.keys("Blogs/dataPagin");
     if (redisPosts.length > 0) {
-      const cacheBlog = await client.lRange("Blogs/dataPagin", 0, -1);
+      const cacheBlogs = await client.lRange(
+        "Blogs/dataPagin",
+        (pageNumber - 1) * perpage,
+        (pageNumber - 1) * perpage + 2
+      );
+
       async.map(
-        cacheBlog,
+        cacheBlogs,
         async function (cacheBlog) {
           let parseData = JSON.parse(cacheBlog);
           let job = { ...parseData };
@@ -72,8 +80,6 @@ const searchpost = async (req, res) => {
       async.map(
         searcharticles,
         async function (searcharticle) {
-          let cacheKey = `Blog:` + uuidv4();
-
           await client.lPush("Blogs/dataPagin", JSON.stringify(searcharticle));
           return searcharticles;
         },
