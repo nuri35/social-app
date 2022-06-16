@@ -39,8 +39,6 @@ const onearticleget = async (req, res) => {
 const searchpost = async (req, res) => {
   let perpage = 3;
 
-  let i = 0;
-
   const value = req.query.q;
   const pageNumber = req.query.page;
 
