@@ -2,7 +2,6 @@ const Notifies = require("../models/notifyModel");
 
 const getNotify = async (req, res, next) => {
   try {
-    console.log(req.user.id);
     const notifies = await Notifies.find({ recipients: req.user.id })
       .sort("-createdAt")
       .populate("user", "google.name google.avatar");
