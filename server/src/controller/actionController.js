@@ -3,10 +3,11 @@ const Dislike = require("./../models/dislike_model");
 
 const upLike = async (req, res, next) => {
   let variable = {};
+
   if (req.body.postId) {
-    variable = { postId: req.body.postId, userId: req.body.user };
+    variable = { postId: req.body.postId, userId: req.user.id };
   } else {
-    variable = { commentId: req.body.commentId, userId: req.body.user };
+    variable = { commentId: req.body.commentId, userId: req.user.id };
   }
 
   try {
@@ -16,7 +17,7 @@ const upLike = async (req, res, next) => {
 
     await Dislike.findOneAndDelete(variable);
 
-    res.json({ success: true });
+    res.status(200).json({ success: true });
   } catch (err) {
     console.log(err);
   }
@@ -26,15 +27,15 @@ const unLike = async (req, res) => {
   let variable = {};
 
   if (req.body.postId) {
-    variable = { postId: req.body.postId, userId: req.body.user };
+    variable = { postId: req.body.postId, userId: req.user.id };
   } else {
-    variable = { commentId: req.body.commentId, userId: req.body.user };
+    variable = { commentId: req.body.commentId, userId: req.user.id };
   }
 
   try {
     await Like.findOneAndDelete(variable);
 
-    res.json({ success: true });
+    res.status(200).json({ success: true });
   } catch (err) {
     console.log(err);
   }
@@ -80,9 +81,9 @@ const upDislike = async (req, res) => {
   let variable = {};
 
   if (req.body.postId) {
-    variable = { postId: req.body.postId, userId: req.body.user };
+    variable = { postId: req.body.postId, userId: req.user.id };
   } else {
-    variable = { commentId: req.body.commentId, userId: req.body.user };
+    variable = { commentId: req.body.commentId, userId: req.user.id };
   }
 
   try {
@@ -92,7 +93,7 @@ const upDislike = async (req, res) => {
 
     await Like.findOneAndDelete(variable);
 
-    res.json({ success: true });
+    res.status(200).json({ success: true });
   } catch (err) {
     console.log(err);
   }
@@ -102,14 +103,14 @@ const unDislike = async (req, res) => {
   let variable = {};
 
   if (req.body.postId) {
-    variable = { postId: req.body.postId, userId: req.body.user };
+    variable = { postId: req.body.postId, userId: req.user.id };
   } else {
-    variable = { commentId: req.body.commentId, userId: req.body.user };
+    variable = { commentId: req.body.commentId, userId: req.user.id };
   }
   try {
     await Dislike.findOneAndDelete(variable);
 
-    res.json({ success: true });
+    res.status(200).json({ success: true });
   } catch (err) {
     console.log(err);
   }
