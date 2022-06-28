@@ -15,28 +15,34 @@ const createPost = async (req, res) => {
     await client.rPush("Blogs/dataPagin", JSON.stringify(saved));
     res.status(200).json({ message: "Successfully published", saved });
   } catch (err) {
-    console.log(err);
+    res.status(500).json({ message: err });
   }
 };
 
 const onearticleget = async (req, res) => {
+  let makaleId = req.params.id;
   try {
-    let makaleId = req.params.id;
-    const sınglearticle = await Blog.findById({ _id: makaleId }).populate(
-      "authorId"
-    );
+    const redisPostsbyId = await client.get(`blog/${req.params.id}`);
 
-    if (!sınglearticle) {
-      res.status(404).json(sınglearticle);
+    if (!redisPostsbyId) {
+      const sınglearticle = await Blog.findById({ _id: makaleId }).populate(
+        "authorId"
+      );
+
+      if (!sınglearticle) {
+        res.status(404).json(sınglearticle);
+      } else {
+        let keyName = `blog/${req.params.id}`;
+        await client.set(keyName, JSON.stringify(sınglearticle));
+        res.json(sınglearticle);
+      }
     } else {
-      res.json(sınglearticle);
+      res.json(JSON.parse(redisPostsbyId));
     }
   } catch (err) {
-    console.log(err);
+    res.status(500).json({ message: err });
   }
 };
-
-//catche konusunda sımdı yukardkaınıde yap daha sonra yorumlarda ekleme yorum getırmeyı hızlı yaparsın zaten yarın 21 rıne kadarda  yorum gunceleme yorum sılme kısımlarının cachını yap youtubeden  ornek turkce vıdeolar sonra ıngılzıce vıdeolardan bakarak bıtırsıın bu dedıgımı sonra tatmın olmak adına genel projelerden veya udemyden sonra cache konusunu sımdılık bu kadar dıyebılrız.
 
 const searchpost = async (req, res) => {
   let perpage = 3;
@@ -62,7 +68,7 @@ const searchpost = async (req, res) => {
         },
         function (err, searcharticles) {
           if (err) throw err;
-          //query control maybe
+
           res.status(200).json({ searcharticles });
         }
       );
@@ -87,12 +93,12 @@ const searchpost = async (req, res) => {
         function (err, searcharticles) {
           if (err) throw err;
 
-          res.status(200).json({ searcharticles });
+          res.status(200).json(searcharticles);
         }
       );
     }
   } catch (err) {
-    res.status(401).json({ message: "hata durumu oluştu" });
+    res.status(500).json({ message: err });
   }
 };
 
