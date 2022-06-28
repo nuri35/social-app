@@ -119,13 +119,19 @@ const editSave = async (req, res) => {
 };
 
 const deleteComment = async (req, res) => {
+  let key = `Comments/${req.query.postId}`;
+
   try {
     const deleteValue = await Comment.findOneAndDelete({
       _id: req.params.id,
       $or: [{ writer: req.user.id }, { authorId: req.user.id }],
     })
       .populate("responseTo", "writer")
-      .populate("postId", "authorId");
+      .populate("postId", "authorId")
+      .populate("writer");
+    //kaldın burda yarın bakıver biraz bitir daha sonra bununla ılgılı youtubeden bak ıngılızce ve turkce bak kaynaklara bunu cozdukten sonrada en son bı genel projelerde kullanımlarına bak yarın sabahda proje calıs  zaten daha sonra ayrıyetten de ve genel proje olarakda udemyden alıcan bu sekılde genel projeler uzerındende baktıtkan sonra tammadır yarın  5 gibi pub/sub olayına geç
+    const jsonData = JSON.stringify({ _id: deleteValue._id });
+    await client.lRem(key, 0, jsonData);
 
     res
       .status(200)

@@ -264,9 +264,12 @@ const SingleComment = (props) => {
       ];
 
       deleteArr.forEach(async (element) => {
-        const deleteResult = await axios.delete(`/api/comment/${element._id}`, {
-          withCredentials: true,
-        });
+        const deleteResult = await axios.delete(
+          `/api/comment/${element._id}?postId=${props.postId._id}`,
+          {
+            withCredentials: true,
+          }
+        );
 
         if (deleteResult.data.success) {
           const msg = {
