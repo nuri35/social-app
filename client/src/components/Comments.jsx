@@ -17,6 +17,7 @@ import { notification } from "antd";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { createNotify } from "../actions/notify";
+
 function Comments(props) {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -79,7 +80,6 @@ function Comments(props) {
         });
 
         if (commentVariable.data.success) {
-          // Notify
           const msg = {
             id: commentVariable.data.result[0]._id,
             text: "has commented on your post.",

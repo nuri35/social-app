@@ -1,34 +1,74 @@
 const Comment = require("./../models/comment");
+const client = require("./../redis/index");
+const async = require("async");
 
 const commentAdd = async (req, res) => {
   try {
     const comment = new Comment(req.body);
-
+    comment.populate("writer");
+    comment.populate("postId");
     const commentNew = await comment.save();
 
     const result = await Comment.find({ _id: commentNew._id })
       .populate("writer")
       .populate("postId");
 
+    await client.rPush(
+      `Comments/${req.body.postId}`,
+      JSON.stringify(commentNew)
+    );
+
     res.status(200).json({ success: true, result });
   } catch (err) {
-    console.log(err);
+    res.status(500).json({ message: err });
   }
 };
 
 const getComments = async (req, res) => {
+  let key = `Comments/${req.body.postId}`;
   try {
-    const postIdbyComments = await Comment.find({
-      postId: req.body.postId,
-    }).populate("writer");
+    const cacheCommentRange = await client.lRange(key, 0, -1);
 
-    if (postIdbyComments.length === 0) {
-      res.status(404).json({ success: false, postIdbyComments });
+    if (cacheCommentRange.length > 0) {
+      async.map(
+        cacheCommentRange,
+        async function (cacheComment) {
+          let parseData = JSON.parse(cacheComment);
+          let job = { ...parseData };
+          return job;
+        },
+        function (err, postIdbyComments) {
+          if (err) throw err;
+
+          res.status(200).json({ success: true, postIdbyComments });
+        }
+      );
     } else {
-      res.status(200).json({ success: true, postIdbyComments });
+      const postIdbyComments = await Comment.find({
+        postId: req.body.postId,
+      })
+        .populate("writer")
+        .populate("postId");
+
+      if (postIdbyComments.length === 0) {
+        res.status(404).json({ success: false, postIdbyComments });
+      } else {
+        async.map(
+          postIdbyComments,
+          async function (postIdbyComment) {
+            await client.lPush(key, JSON.stringify(postIdbyComment));
+            return postIdbyComments;
+          },
+          function (err, postIdbyComments) {
+            if (err) throw err;
+
+            res.status(200).json({ success: true, postIdbyComments });
+          }
+        );
+      }
     }
   } catch (err) {
-    console.log(err);
+    res.status(500).json({ message: err });
   }
 };
 
@@ -52,7 +92,7 @@ const editSave = async (req, res) => {
       res.status(404).json({ message: "You can't edit  comment error" });
     }
   } catch (err) {
-    console.log(err);
+    res.status(500).json({ message: err });
   }
 };
 
@@ -69,7 +109,7 @@ const deleteComment = async (req, res) => {
       .status(200)
       .json({ success: true, message: "Comment Deleted", ıtem: deleteValue });
   } catch (err) {
-    console.log(err);
+    res.status(500).json({ message: err });
   }
 };
 
