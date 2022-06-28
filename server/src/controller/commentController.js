@@ -73,9 +73,10 @@ const getComments = async (req, res) => {
 };
 
 const editSave = async (req, res) => {
+  let key = `Comments/${req.body.postId}`;
   try {
     const findWhoComment = await Comment.findOne({
-      $and: [{ _id: req.body.postId }, { writer: req.user.id }],
+      $and: [{ writer: req.user.id }, { _id: req.body.index }],
     }).populate("writer");
 
     if (findWhoComment) {
@@ -87,7 +88,28 @@ const editSave = async (req, res) => {
         .populate("writer")
         .populate("postId");
 
-      res.status(200).json({ success: true, updatedProduct });
+      const cacheLRange = await client.lRange(key, 0, -1);
+
+      async.map(
+        cacheLRange,
+        async function (value) {
+          let parseData = JSON.parse(value);
+
+          let job = { ...parseData };
+          return job;
+        },
+        async function (err, valueResult) {
+          if (err) throw err;
+
+          const findIndex = valueResult.findIndex(
+            ({ _id }) => _id == updatedProduct._id
+          );
+
+          await client.lSet(key, findIndex, JSON.stringify(updatedProduct));
+
+          res.status(200).json({ success: true, updatedProduct });
+        }
+      );
     } else {
       res.status(404).json({ message: "You can't edit  comment error" });
     }

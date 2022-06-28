@@ -230,8 +230,8 @@ const SingleComment = (props) => {
     try {
       const variables = {
         content: EditInputValue,
-
-        postId: whichProps,
+        index: props.parentCommentId,
+        postId: props.postId._id,
       };
 
       const editCommentResult = await axios.put("/api/comment", variables, {

@@ -189,6 +189,7 @@ function Comments(props) {
                   refreshFunction={props.refreshFunction}
                   editFunction={props.editFunction}
                   deleteFunction={props.deleteFunction}
+                  parentCommentId={comment._id}
                 />
 
                 <ReplyComment
