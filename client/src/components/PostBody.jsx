@@ -68,7 +68,7 @@ function PostBody({ socket }) {
 
   const deleteComment = (newComment) => {
     const deletedArr = CommentLists.filter((comment) => {
-      return newComment !== comment._id;
+      return newComment._id !== comment._id;
     });
 
     setCommentLists(deletedArr);
@@ -85,9 +85,7 @@ function PostBody({ socket }) {
           postVariable
         );
 
-        if (commentsBypostId.data.success) {
-          setCommentLists(commentsBypostId.data.postIdbyComments);
-        }
+        setCommentLists(commentsBypostId.data.postIdbyComments);
       } catch (err) {
         console.log(err);
       }

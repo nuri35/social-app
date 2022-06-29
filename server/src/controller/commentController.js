@@ -4,7 +4,11 @@ const async = require("async");
 
 const commentAdd = async (req, res) => {
   try {
-    const comment = new Comment(req.body);
+    const comment = new Comment();
+    comment.writer = req.body.writer;
+    comment.postId = req.body.postId;
+    comment.content = req.body.content;
+
     comment.populate("writer");
     comment.populate("postId");
     const commentNew = await comment.save();
@@ -40,7 +44,7 @@ const getComments = async (req, res) => {
         function (err, postIdbyComments) {
           if (err) throw err;
 
-          res.status(200).json({ success: true, postIdbyComments });
+          res.status(200).json({ postIdbyComments });
         }
       );
     } else {
@@ -51,7 +55,7 @@ const getComments = async (req, res) => {
         .populate("postId");
 
       if (postIdbyComments.length === 0) {
-        res.status(404).json({ success: false, postIdbyComments });
+        res.status(204).json({ postIdbyComments });
       } else {
         async.map(
           postIdbyComments,
@@ -62,7 +66,7 @@ const getComments = async (req, res) => {
           function (err, postIdbyComments) {
             if (err) throw err;
 
-            res.status(200).json({ success: true, postIdbyComments });
+            res.status(200).json({ postIdbyComments });
           }
         );
       }
@@ -128,10 +132,12 @@ const deleteComment = async (req, res) => {
     })
       .populate("responseTo", "writer")
       .populate("postId", "authorId")
+      .populate("postId")
       .populate("writer");
-    //kaldın burda yarın bakıver biraz bitir daha sonra bununla ılgılı youtubeden bak ıngılızce ve turkce bak kaynaklara bunu cozdukten sonrada en son bı genel projelerde kullanımlarına bak yarın sabahda proje calıs  zaten daha sonra ayrıyetten de ve genel proje olarakda udemyden alıcan bu sekılde genel projeler uzerındende baktıtkan sonra tammadır yarın  5 gibi pub/sub olayına geç
-    const jsonData = JSON.stringify({ _id: deleteValue._id });
-    await client.lRem(key, 0, jsonData);
+
+    const jsonData = JSON.stringify(deleteValue);
+
+    await client.lRem(key, 1, jsonData);
 
     res
       .status(200)
