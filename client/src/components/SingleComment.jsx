@@ -193,7 +193,7 @@ const SingleComment = (props) => {
         const variables = {
           content: Commentval,
           writer: user.id,
-          postId: props.postId,
+          postId: props.postId._id,
           responseTo: props.comment._id,
         };
 

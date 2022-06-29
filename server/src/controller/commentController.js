@@ -5,10 +5,13 @@ const async = require("async");
 const commentAdd = async (req, res) => {
   try {
     const comment = new Comment();
+
     comment.writer = req.body.writer;
     comment.postId = req.body.postId;
     comment.content = req.body.content;
-
+    if (req.body.responseTo) {
+      comment.responseTo = req.body.responseTo;
+    }
     comment.populate("writer");
     comment.populate("postId");
     const commentNew = await comment.save();
@@ -55,7 +58,7 @@ const getComments = async (req, res) => {
         .populate("postId");
 
       if (postIdbyComments.length === 0) {
-        res.status(204).json({ postIdbyComments });
+        res.status(200).json({ postIdbyComments });
       } else {
         async.map(
           postIdbyComments,
@@ -136,13 +139,15 @@ const deleteComment = async (req, res) => {
       .populate("writer");
 
     const jsonData = JSON.stringify(deleteValue);
-
-    await client.lRem(key, 1, jsonData);
-
+    //örnegın 2 yorum iç içe en üstten sıldın içindekinide sildi mongo dbde fakat redisde 1 tanesını sılıyor
+    const rs = await client.lRem(key, 0, jsonData);
+    //rs sonucuna göre biri 0 biri 1 yani birini siliyor birini silmiyor
+    console.log(rs);
     res
       .status(200)
       .json({ success: true, message: "Comment Deleted", ıtem: deleteValue });
   } catch (err) {
+    console.log(err);
     res.status(500).json({ message: err });
   }
 };
