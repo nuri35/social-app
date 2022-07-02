@@ -127,22 +127,20 @@ const editSave = async (req, res) => {
 
 const deleteComment = async (req, res) => {
   let key = `Comments/${req.query.postId}`;
-
   try {
     const deleteValue = await Comment.findOneAndDelete({
       _id: req.params.id,
       $or: [{ writer: req.user.id }, { authorId: req.user.id }],
     })
-      .populate("responseTo", "writer")
-      .populate("postId", "authorId")
+      // .populate("responseTo", "writer")
+      // .populate("postId", "authorId")
       .populate("postId")
       .populate("writer");
 
     const jsonData = JSON.stringify(deleteValue);
-    //örnegın 2 yorum iç içe en üstten sıldın içindekinide sildi mongo dbde fakat redisde 1 tanesını sılıyor
-    const rs = await client.lRem(key, 0, jsonData);
-    //rs sonucuna göre biri 0 biri 1 yani birini siliyor birini silmiyor
-    console.log(rs);
+
+    await client.lRem(key, 0, jsonData);
+
     res
       .status(200)
       .json({ success: true, message: "Comment Deleted", ıtem: deleteValue });
