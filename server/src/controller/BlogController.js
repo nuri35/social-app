@@ -52,6 +52,7 @@ const searchpost = async (req, res) => {
 
   try {
     const redisPosts = await client.keys("Blogs/dataPagin");
+
     if (redisPosts.length > 0) {
       const cacheBlogs = await client.lRange(
         "Blogs/dataPagin",

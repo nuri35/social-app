@@ -3,11 +3,11 @@ const app = express();
 require("dotenv").config();
 const database = require("./src/controller/database");
 const client = require("./src/redis/index");
-const MongoStore = require("connect-mongo");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
+let RedisStore = require("connect-redis")(session);
 
 const passport = require("passport");
 database.main();
@@ -27,15 +27,12 @@ client
     console.log(err);
   });
 
-const { DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD } = process.env;
 app.use(
   session({
+    store: new RedisStore({ client }),
+    saveUninitialized: false,
     secret: process.env.SESSION_SECRET,
-    resave: true,
-    saveUninitialized: true,
-    store: MongoStore.create({
-      mongoUrl: `mongodb://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?authSource=admin`,
-    }),
+    resave: false,
     cookie: {
       secure: false,
       maxAge: 1000 * 60 * 60 * 24,
