@@ -6,8 +6,8 @@ const client = require("./src/redis/index");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const cookieParser = require("cookie-parser");
-let RedisStore = require("connect-redis")(session);
 
 const passport = require("passport");
 database.main();
@@ -27,9 +27,13 @@ client
     console.log(err);
   });
 
+const { DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD } = process.env;
+
 app.use(
   session({
-    store: new RedisStore({ client }),
+    store: new MongoStore({
+      mongoUrl: `mongodb://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?authSource=admin`,
+    }),
     saveUninitialized: false,
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -53,7 +57,6 @@ app.use("/api", require("./src/router/actionRouter"));
 app.use("/auth", require("./src/router/authRouter"));
 app.use("/api", require("./src/router/authRouter"));
 app.use("/api", require("./src/router/notifyRouter"));
-
 const server = app.listen(process.env.PORT, () => {
   console.log("bu port dınlenıyor: " + process.env.PORT);
 });

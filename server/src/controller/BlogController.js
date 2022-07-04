@@ -47,7 +47,6 @@ const onearticleget = async (req, res) => {
 const searchpost = async (req, res) => {
   let perpage = 3;
 
-  const value = req.query.q;
   const pageNumber = req.query.page;
 
   try {
@@ -74,16 +73,7 @@ const searchpost = async (req, res) => {
         }
       );
     } else {
-      const searcharticles = await Blog.find({
-        $or: [
-          { title: { $regex: value, $options: "i" } },
-          { tag: { $regex: value, $options: "i" } },
-          { Subtitle: { $regex: value, $options: "i" } },
-        ],
-      })
-        .skip((pageNumber - 1) * perpage)
-        .limit(perpage)
-        .populate("authorId");
+      const searcharticles = await Blog.find({}).populate("authorId");
 
       async.map(
         searcharticles,
