@@ -107,7 +107,7 @@ function Login(props) {
   };
 
   const googleLogin = () => {
-    window.open(`/api/google`, "_self");
+    window.open(`${process.env.REACT_APP_API_URL}/api/google/`, "_self");
   };
 
   return (

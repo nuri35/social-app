@@ -113,7 +113,7 @@ const PostsList = ({ socket }) => {
     setQuery(e.target.value);
     setPageNumber(1);
   }
-
+  console.log(blogs);
   return (
     <ThemeProvider theme={theme}>
       {ısAuthenticated ? <AuthenticatedNav></AuthenticatedNav> : <Nav></Nav>}

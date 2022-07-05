@@ -52,7 +52,6 @@ export const SearchPost = (query, pageNumber) => {
       cancelToken: new axios.CancelToken((c) => (cancel = c)),
     })
       .then((res) => {
-        console.log(res.data);
         setBlogs((prevBlog) => {
           return [
             ...new Set([...prevBlog, ...res.data.searcharticles.map((b) => b)]),

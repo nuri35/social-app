@@ -8,4 +8,4 @@ Dockerfile.prod
 README.md
 LICENSE
 docker-compose*
-setupProxy*
+
