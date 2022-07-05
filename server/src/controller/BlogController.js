@@ -75,18 +75,25 @@ const searchpost = async (req, res) => {
     } else {
       const searcharticles = await Blog.find({}).populate("authorId");
 
-      async.map(
-        searcharticles,
-        async function (searcharticle) {
-          await client.lPush("Blogs/dataPagin", JSON.stringify(searcharticle));
-          return searcharticles;
-        },
-        function (err, searcharticles) {
-          if (err) throw err;
+      if (searcharticles.length === 0) {
+        res.status(200).json({ searcharticles });
+      } else {
+        async.map(
+          searcharticles,
+          async function (searcharticle) {
+            await client.lPush(
+              "Blogs/dataPagin",
+              JSON.stringify(searcharticle)
+            );
+            return searcharticles;
+          },
+          function (err, searcharticles) {
+            if (err) throw err;
 
-          res.status(200).json(searcharticles);
-        }
-      );
+            res.status(200).json(searcharticles);
+          }
+        );
+      }
     }
   } catch (err) {
     res.status(500).json({ message: err });

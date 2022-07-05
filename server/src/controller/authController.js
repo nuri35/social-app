@@ -36,7 +36,7 @@ const getUserInfo = async (req, res, next) => {
 };
 
 const loginFailed = (req, res, next) => {
-  res.json({ success: false, message: "Failure" });
+  res.status(400).json({ success: false, message: "Failure" });
 };
 
 const verifymail = async (req, res, next) => {
@@ -219,5 +219,6 @@ module.exports = {
   verifymail,
   getUserInfo,
   loginFailed,
+
   resetPassword,
 };
