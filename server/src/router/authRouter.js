@@ -19,9 +19,9 @@ router.get(
   "/google/callback",
   passport.authenticate("google", {
     successRedirect:
-      process.env.NODE_ENV === "development"
-        ? `${process.env.WEB_SITE_URL_DEV}`
-        : `${process.env.WEB_SITE_URL}`,
+      process.env.NODE_ENV === "localhost"
+        ? `${process.env.WEB_SITE_URL}`
+        : `${process.env.WEB_SITE_URL_DEV_PROD}`,
     failureRedirect: "/auth/failed",
   })
 );

@@ -9,8 +9,6 @@ const jwt = require("jsonwebtoken");
 const passport = require("passport");
 require("./password")(passport);
 
-const CLİENT_URL = "http://localhost:3000/";
-
 const login = (req, res, next) => {
   passport.authenticate("local", (error, user, info) => {
     if (error) {
@@ -162,7 +160,11 @@ const logout = (req, res, next) => {
   req.logout();
   req.session.destroy((err) => {
     res.clearCookie("connect.sid");
-    res.redirect(CLİENT_URL);
+    res.redirect(
+      process.env.NODE_ENV === "localhost"
+        ? `${process.env.WEB_SITE_URL}`
+        : `${process.env.WEB_SITE_URL_DEV_PROD}`
+    );
   });
 };
 
