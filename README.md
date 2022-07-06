@@ -36,6 +36,8 @@
 <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg" alt="express" width="40" height="40"/>
 <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/redis/redis-original.svg" alt="redis" width="40" height="40"/>
 <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nginx/nginx-original.svg" alt="redis" width="40" height="40"/>
+<img src="https://www.vectorlogo.zone/logos/chaijs/chaijs-ar21.svg" alt="redis" width="40" height="40"/>
+<img src="https://www.vectorlogo.zone/logos/mochajs/mochajs-icon.svg" alt="redis" width="40" height="40"/>
 
 ## Features
 
@@ -49,13 +51,95 @@ List the ready features here:
 - dockerize application
 - real express structure
 
-## Setup
+### I. Commonly used commands in docker-compose-dev:
+
+1. Build and rebuild a image.
+
+   - `docker-compose up --build`
+   - `docker-compose -f "docker-compose.dev.yml" up --build`
+
+2. Run and start containers.
+
+   - `docker-compose up`
+   - `docker-compose -f "docker-compose.dev.yml" up`
+
+3. Stop and clear containers.
+
+   - `docker-compose down`
+   - `docker-compose -f "docker-compose.dev.yml" down`
+
+4. Stop and clear containers, volumes.
+
+   - `docker-compose down -v`
+   - `docker-compose -f "docker-compose.dev.yml" down -v`
+
+### II. Commonly used commands in docker-compose-prod:
+
+1. Build and rebuild a image.
+
+   - `docker-swarm init `
+   - `docker stack ls`
+   - `docker service ls`
+   - `docker stack deploy -c docker-compose.prod.yaml name`
+   - `docker image build --tag nurettinsenbackend/server --build-arg NODE_ENV=production .`
+   - `docker push nurettinsenbackend/client`
+
+## Setup app
 
 ```sh
 npm init -y
 npm install
 npm run dev => backend and socket folder
 npm start => client folder
+```
+
+## Setup nginx main
+
+```sh
+upstream client {
+	server frontend:3000;
+}
+
+upstream api {
+	server backend:5000;
+}
+
+
+
+server {
+	listen 80;
+	listen [::]:80;
+
+	server_name _;
+	location / {
+		proxy_pass http://client;
+	}
+
+	location /sockjs-node {
+		proxy_pass http://client;
+		proxy_http_version 1.1;
+		proxy_set_header Upgrade $http_upgrade;
+		proxy_set_header Connection "Upgrade";
+  }
+
+	location /api/ {
+		proxy_pass http://api;
+	}
+
+	location /socket.io {
+	 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header Host $host;
+
+      proxy_pass http://socket:6500;
+
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection "upgrade";
+	}
+
+
+
+}
 ```
 
 ## Author
