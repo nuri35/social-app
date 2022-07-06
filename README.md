@@ -1,8 +1,5 @@
-
-<h1 align="center">Welcome to readme-md-generator 👋</h1>
+<h1 align="center">Real time social media app 👋</h1>
 <p align="center">
-
-
 
   <a href='https://d0b4-212-253-219-66.eu.ngrok.io/job/social%20app/'>
   <img src='https://d0b4-212-253-219-66.eu.ngrok.io/buildStatus/icon?job=social+app'>
@@ -19,82 +16,51 @@
  
 </p>
 
-> CLI that generates beautiful README.md files.<br /> `readme-md-generator` will suggest you default answers by reading your `package.json` and `git` configuration.
+## Table of Contents
 
-## ✨ Demo
+- - [Table of Contents](#table-of-contents)
+  - [Technologies Used](#technologies-used)
+  - [Features](#features)
+  - [Screenshots](#screenshots)
+  - [Setup](#setup)
+  - [Setup sequelize database](#setup-sequelize-database)
+  - [Contact](#contact)
 
-`readme-md-generator` is able to read your environment (package.json, git config...) to suggest you default answers during the `README.md` creation process:
+## Technologies Used
 
-<p align="center">
-  <img width="700" align="center" src="https://user-images.githubusercontent.com/9840435/60266022-72a82400-98e7-11e9-9958-f9004c2f97e1.gif" alt="demo"/>
-</p>
+<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original-wordmark.svg" alt="redis" width="40" height="40"/> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="express" width="40" height="40"/>
+<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="express" width="40" height="40"/>
+<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/redux/redux-original.svg" alt="express" width="40" height="40"/>
+<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original.svg" alt="express" width="40" height="40"/>
+<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/socketio/socketio-original.svg" alt="express" width="40" height="40"/>
+<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg" alt="express" width="40" height="40"/>
+<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/redis/redis-original.svg" alt="redis" width="40" height="40"/>
+<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nginx/nginx-original.svg" alt="redis" width="40" height="40"/>
 
-Generated `README.md`:
+## Features
 
-<p align="center">
-  <img width="700" src="https://user-images.githubusercontent.com/9840435/60266090-9cf9e180-98e7-11e9-9cac-3afeec349bbc.jpg" alt="cli output"/>
-</p>
+List the ready features here:
 
-Example of `package.json` with good meta data:
+- mongo db Database and data type,mongoose orm
+- Node js crud process and real time application with socket io npm
+- React, redux
+- redis cache and session storage
+- proxy nginx
+- dockerize application
+- real express structure
 
-```json
-// The package.json is not required to run README-MD-GENERATOR
-{
-  "name": "readme-md-generator",
-  "version": "0.1.3",
-  "description": "CLI that generates beautiful README.md files.",
-  "author": "Franck Abgrall",
-  "license": "MIT",
-  "homepage": "https://github.com/kefranabg/readme-md-generator#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kefranabg/readme-md-generator.git"
-  },
-  "bugs": {
-    "url": "https://github.com/kefranabg/readme-md-generator/issues"
-  },
-  "engines": {
-    "npm": ">=5.5.0",
-    "node": ">=9.3.0"
-  }
-}
-```
-
-## 🚀 Usage
-
-Make sure you have [npx](https://www.npmjs.com/package/npx) installed (`npx` is shipped by default since npm `5.2.0`)
-
-Just run the following command at the root of your project and answer questions:
+## Setup
 
 ```sh
-npx readme-md-generator
+npm init -y
+npm install
+npm run dev => backend and socket folder
+npm start => client folder
 ```
-
-Or use default values for all questions (`-y`):
-
-```sh
-npx readme-md-generator -y
-```
-
-Use your own `ejs` README template (`-p`):
-
-```sh
-npx readme-md-generator -p path/to/my/own/template.md
-```
-
-You can find [ejs README template examples here](https://github.com/kefranabg/readme-md-generator/tree/master/templates).
-
-
-
-## 🤝 Contributing
-
-Contributions, issues and feature requests are welcome.<br />
-Feel free to check [issues page](https://github.com/kefranabg/readme-md-generator/issues) if you want to contribute.<br />
-[Check the contributing guide](./CONTRIBUTING.md).<br />
 
 ## Author
 
 👤 **Nurettin Şen**
 
-- Twitter: [@nurettin-sen](https://www.linkedin.com/in/nurettin-sen/)
+- Linkedin: [@nurettin-sen](https://www.linkedin.com/in/nurettin-sen/)
 - Github: [@nuri35](https://github.com/nuri35)
